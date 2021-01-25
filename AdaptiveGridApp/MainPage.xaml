@@ -1,0 +1,54 @@
+﻿<Page
+    x:Class="AdaptiveGridApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:AdaptiveGridApp"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="Page_Loaded"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <DataTemplate x:Key="ImageTemplate" x:DataType="local:PhotoItem">
+            <local:AspectContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                <Grid
+                    Background="White"
+                    BorderBrush="Black"
+                    BorderThickness="1">
+                    <Image Source="{x:Bind ImageURI, Mode=OneWay}" Stretch="UniformToFill" />
+                </Grid>
+            </local:AspectContentControl>
+
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Button
+            Background="Transparent"
+            BorderBrush="Transparent"
+            BorderThickness="0"
+            Click="Button_Click"
+            Content="Add Image"
+            Foreground="Blue">
+            <Button.Resources>
+                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
+            </Button.Resources>
+        </Button>
+        <controls:AdaptiveGridView
+            Name="AdaptiveGridViewControl"
+            Grid.Row="1"
+            DesiredWidth="300"
+            IsItemClickEnabled="True"
+            ItemTemplate="{StaticResource ImageTemplate}"
+            ItemsSource="{x:Bind PhotoItems, Mode=OneWay}"
+            OneRowModeEnabled="False"
+            SelectionMode="Single"
+            StretchContentForSingleRow="True" />
+    </Grid>
+</Page>

@@ -42,7 +42,7 @@
         </Button>
         <controls:AdaptiveGridView
             Name="AdaptiveGridViewControl"
-            Grid.Row="1"
+            Grid.Row="1" VerticalAlignment="Center"
             MinWidth="250"
             IsItemClickEnabled="True"
             ItemTemplate="{StaticResource ImageTemplate}"

@@ -27,7 +27,7 @@ namespace AdaptiveGridApp
         ObservableCollection<PhotoItem> PhotoItems = new ObservableCollection<PhotoItem>();
         IList<PhotoItem> PhotoItemsList = new List<PhotoItem>();
         private int CurrentIndex = 0;
-
+        public int Dimension = 1;
         public MainPage()
         {
             this.InitializeComponent();
@@ -37,9 +37,9 @@ namespace AdaptiveGridApp
             return CurrentIndex %= 26;
         }
 
-        private void GetDimension()
+        private void ComputeAndSetDimension()
         {
-
+            Dimension = (int)Math.Ceiling(Math.Sqrt(PhotoItems.Count));
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -49,6 +49,8 @@ namespace AdaptiveGridApp
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            this.SizeChanged += MainPage_SizeChanged;
+            PhotoItems.CollectionChanged += PhotoItems_CollectionChanged;
             for (int i = 0; i < 26; i++)
             {
                 PhotoItem item = new PhotoItem
@@ -64,6 +66,17 @@ namespace AdaptiveGridApp
                 item.ImageURI = bitmapImage;
                 PhotoItemsList.Add(item);
             }
+        }
+
+        private void PhotoItems_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            ComputeAndSetDimension();
+            AdaptiveGridViewControl.DesiredWidth = ActualWidth / Dimension;
+        }
+
+        private void MainPage_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            AdaptiveGridViewControl.DesiredWidth = e.NewSize.Width / Dimension;
         }
     }
 }

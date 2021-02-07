@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -41,7 +42,7 @@ namespace AdaptiveGridApp
         {
             Dimension = (int)Math.Ceiling(Math.Sqrt(PhotoItems.Count));
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AddParticipant_Click(object sender, RoutedEventArgs e)
         {
             PhotoItems.Add(PhotoItemsList[GetCurrentIndex()]);
             CurrentIndex++;
@@ -77,6 +78,13 @@ namespace AdaptiveGridApp
         private void MainPage_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             AdaptiveGridViewControl.DesiredWidth = e.NewSize.Width / Dimension;
+        }
+
+        private void ClearParticipants_Click(object sender, RoutedEventArgs e)
+        {
+            PhotoItems.Clear();
+            CurrentIndex = 0;
+            Dimension = 1;
         }
     }
 }

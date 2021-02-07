@@ -116,10 +116,14 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AdaptiveHeightValueConverter.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AspectContentControl.cs" />
+    <Compile Include="CustomAdaptiveGridView.cs" />
+    <Compile Include="CustomAdaptiveGridView.Properties.cs" />
+    <Compile Include="CustomAdaptiveView.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

@@ -28,7 +28,8 @@ namespace AdaptiveGridApp
         ObservableCollection<PhotoItem> PhotoItems = new ObservableCollection<PhotoItem>();
         IList<PhotoItem> PhotoItemsList = new List<PhotoItem>();
         private int CurrentIndex = 0;
-        public int Dimension = 1;
+        public int Columns = 1;
+        public int MinimumWidth = 350;
         public MainPage()
         {
             this.InitializeComponent();
@@ -40,7 +41,14 @@ namespace AdaptiveGridApp
 
         private void ComputeAndSetDimension()
         {
-            Dimension = (int)Math.Ceiling(Math.Sqrt(PhotoItems.Count));
+            Columns = (int)Math.Ceiling(Math.Sqrt(PhotoItems.Count));
+            double itemWidth = AdaptiveGridViewControl.ActualWidth / Columns;
+            if (itemWidth < MinimumWidth)
+            {
+                int MaxColumns = (int)(AdaptiveGridViewControl.ActualWidth / MinimumWidth);
+                Columns = MaxColumns;
+            }
+            AdaptiveGridViewControl.DesiredWidth = AdaptiveGridViewControl.ActualWidth / Columns;
         }
         private void AddParticipant_Click(object sender, RoutedEventArgs e)
         {
@@ -50,8 +58,7 @@ namespace AdaptiveGridApp
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            this.SizeChanged += MainPage_SizeChanged;
-            PhotoItems.CollectionChanged += PhotoItems_CollectionChanged;
+            AdaptiveGridViewControl.Items.VectorChanged += Items_VectorChanged;
             for (int i = 0; i < 26; i++)
             {
                 PhotoItem item = new PhotoItem
@@ -69,22 +76,27 @@ namespace AdaptiveGridApp
             }
         }
 
-        private void PhotoItems_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void Items_VectorChanged(IObservableVector<object> sender, IVectorChangedEventArgs @event)
         {
             ComputeAndSetDimension();
-            AdaptiveGridViewControl.DesiredWidth = ActualWidth / Dimension;
         }
 
-        private void MainPage_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            AdaptiveGridViewControl.DesiredWidth = e.NewSize.Width / Dimension;
-        }
-
-        private void ClearParticipants_Click(object sender, RoutedEventArgs e)
+        sioprivate void ClearParticipants_Click(object sender, RoutedEventArgs e)
         {
             PhotoItems.Clear();
             CurrentIndex = 0;
-            Dimension = 1;
+            Columns = 1;
+        }
+
+        private void AspectContentControl_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AdaptiveGridViewControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ComputeAndSetDimension();
+            // AdaptiveGridViewControl.DesiredWidth = e.NewSize.Width / Columns;
         }
     }
 }

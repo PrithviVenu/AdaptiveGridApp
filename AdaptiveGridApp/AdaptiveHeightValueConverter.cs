@@ -46,7 +46,7 @@ namespace AdaptiveGridApp
             throw new NotImplementedException();
         }
 
-        internal static Thickness GetItemMargin(GridView view, Thickness fallback = default(Thickness))
+        internal static Thickness GetItemMargin(GridView view, Thickness fallback = default)
         {
             var setter = view.ItemContainerStyle?.Setters.OfType<Setter>().FirstOrDefault(s => s.Property == FrameworkElement.MarginProperty);
             if (setter != null)

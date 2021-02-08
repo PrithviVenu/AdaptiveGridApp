@@ -81,7 +81,7 @@ namespace AdaptiveGridApp
             ComputeAndSetDimension();
         }
 
-        sioprivate void ClearParticipants_Click(object sender, RoutedEventArgs e)
+        private void ClearParticipants_Click(object sender, RoutedEventArgs e)
         {
             PhotoItems.Clear();
             CurrentIndex = 0;

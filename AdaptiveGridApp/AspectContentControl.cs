@@ -10,11 +10,9 @@ namespace AdaptiveGridApp
 {
     public class AspectContentControl : ContentControl
     {
-
-
         protected override Size MeasureOverride(Size availableSize)
         {
-            return new Size(availableSize.Width, (availableSize.Width * 9.0) / 16.0);
+            return new Size(availableSize.Width, (availableSize.Width * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio);
         }
     }
 }

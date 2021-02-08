@@ -32,6 +32,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Button
                 x:Name="AddParticipant"
@@ -60,13 +61,40 @@
                     <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
                 </Button.Resources>
             </Button>
+            <Grid
+                Grid.Column="2"
+                Margin="0,0,20,0"
+                HorizontalAlignment="Right">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    x:Name="ToggleAspectRatio"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    BorderThickness="0"
+                    Click="ToggleAspectRatio_Click"
+                    Content="Toggle Aspect Ratio"
+                    Foreground="Blue">
+                    <Button.Resources>
+                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
+                    </Button.Resources>
+                </Button>
+                <TextBlock
+                    x:Name="AspectRatio"
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Foreground="Blue"
+                    Text=" 16:9" />
+            </Grid>
         </Grid>
         <local:CustomAdaptiveGridView
             x:Name="AdaptiveGridViewControl"
             Grid.Row="1"
             Margin="15,0,15,0"
             VerticalAlignment="Center"
-            DesiredWidth="390"
             IsItemClickEnabled="False"
             ItemTemplate="{StaticResource ImageTemplate}"
             ItemsSource="{x:Bind PhotoItems, Mode=OneWay}"

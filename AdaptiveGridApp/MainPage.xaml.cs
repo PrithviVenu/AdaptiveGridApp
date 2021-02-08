@@ -30,7 +30,10 @@ namespace AdaptiveGridApp
         private int CurrentIndex = 0;
         public int TotalColumns = 1;
         public int TotalRows = 1;
-        public int MinimumWidth = 350;
+        public int MinimumWidth = 250;
+        public static int CurrentAspectWidthRatio = 16;
+        public static int CurrentAspectHeightRatio = 9;
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -157,6 +160,23 @@ namespace AdaptiveGridApp
         private void AdaptiveGridViewControl_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             ComputeAndSetDimension();
+        }
+
+        private void ToggleAspectRatio_Click(object sender, RoutedEventArgs e)
+        {
+            if (AspectRatio.Text.Contains("16:9"))
+            {
+                AspectRatio.Text = " 4:3";
+                CurrentAspectWidthRatio = 4;
+                CurrentAspectHeightRatio = 3;
+            }
+            else if (AspectRatio.Text.Contains("4:3"))
+            {
+                AspectRatio.Text = " 16:9";
+                CurrentAspectWidthRatio = 16;
+                CurrentAspectHeightRatio = 9;
+            }
+            PhotoItems.Clear();
         }
     }
 }

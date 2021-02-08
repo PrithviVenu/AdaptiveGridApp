@@ -47,7 +47,7 @@ namespace AdaptiveGridApp
         /// <param name="item">The item to display.</param>
         protected override void PrepareContainerForItemOverride(DependencyObject obj, object item)
         {
-            // base.PrepareContainerForItemOverride(obj, item);
+            base.PrepareContainerForItemOverride(obj, item);
             if (obj is FrameworkElement element)
             {
                 var heightBinding = new Binding()
@@ -78,22 +78,6 @@ namespace AdaptiveGridApp
             {
                 _needContainerMarginForLayout = false;
                 RecalculateLayout(ActualWidth);
-            }
-
-
-            if (ItemsSource is ObservableCollection<PhotoItem> photoItems && obj is GridViewItem gridViewItem)
-            {
-                for (var t = ((photoItems.Count - photoItems.Count % (int)Math.Ceiling(Math.Sqrt(photoItems.Count)))); t < photoItems.Count; t++)
-                {
-                    if (item as PhotoItem == photoItems[t])
-                    {
-                        if (gridViewItem != null)
-                        {
-                            // VariableSizedWrapGrid.SetColumnSpan(gridViewItem, 2);
-                        }
-                    }
-                }
-                base.PrepareContainerForItemOverride(obj, item);
             }
         }
 
@@ -142,15 +126,15 @@ namespace AdaptiveGridApp
             OnOneRowModeEnabledChanged(this, OneRowModeEnabled);
         }
 
-        private void ItemsOnVectorChanged(IObservableVector<object> sender, IVectorChangedEventArgs @event)
-        {
-            if (!double.IsNaN(ActualWidth))
-            {
-                // If the item count changes, check if more or less columns needs to be rendered,
-                // in case we were having fewer items than columns.
-                RecalculateLayout(ActualWidth);
-            }
-        }
+        //private void ItemsOnVectorChanged(IObservableVector<object> sender, IVectorChangedEventArgs @event)
+        //{
+        //    if (!double.IsNaN(ActualWidth))
+        //    {
+        //        // If the item count changes, check if more or less columns needs to be rendered,
+        //        // in case we were having fewer items than columns.
+        //        RecalculateLayout(ActualWidth);
+        //    }
+        //}
 
         private void OnItemClick(object sender, ItemClickEventArgs e)
         {
@@ -164,27 +148,27 @@ namespace AdaptiveGridApp
             }
         }
 
-        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            // If we are in center alignment, we only care about relayout if the number of columns we can display changes
-            // Fixes #1737
-            if (HorizontalAlignment != HorizontalAlignment.Stretch)
-            {
-                var prevColumns = CalculateColumns(e.PreviousSize.Width, DesiredWidth);
-                var newColumns = CalculateColumns(e.NewSize.Width, DesiredWidth);
+        //private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        //{
+        //    // If we are in center alignment, we only care about relayout if the number of columns we can display changes
+        //    // Fixes #1737
+        //    if (HorizontalAlignment != HorizontalAlignment.Stretch)
+        //    {
+        //        var prevColumns = CalculateColumns(e.PreviousSize.Width, DesiredWidth);
+        //        var newColumns = CalculateColumns(e.NewSize.Width, DesiredWidth);
 
-                // If the width of the internal list view changes, check if more or less columns needs to be rendered.
-                if (prevColumns != newColumns)
-                {
-                    RecalculateLayout(e.NewSize.Width);
-                }
-            }
-            else if (e.PreviousSize.Width != e.NewSize.Width)
-            {
-                // We need to recalculate width as our size changes to adjust internal items.
-                RecalculateLayout(e.NewSize.Width);
-            }
-        }
+        //        // If the width of the internal list view changes, check if more or less columns needs to be rendered.
+        //        if (prevColumns != newColumns)
+        //        {
+        //            RecalculateLayout(e.NewSize.Width);
+        //        }
+        //    }
+        //    else if (e.PreviousSize.Width != e.NewSize.Width)
+        //    {
+        //        // We need to recalculate width as our size changes to adjust internal items.
+        //        RecalculateLayout(e.NewSize.Width);
+        //    }
+        //}
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {

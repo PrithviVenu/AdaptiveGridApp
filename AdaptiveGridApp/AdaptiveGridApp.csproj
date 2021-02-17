@@ -124,6 +124,7 @@
     <Compile Include="CustomAdaptiveGridView.cs" />
     <Compile Include="CustomAdaptiveGridView.Properties.cs" />
     <Compile Include="CustomAdaptiveView.cs" />
+    <Compile Include="CustomPanel.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

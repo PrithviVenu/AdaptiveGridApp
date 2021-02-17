@@ -261,10 +261,10 @@ namespace AdaptiveGridApp
         //protected override Size ArrangeOverride(Size finalSize)
         //{
         //    // get the collection of children
-        //    UIElementCollection mychildren = children;
+        //    UIElementCollection mychildren = pane;
 
         //    // get total number of children
-        //    int count = mychildren.count;
+        //    int count = mychildren.Count;
 
         //    // arrange children
         //    // we're only allowing 9 children in this panel.  more children will get a 0x0 layout slot.
@@ -277,17 +277,17 @@ namespace AdaptiveGridApp
 
         //        // arrange child
         //        // get desired height and width. this will not be larger than 100x100 as set in measureoverride.
-        //        double dw = mychildren[i].desiredsize.width;
-        //        double dh = mychildren[i].desiredsize.height;
+        //        double dw = mychildren[i].DesiredSize.Width;
+        //        double dh = mychildren[i].DesiredSize.Height;
 
-        //        mychildren[i].arrange(new Rect(cellorigin.x, cellorigin.y, dw, dh));
+        //        mychildren[i].Arrange(new Rect(cellorigin.X, cellorigin.Y, dw, dh));
 
         //    }
 
         //    // give the remaining children a 0x0 layout slot
         //    for (i = 9; i < count; i++)
         //    {
-        //        mychildren[i].arrange(new Rect(0, 0, 0, 0));
+        //        mychildren[i].Arrange(new Rect(0, 0, 0, 0));
         //    }
 
 

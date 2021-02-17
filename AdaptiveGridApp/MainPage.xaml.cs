@@ -28,8 +28,8 @@ namespace AdaptiveGridApp
         ObservableCollection<PhotoItem> PhotoItems = new ObservableCollection<PhotoItem>();
         IList<PhotoItem> PhotoItemsList = new List<PhotoItem>();
         private int CurrentIndex = 0;
-        public int TotalColumns = 1;
-        public int TotalRows = 1;
+        public static int TotalColumns = 1;
+        public static int TotalRows = 1;
         public int MinimumWidth = 250;
         public static int CurrentAspectWidthRatio = 16;
         public static int CurrentAspectHeightRatio = 9;
@@ -57,11 +57,12 @@ namespace AdaptiveGridApp
             if (TotalColumns > 0)
                 TotalRows = (int)Math.Ceiling(PhotoItems.Count / (double)TotalColumns);
             AdaptiveGridViewControl.DesiredWidth = AdaptiveGridViewControl.ActualWidth / TotalColumns;
-            // ComputeAndSetMargins();
+            //ComputeAndSetMargins();
         }
         private void AddParticipant_Click(object sender, RoutedEventArgs e)
         {
-            PhotoItems.Add(PhotoItemsList[GetCurrentIndex()]);
+            PhotoItem item = PhotoItemsList[GetCurrentIndex()];
+            PhotoItems.Add(item);
             CurrentIndex++;
         }
 
@@ -115,7 +116,8 @@ namespace AdaptiveGridApp
                 DependencyObject containerAtIndex = AdaptiveGridViewControl.ContainerFromIndex(i);
                 if (containerAtIndex is GridViewItem gvItem)
                 {
-                    gvItem.Margin = new Thickness(0, 0, 10, 0);
+                    VariableSizedWrapGrid.SetColumnSpan(gvItem, 1);
+                    gvItem.Margin = new Thickness(0, 10, 10, 0);
                 }
             }
             int CenterItemIndex = TotalColumns / 2 + TotalColumns % 2;
@@ -128,16 +130,18 @@ namespace AdaptiveGridApp
                 {
                     if (LastRowTotalItems > CenterItemIndex)
                     {
-                        gvItem.Margin = new Thickness(0, 0, 10, 0);
+                        VariableSizedWrapGrid.SetColumnSpan(gvItem, 1);
+                        gvItem.Margin = new Thickness(0, 10, 10, 0);
                     }
                     else
                     {
                         int RightMargin = 10;
                         int centerX = (int)AdaptiveGridViewControl.ActualWidth / 2;
-                        int LeftMargin = centerX - ((int)((CenterItemIndex - i) * AdaptiveGridViewControl.DesiredWidth + RightMargin)) - ((int)AdaptiveGridViewControl.DesiredWidth / 2);//- ((int)AdaptiveGridViewControl.DesiredWidth / 2)
+                        int LeftMargin = centerX - ((int)((LastRowTotalItems - i) * AdaptiveGridViewControl.DesiredWidth + RightMargin)) - ((int)AdaptiveGridViewControl.DesiredWidth / 2);//- ((int)AdaptiveGridViewControl.DesiredWidth / 2)
                         if (LeftMargin < 0)
                             LeftMargin = 0;
-                        gvItem.Margin = new Thickness(LeftMargin, 0, RightMargin, 0);
+                        VariableSizedWrapGrid.SetColumnSpan(gvItem, i);
+                        gvItem.Margin = new Thickness(LeftMargin, 10, RightMargin, 0);
                         DependencyObject contai = AdaptiveGridViewControl.ContainerFromItem(gvItem);
 
                     }

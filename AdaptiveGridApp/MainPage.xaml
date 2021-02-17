@@ -11,7 +11,10 @@
     mc:Ignorable="d">
     <Page.Resources>
         <DataTemplate x:Key="ImageTemplate" x:DataType="local:PhotoItem">
-            <local:AspectContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <local:AspectContentControl
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch"
+                Background="AliceBlue">
                 <Grid
                     Margin="0,0,0,0"
                     Background="White"
@@ -86,7 +89,7 @@
                     x:Name="AspectRatio"
                     Grid.Column="1"
                     VerticalAlignment="Center"
-                    Foreground="Blue"
+                    Foreground="Red"
                     Text=" 16:9" />
             </Grid>
         </Grid>
@@ -104,7 +107,7 @@
             StretchContentForSingleRow="True">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <VariableSizedWrapGrid Orientation="Horizontal" />
+                    <local:CustomPanel />
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
         </local:CustomAdaptiveGridView>

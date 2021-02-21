@@ -34,12 +34,6 @@ namespace AdaptiveGridApp
             DependencyProperty.Register(nameof(ItemHeight), typeof(double), typeof(CustomAdaptiveGridView), new PropertyMetadata(double.NaN));
 
         /// <summary>
-        /// Identifies the <see cref="OneRowModeEnabled"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty OneRowModeEnabledProperty =
-            DependencyProperty.Register(nameof(OneRowModeEnabled), typeof(bool), typeof(CustomAdaptiveGridView), new PropertyMetadata(false, (o, e) => { OnOneRowModeEnabledChanged(o, e.NewValue); }));
-
-        /// <summary>
         /// Identifies the <see cref="ItemWidth"/> dependency property.
         /// </summary>
         private static readonly DependencyProperty ItemWidthProperty =
@@ -56,12 +50,6 @@ namespace AdaptiveGridApp
         /// </summary>
         public static readonly DependencyProperty StretchContentForSingleRowProperty =
         DependencyProperty.Register(nameof(StretchContentForSingleRow), typeof(bool), typeof(CustomAdaptiveGridView), new PropertyMetadata(true, OnStretchContentForSingleRowPropertyChanged));
-
-        private static void OnOneRowModeEnabledChanged(DependencyObject d, object newValue)
-        {
-            var self = d as CustomAdaptiveGridView;
-            self.DetermineOneRowMode();
-        }
 
         private static void DesiredWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -119,15 +107,6 @@ namespace AdaptiveGridApp
             set { SetValue(ItemHeightProperty, value); }
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether only one row should be displayed.
-        /// </summary>
-        /// <value><c>true</c> if only one row is displayed; otherwise, <c>false</c>.</value>
-        public bool OneRowModeEnabled
-        {
-            get { return (bool)GetValue(OneRowModeEnabledProperty); }
-            set { SetValue(OneRowModeEnabledProperty, value); }
-        }
 
         /// <summary>
         /// Gets the template that defines the panel that controls the layout of items.

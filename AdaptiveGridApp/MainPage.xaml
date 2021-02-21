@@ -101,7 +101,6 @@
             IsItemClickEnabled="False"
             ItemTemplate="{StaticResource ImageTemplate}"
             ItemsSource="{x:Bind PhotoItems, Mode=OneWay}"
-            OneRowModeEnabled="False"
             SelectionMode="Single"
             SizeChanged="AdaptiveGridViewControl_SizeChanged"
             StretchContentForSingleRow="True">

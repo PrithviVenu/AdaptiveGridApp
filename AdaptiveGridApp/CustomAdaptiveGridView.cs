@@ -122,19 +122,8 @@ namespace AdaptiveGridApp
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
-            OnOneRowModeEnabledChanged(this, OneRowModeEnabled);
         }
 
-        //private void ItemsOnVectorChanged(IObservableVector<object> sender, IVectorChangedEventArgs @event)
-        //{
-        //    if (!double.IsNaN(ActualWidth))
-        //    {
-        //        // If the item count changes, check if more or less columns needs to be rendered,
-        //        // in case we were having fewer items than columns.
-        //        RecalculateLayout(ActualWidth);
-        //    }
-        //}
 
         private void OnItemClick(object sender, ItemClickEventArgs e)
         {
@@ -148,96 +137,15 @@ namespace AdaptiveGridApp
             }
         }
 
-        //private void OnSizeChanged(object sender, SizeChangedEventArgs e)
-        //{
-        //    // If we are in center alignment, we only care about relayout if the number of columns we can display changes
-        //    // Fixes #1737
-        //    if (HorizontalAlignment != HorizontalAlignment.Stretch)
-        //    {
-        //        var prevColumns = CalculateColumns(e.PreviousSize.Width, DesiredWidth);
-        //        var newColumns = CalculateColumns(e.NewSize.Width, DesiredWidth);
-
-        //        // If the width of the internal list view changes, check if more or less columns needs to be rendered.
-        //        if (prevColumns != newColumns)
-        //        {
-        //            RecalculateLayout(e.NewSize.Width);
-        //        }
-        //    }
-        //    else if (e.PreviousSize.Width != e.NewSize.Width)
-        //    {
-        //        // We need to recalculate width as our size changes to adjust internal items.
-        //        RecalculateLayout(e.NewSize.Width);
-        //    }
-        //}
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             _isLoaded = true;
-            DetermineOneRowMode();
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
             _isLoaded = false;
-        }
-
-        private void DetermineOneRowMode()
-        {
-            if (_isLoaded)
-            {
-                var itemsWrapGridPanel = ItemsPanelRoot as ItemsWrapGrid;
-
-                if (OneRowModeEnabled)
-                {
-                    var b = new Binding()
-                    {
-                        Source = this,
-                        Path = new PropertyPath("ItemHeight"),
-                        Converter = new AdaptiveHeightValueConverter(),
-                        ConverterParameter = this
-                    };
-
-                    if (itemsWrapGridPanel != null)
-                    {
-                        _savedOrientation = itemsWrapGridPanel.Orientation;
-                        itemsWrapGridPanel.Orientation = Orientation.Vertical;
-                    }
-
-                    SetBinding(MaxHeightProperty, b);
-
-                    _savedHorizontalScrollMode = ScrollViewer.GetHorizontalScrollMode(this);
-                    _savedVerticalScrollMode = ScrollViewer.GetVerticalScrollMode(this);
-                    _savedHorizontalScrollBarVisibility = ScrollViewer.GetHorizontalScrollBarVisibility(this);
-                    _savedVerticalScrollBarVisibility = ScrollViewer.GetVerticalScrollBarVisibility(this);
-                    _needToRestoreScrollStates = true;
-
-                    ScrollViewer.SetVerticalScrollMode(this, ScrollMode.Disabled);
-                    ScrollViewer.SetVerticalScrollBarVisibility(this, ScrollBarVisibility.Hidden);
-                    ScrollViewer.SetHorizontalScrollBarVisibility(this, ScrollBarVisibility.Visible);
-                    ScrollViewer.SetHorizontalScrollMode(this, ScrollMode.Enabled);
-                }
-                else
-                {
-                    ClearValue(MaxHeightProperty);
-
-                    if (!_needToRestoreScrollStates)
-                    {
-                        return;
-                    }
-
-                    _needToRestoreScrollStates = false;
-
-                    if (itemsWrapGridPanel != null)
-                    {
-                        itemsWrapGridPanel.Orientation = _savedOrientation;
-                    }
-
-                    ScrollViewer.SetVerticalScrollMode(this, _savedVerticalScrollMode);
-                    ScrollViewer.SetVerticalScrollBarVisibility(this, _savedVerticalScrollBarVisibility);
-                    ScrollViewer.SetHorizontalScrollBarVisibility(this, _savedHorizontalScrollBarVisibility);
-                    ScrollViewer.SetHorizontalScrollMode(this, _savedHorizontalScrollMode);
-                }
-            }
         }
 
         private void RecalculateLayout(double containerWidth)
@@ -257,44 +165,6 @@ namespace AdaptiveGridApp
                 ItemWidth = Math.Floor(newWidth);
             }
         }
-
-        //protected override Size ArrangeOverride(Size finalSize)
-        //{
-        //    // get the collection of children
-        //    UIElementCollection mychildren = pane;
-
-        //    // get total number of children
-        //    int count = mychildren.Count;
-
-        //    // arrange children
-        //    // we're only allowing 9 children in this panel.  more children will get a 0x0 layout slot.
-        //    int i;
-        //    for (i = 0; i < 9; i++)
-        //    {
-
-        //        // get (left, top) origin point for the element in the 3x3 block
-        //        Point cellorigin = getorigin(i, 3, new Size(100, 100));
-
-        //        // arrange child
-        //        // get desired height and width. this will not be larger than 100x100 as set in measureoverride.
-        //        double dw = mychildren[i].DesiredSize.Width;
-        //        double dh = mychildren[i].DesiredSize.Height;
-
-        //        mychildren[i].Arrange(new Rect(cellorigin.X, cellorigin.Y, dw, dh));
-
-        //    }
-
-        //    // give the remaining children a 0x0 layout slot
-        //    for (i = 9; i < count; i++)
-        //    {
-        //        mychildren[i].Arrange(new Rect(0, 0, 0, 0));
-        //    }
-
-
-        //    // Return final size of the panel
-        //    return base.ArrangeOverride(finalSize);
-        //}
-
 
     }
 }

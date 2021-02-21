@@ -49,7 +49,6 @@ namespace AdaptiveGridApp
             if (double.IsInfinity(input.Height))
             {
                 input.Height = cellheight * MainPage.TotalRows;
-                // cellheight = maxcellheight;
             }
             return input;
         }
@@ -57,6 +56,8 @@ namespace AdaptiveGridApp
         {
             int count = 1;
             double x, y;
+            if (Children.Count == 0)
+                return finalSize;
             int LastRowTotalItems = Children.Count - ((MainPage.TotalRows - 1) * MainPage.TotalColumns);
             int LastRowStartIndex;
             if (MainPage.TotalRows <= 1)
@@ -91,13 +92,12 @@ namespace AdaptiveGridApp
                 }
                 else if (i > CenterItemIndex)
                 {
-                    // x = (count - 1) % MainPage.TotalColumns * child.DesiredSize.Width;
-                    x = centerX + ((int)((LastRowTotalItems - i) * child.DesiredSize.Width + RightMargin)) + ((int)child.DesiredSize.Width / 2) - RightMargin;//- ((int)AdaptiveGridViewControl.DesiredWidth / 2)
+                    x = centerX + ((int)((LastRowTotalItems - i) * child.DesiredSize.Width + RightMargin)) + ((int)child.DesiredSize.Width / 2) - RightMargin;
                 }
                 else
                 {
                     int offset = (LastRowTotalItems < CenterItemIndex) ? LastRowTotalItems : CenterItemIndex;
-                    x = centerX - ((int)((offset - i) * child.DesiredSize.Width + RightMargin)) - ((int)child.DesiredSize.Width / 2) + RightMargin;//- ((int)AdaptiveGridViewControl.DesiredWidth / 2)               
+                    x = centerX - ((int)((offset - i) * child.DesiredSize.Width + RightMargin)) - ((int)child.DesiredSize.Width / 2) + RightMargin;
                 }
                 if (x < 0)
                     x = 0;
@@ -106,21 +106,6 @@ namespace AdaptiveGridApp
                 count++;
             }
             return finalSize;
-        }
-        private double CalculateHorizontalCoordinate(int childIndex)
-        {
-            double x = 0;
-            int LastRowTotalItems = Children.Count - ((MainPage.TotalRows - 1) * MainPage.TotalColumns);
-            int LastRowStartIndex;
-            if (MainPage.TotalRows <= 1)
-            {
-                LastRowStartIndex = 0;
-            }
-            else
-            {
-                LastRowStartIndex = (MainPage.TotalRows - 1) * MainPage.TotalColumns;
-            }
-            return x;
         }
     }
 }

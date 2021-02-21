@@ -36,7 +36,7 @@ namespace AdaptiveGridApp
             cellwidth = (int)Math.Floor(availableSize.Width / MainPage.TotalColumns);
             // Next get a cell height, same logic of dividing available vertical by rowcount.
             //cellheight = double.IsInfinity(availableSize.Height) ? double.PositiveInfinity : availableSize.Height / MainPage.TotalRows;
-            cellheight = (availableSize.Width * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
+            cellheight = (cellwidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
             foreach (UIElement child in Children)
             {
                 child.Measure(new Size(cellwidth, cellheight));

@@ -94,7 +94,7 @@ namespace AdaptiveGridApp
                 {
                     int RightMargin = 10;
                     int centerX = (int)finalSize.Width / 2;
-                    x = centerX - ((int)((LastRowTotalItems - i) * child.DesiredSize.Width + RightMargin)) - ((int)child.DesiredSize.Width / 2)+RightMargin;//- ((int)AdaptiveGridViewControl.DesiredWidth / 2)
+                    x = centerX - ((int)((LastRowTotalItems - i) * child.DesiredSize.Width + RightMargin)) - ((int)child.DesiredSize.Width / 2) + RightMargin;//- ((int)AdaptiveGridViewControl.DesiredWidth / 2)
                     if (x < 0)
                         x = 0;
                     y = (count - 1) / MainPage.TotalColumns * child.DesiredSize.Height;
@@ -102,14 +102,6 @@ namespace AdaptiveGridApp
                     child.Arrange(new Rect(anchorPoint, child.DesiredSize));
                     count++;
                 }
-                //foreach (UIElement child in Children)
-                //{
-                //    x = (count - 1) % MainPage.TotalColumns * child.DesiredSize.Width;
-                //    y = (count - 1) / MainPage.TotalColumns * child.DesiredSize.Height;
-                //    Point anchorPoint = new Point(x, y);
-                //    child.Arrange(new Rect(anchorPoint, child.DesiredSize));
-                //    count++;
-                //}
             }
             return finalSize;
         }

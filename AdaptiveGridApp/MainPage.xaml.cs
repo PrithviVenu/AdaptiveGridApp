@@ -93,10 +93,7 @@ namespace AdaptiveGridApp
 
         private void ClearParticipants_Click(object sender, RoutedEventArgs e)
         {
-            PhotoItems.Clear();
-            CurrentIndex = 0;
-            TotalColumns = 1;
-            TotalRows = 1;
+            Reset();
         }
 
         private void ComputeAndSetMargins()
@@ -160,7 +157,13 @@ namespace AdaptiveGridApp
             }
             return IsItemInLastRow;
         }
-
+        private void Reset()
+        {
+            PhotoItems.Clear();
+            CurrentIndex = 0;
+            TotalColumns = 1;
+            TotalRows = 1;
+        }
         private void AdaptiveGridViewControl_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             ComputeAndSetDimension();
@@ -180,7 +183,7 @@ namespace AdaptiveGridApp
                 CurrentAspectWidthRatio = 16;
                 CurrentAspectHeightRatio = 9;
             }
-            PhotoItems.Clear();
+            Reset();
         }
     }
 }

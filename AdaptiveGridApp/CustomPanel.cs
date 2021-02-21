@@ -35,8 +35,8 @@ namespace AdaptiveGridApp
             // Now that we have a column count, divide available horizontal, that's our cell width.
             cellwidth = (int)Math.Floor(availableSize.Width / MainPage.TotalColumns);
             // Next get a cell height, same logic of dividing available vertical by rowcount.
-            cellheight = double.IsInfinity(availableSize.Height) ? double.PositiveInfinity : availableSize.Height / MainPage.TotalRows;
-
+            //cellheight = double.IsInfinity(availableSize.Height) ? double.PositiveInfinity : availableSize.Height / MainPage.TotalRows;
+            cellheight = (availableSize.Width * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
             foreach (UIElement child in Children)
             {
                 child.Measure(new Size(cellwidth, cellheight));
@@ -48,8 +48,8 @@ namespace AdaptiveGridApp
         {
             if (double.IsInfinity(input.Height))
             {
-                input.Height = maxcellheight * MainPage.TotalColumns;
-                cellheight = maxcellheight;
+                input.Height = cellheight * MainPage.TotalRows;
+                // cellheight = maxcellheight;
             }
             return input;
         }
@@ -82,26 +82,28 @@ namespace AdaptiveGridApp
                 int indexFactor = LastRowStartIndex - 1;
                 int index = indexFactor + i;
                 UIElement child = Children[index];
-                if (LastRowTotalItems > CenterItemIndex)
+                int RightMargin = 10;
+                int centerX = (int)finalSize.Width / 2;
+                y = (count - 1) / MainPage.TotalColumns * child.DesiredSize.Height;
+                if (MainPage.TotalColumns == LastRowTotalItems)
                 {
                     x = (count - 1) % MainPage.TotalColumns * child.DesiredSize.Width;
-                    y = (count - 1) / MainPage.TotalColumns * child.DesiredSize.Height;
-                    Point anchorPoint = new Point(x, y);
-                    child.Arrange(new Rect(anchorPoint, child.DesiredSize));
-                    count++;
+                }
+                else if (i > CenterItemIndex)
+                {
+                    // x = (count - 1) % MainPage.TotalColumns * child.DesiredSize.Width;
+                    x = centerX + ((int)((LastRowTotalItems - i) * child.DesiredSize.Width + RightMargin)) + ((int)child.DesiredSize.Width / 2) - RightMargin;//- ((int)AdaptiveGridViewControl.DesiredWidth / 2)
                 }
                 else
                 {
-                    int RightMargin = 10;
-                    int centerX = (int)finalSize.Width / 2;
-                    x = centerX - ((int)((LastRowTotalItems - i) * child.DesiredSize.Width + RightMargin)) - ((int)child.DesiredSize.Width / 2) + RightMargin;//- ((int)AdaptiveGridViewControl.DesiredWidth / 2)
-                    if (x < 0)
-                        x = 0;
-                    y = (count - 1) / MainPage.TotalColumns * child.DesiredSize.Height;
-                    Point anchorPoint = new Point(x, y);
-                    child.Arrange(new Rect(anchorPoint, child.DesiredSize));
-                    count++;
+                    int offset = (LastRowTotalItems < CenterItemIndex) ? LastRowTotalItems : CenterItemIndex;
+                    x = centerX - ((int)((offset - i) * child.DesiredSize.Width + RightMargin)) - ((int)child.DesiredSize.Width / 2) + RightMargin;//- ((int)AdaptiveGridViewControl.DesiredWidth / 2)               
                 }
+                if (x < 0)
+                    x = 0;
+                Point anchorPoint = new Point(x, y);
+                child.Arrange(new Rect(anchorPoint, child.DesiredSize));
+                count++;
             }
             return finalSize;
         }

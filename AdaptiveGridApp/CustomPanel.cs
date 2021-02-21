@@ -57,15 +57,76 @@ namespace AdaptiveGridApp
         {
             int count = 1;
             double x, y;
-            foreach (UIElement child in Children)
+            int LastRowTotalItems = Children.Count - ((MainPage.TotalRows - 1) * MainPage.TotalColumns);
+            int LastRowStartIndex;
+            if (MainPage.TotalRows <= 1)
             {
+                LastRowStartIndex = 0;
+            }
+            else
+            {
+                LastRowStartIndex = (MainPage.TotalRows - 1) * MainPage.TotalColumns;
+            }
+            for (int i = 0; i < LastRowStartIndex; i++)
+            {
+                UIElement child = Children[i];
                 x = (count - 1) % MainPage.TotalColumns * child.DesiredSize.Width;
                 y = (count - 1) / MainPage.TotalColumns * child.DesiredSize.Height;
                 Point anchorPoint = new Point(x, y);
                 child.Arrange(new Rect(anchorPoint, child.DesiredSize));
                 count++;
             }
+            int CenterItemIndex = MainPage.TotalColumns / 2 + MainPage.TotalColumns % 2;
+            for (int i = 1; i <= LastRowTotalItems; i++)
+            {
+                int indexFactor = LastRowStartIndex - 1;
+                int index = indexFactor + i;
+                UIElement child = Children[index];
+                if (LastRowTotalItems > CenterItemIndex)
+                {
+                    x = (count - 1) % MainPage.TotalColumns * child.DesiredSize.Width;
+                    y = (count - 1) / MainPage.TotalColumns * child.DesiredSize.Height;
+                    Point anchorPoint = new Point(x, y);
+                    child.Arrange(new Rect(anchorPoint, child.DesiredSize));
+                    count++;
+                }
+                else
+                {
+                    int RightMargin = 10;
+                    int centerX = (int)finalSize.Width / 2;
+                    x = centerX - ((int)((LastRowTotalItems - i) * child.DesiredSize.Width + RightMargin)) - ((int)child.DesiredSize.Width / 2)+RightMargin;//- ((int)AdaptiveGridViewControl.DesiredWidth / 2)
+                    if (x < 0)
+                        x = 0;
+                    y = (count - 1) / MainPage.TotalColumns * child.DesiredSize.Height;
+                    Point anchorPoint = new Point(x, y);
+                    child.Arrange(new Rect(anchorPoint, child.DesiredSize));
+                    count++;
+                }
+                //foreach (UIElement child in Children)
+                //{
+                //    x = (count - 1) % MainPage.TotalColumns * child.DesiredSize.Width;
+                //    y = (count - 1) / MainPage.TotalColumns * child.DesiredSize.Height;
+                //    Point anchorPoint = new Point(x, y);
+                //    child.Arrange(new Rect(anchorPoint, child.DesiredSize));
+                //    count++;
+                //}
+            }
             return finalSize;
+        }
+        private double CalculateHorizontalCoordinate(int childIndex)
+        {
+            double x = 0;
+            int LastRowTotalItems = Children.Count - ((MainPage.TotalRows - 1) * MainPage.TotalColumns);
+            int LastRowStartIndex;
+            if (MainPage.TotalRows <= 1)
+            {
+                LastRowStartIndex = 0;
+            }
+            else
+            {
+                LastRowStartIndex = (MainPage.TotalRows - 1) * MainPage.TotalColumns;
+            }
+            return x;
         }
     }
 }

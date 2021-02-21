@@ -107,6 +107,7 @@
             StretchContentForSingleRow="True">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
+                    <!--<VariableSizedWrapGrid Orientation="Horizontal" />-->
                     <local:CustomPanel />
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>

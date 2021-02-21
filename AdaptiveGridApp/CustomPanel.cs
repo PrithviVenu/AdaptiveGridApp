@@ -12,8 +12,8 @@ namespace AdaptiveGridApp
     public class CustomPanel : Panel
     {
         double cellwidth, cellheight, maxcellheight, aspectratio;
-        public static int TotalColumns = 1;
-        public static int TotalRows = 1;
+        public int TotalColumns = 1;
+        public int TotalRows = 1;
         public int MinimumWidth = 250;
         protected override Size MeasureOverride(Size availableSize)
         {
@@ -96,12 +96,12 @@ namespace AdaptiveGridApp
                 }
                 else if (i > CenterItemIndex)
                 {
-                    x = centerX + ((int)((LastRowTotalItems - i) * child.DesiredSize.Width + RightMargin)) + ((int)child.DesiredSize.Width / 2) - RightMargin;
+                    x = centerX + ((int)((i - CenterItemIndex - 1) * child.DesiredSize.Width)) + ((int)child.DesiredSize.Width / 2);
                 }
                 else
                 {
                     int offset = (LastRowTotalItems < CenterItemIndex) ? LastRowTotalItems : CenterItemIndex;
-                    x = centerX - ((int)((offset - i) * child.DesiredSize.Width + RightMargin)) - ((int)child.DesiredSize.Width / 2) + RightMargin;
+                    x = centerX - ((int)((offset - i) * child.DesiredSize.Width)) - ((int)child.DesiredSize.Width / 2);
                 }
                 if (x < 0)
                     x = 0;

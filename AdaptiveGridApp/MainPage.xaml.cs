@@ -28,9 +28,6 @@ namespace AdaptiveGridApp
         ObservableCollection<PhotoItem> PhotoItems = new ObservableCollection<PhotoItem>();
         IList<PhotoItem> PhotoItemsList = new List<PhotoItem>();
         private int CurrentIndex = 0;
-        public static int TotalColumns = 1;
-        public static int TotalRows = 1;
-        public int MinimumWidth = 250;
         public static int CurrentAspectWidthRatio = 16;
         public static int CurrentAspectHeightRatio = 9;
 
@@ -43,25 +40,6 @@ namespace AdaptiveGridApp
             return CurrentIndex %= 26;
         }
 
-        private void ComputeAndSetDimension()
-        {
-            int cols = (int)Math.Ceiling(Math.Sqrt(PhotoItems.Count));
-            if (cols > 0)
-                TotalColumns = cols;
-            double itemWidth = AdaptiveGridViewControl.ActualWidth / TotalColumns;
-            if (itemWidth < MinimumWidth)
-            {
-                int MaxColumns = (int)(AdaptiveGridViewControl.ActualWidth / MinimumWidth);
-                //  System.Diagnostics.Debug.WriteLine(("ActualWidth " + AdaptiveGridViewControl.ActualWidth+"Max Columns " +MaxColumns+ "" ));
-                TotalColumns = MaxColumns;
-            }
-            if (TotalColumns > 0)
-                TotalRows = (int)Math.Ceiling(PhotoItems.Count / (double)TotalColumns);
-            // System.Diagnostics.Debug.WriteLine(( " item width " + itemWidth.ToString()));
-            itemWidth = AdaptiveGridViewControl.ActualWidth / TotalColumns;
-            AdaptiveGridViewControl.DesiredWidth = itemWidth;
-            //System.Diagnostics.Debug.WriteLine((" desired width " + itemWidth.ToString()));
-        }
         private void AddParticipant_Click(object sender, RoutedEventArgs e)
         {
             PhotoItem item = PhotoItemsList[GetCurrentIndex()];
@@ -71,7 +49,6 @@ namespace AdaptiveGridApp
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            AdaptiveGridViewControl.Items.VectorChanged += Items_VectorChanged;
             for (int i = 0; i < 26; i++)
             {
                 PhotoItem item = new PhotoItem
@@ -89,11 +66,6 @@ namespace AdaptiveGridApp
             }
         }
 
-        private void Items_VectorChanged(IObservableVector<object> sender, IVectorChangedEventArgs @event)
-        {
-            ComputeAndSetDimension();
-        }
-
         private void ClearParticipants_Click(object sender, RoutedEventArgs e)
         {
             Reset();
@@ -103,12 +75,6 @@ namespace AdaptiveGridApp
         {
             PhotoItems.Clear();
             CurrentIndex = 0;
-            TotalColumns = 1;
-            TotalRows = 1;
-        }
-        private void AdaptiveGridViewControl_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            ComputeAndSetDimension();
         }
 
         private void ToggleAspectRatio_Click(object sender, RoutedEventArgs e)

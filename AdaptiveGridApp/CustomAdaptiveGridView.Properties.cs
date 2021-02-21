@@ -48,8 +48,8 @@ namespace AdaptiveGridApp
         /// <summary>
         /// Identifies the <see cref="StretchContentForSingleRow"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty StretchContentForSingleRowProperty =
-        DependencyProperty.Register(nameof(StretchContentForSingleRow), typeof(bool), typeof(CustomAdaptiveGridView), new PropertyMetadata(true, OnStretchContentForSingleRowPropertyChanged));
+        //public static readonly DependencyProperty StretchContentForSingleRowProperty =
+        //DependencyProperty.Register(nameof(StretchContentForSingleRow), typeof(bool), typeof(CustomAdaptiveGridView), new PropertyMetadata(true, OnStretchContentForSingleRowPropertyChanged));
 
         private static void DesiredWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -57,11 +57,11 @@ namespace AdaptiveGridApp
             self.RecalculateLayout(self.ActualWidth);
         }
 
-        private static void OnStretchContentForSingleRowPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var self = d as CustomAdaptiveGridView;
-            self.RecalculateLayout(self.ActualWidth);
-        }
+        //private static void OnStretchContentForSingleRowPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    var self = d as CustomAdaptiveGridView;
+        //    self.RecalculateLayout(self.ActualWidth);
+        //}
 
         /// <summary>
         /// Gets or sets the desired width of each item
@@ -81,11 +81,11 @@ namespace AdaptiveGridApp
         /// If set to <c>false</c>, items will have their normal size, which means a gap can exist at the end of the row.
         /// </remarks>
         /// <value>A value indicating whether the control should stretch the content to fill at least one row.</value>
-        public bool StretchContentForSingleRow
-        {
-            get { return (bool)GetValue(StretchContentForSingleRowProperty); }
-            set { SetValue(StretchContentForSingleRowProperty, value); }
-        }
+        //public bool StretchContentForSingleRow
+        //{
+        //    get { return (bool)GetValue(StretchContentForSingleRowProperty); }
+        //    set { SetValue(StretchContentForSingleRowProperty, value); }
+        //}
 
         /// <summary>
         /// Gets or sets the command to execute when an item is clicked and the IsItemClickEnabled property is true.

@@ -84,10 +84,10 @@ namespace AdaptiveGridApp
             var columns = CalculateColumns(containerWidth, DesiredWidth);
 
             // If there's less items than there's columns, reduce the column count (if requested);
-            if (Items != null && Items.Count > 0 && Items.Count < columns && StretchContentForSingleRow)
-            {
-                columns = Items.Count;
-            }
+            //if (Items != null && Items.Count > 0 && Items.Count < columns && StretchContentForSingleRow)
+            //{
+            //    columns = Items.Count;
+            //}
 
             // subtract the margin from the width so we place the correct width for placement
             var fallbackThickness = default(Thickness);
@@ -98,7 +98,6 @@ namespace AdaptiveGridApp
                 // We need to get an actual margin for proper layout
                 _needContainerMarginForLayout = true;
             }
-
             return (containerWidth / columns) - itemMargin.Left - itemMargin.Right;
         }
 

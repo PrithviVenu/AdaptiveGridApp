@@ -11,31 +11,19 @@ namespace AdaptiveGridApp
 {
     public class CustomPanel : Panel
     {
-        int maxrc, rowcount, colcount;
         double cellwidth, cellheight, maxcellheight, aspectratio;
+        public static int TotalColumns = 1;
+        public static int TotalRows = 1;
+        public int MinimumWidth = 250;
         protected override Size MeasureOverride(Size availableSize)
         {
             // Determine the square that can contain this number of items.
-            maxrc = (int)Math.Ceiling(Math.Sqrt(Children.Count));
+            ComputeAndSetDimension(availableSize);
             // Get an aspect ratio from availableSize, decides whether to trim row or column.
             aspectratio = availableSize.Width / availableSize.Height;
 
-            // Now trim this square down to a rect, many times an entire row or column can be omitted.
-            //if (aspectratio > 1)
-            //{
-            //    rowcount = maxrc;
-            //    colcount = (maxrc > 2 && Children.Count < maxrc * (maxrc - 1)) ? maxrc - 1 : maxrc;
-            //}
-            //else
-            //{
-            //    rowcount = (maxrc > 2 && Children.Count < maxrc * (maxrc - 1)) ? maxrc - 1 : maxrc;
-            //    colcount = maxrc;
-            //}
-
-            // Now that we have a column count, divide available horizontal, that's our cell width.
-            cellwidth = (int)Math.Floor(availableSize.Width / MainPage.TotalColumns);
+            cellwidth = (int)Math.Floor(availableSize.Width / TotalColumns);
             // Next get a cell height, same logic of dividing available vertical by rowcount.
-            //cellheight = double.IsInfinity(availableSize.Height) ? double.PositiveInfinity : availableSize.Height / MainPage.TotalRows;
             cellheight = (cellwidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
             foreach (UIElement child in Children)
             {
@@ -48,36 +36,52 @@ namespace AdaptiveGridApp
         {
             if (double.IsInfinity(input.Height))
             {
-                input.Height = cellheight * MainPage.TotalRows;
+                input.Height = cellheight * TotalRows;
             }
             return input;
         }
+
+        private void ComputeAndSetDimension(Size availableSize)
+        {
+            int cols = (int)Math.Ceiling(Math.Sqrt(Children.Count));
+            if (cols > 0)
+                TotalColumns = cols;
+            double itemWidth = availableSize.Width / TotalColumns;
+            if (itemWidth < MinimumWidth)
+            {
+                int MaxColumns = (int)(availableSize.Width / MinimumWidth);
+                TotalColumns = MaxColumns;
+            }
+            if (TotalColumns > 0)
+                TotalRows = (int)Math.Ceiling(Children.Count / (double)TotalColumns);
+        }
+
         protected override Size ArrangeOverride(Size finalSize)
         {
             int count = 1;
             double x, y;
             if (Children.Count == 0)
                 return finalSize;
-            int LastRowTotalItems = Children.Count - ((MainPage.TotalRows - 1) * MainPage.TotalColumns);
+            int LastRowTotalItems = Children.Count - ((TotalRows - 1) * TotalColumns);
             int LastRowStartIndex;
-            if (MainPage.TotalRows <= 1)
+            if (TotalRows <= 1)
             {
                 LastRowStartIndex = 0;
             }
             else
             {
-                LastRowStartIndex = (MainPage.TotalRows - 1) * MainPage.TotalColumns;
+                LastRowStartIndex = (TotalRows - 1) * TotalColumns;
             }
             for (int i = 0; i < LastRowStartIndex; i++)
             {
                 UIElement child = Children[i];
-                x = (count - 1) % MainPage.TotalColumns * child.DesiredSize.Width;
-                y = (count - 1) / MainPage.TotalColumns * child.DesiredSize.Height;
+                x = (count - 1) % TotalColumns * child.DesiredSize.Width;
+                y = (count - 1) / TotalColumns * child.DesiredSize.Height;
                 Point anchorPoint = new Point(x, y);
                 child.Arrange(new Rect(anchorPoint, child.DesiredSize));
                 count++;
             }
-            int CenterItemIndex = MainPage.TotalColumns / 2 + MainPage.TotalColumns % 2;
+            int CenterItemIndex = TotalColumns / 2 + TotalColumns % 2;
             for (int i = 1; i <= LastRowTotalItems; i++)
             {
                 int indexFactor = LastRowStartIndex - 1;
@@ -85,10 +89,10 @@ namespace AdaptiveGridApp
                 UIElement child = Children[index];
                 int RightMargin = 10;
                 int centerX = (int)finalSize.Width / 2;
-                y = (count - 1) / MainPage.TotalColumns * child.DesiredSize.Height;
-                if (MainPage.TotalColumns == LastRowTotalItems)
+                y = (count - 1) / TotalColumns * child.DesiredSize.Height;
+                if (TotalColumns == LastRowTotalItems)
                 {
-                    x = (count - 1) % MainPage.TotalColumns * child.DesiredSize.Width;
+                    x = (count - 1) % TotalColumns * child.DesiredSize.Width;
                 }
                 else if (i > CenterItemIndex)
                 {

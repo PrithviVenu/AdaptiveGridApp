@@ -52,11 +52,15 @@ namespace AdaptiveGridApp
             if (itemWidth < MinimumWidth)
             {
                 int MaxColumns = (int)(AdaptiveGridViewControl.ActualWidth / MinimumWidth);
+                //  System.Diagnostics.Debug.WriteLine(("ActualWidth " + AdaptiveGridViewControl.ActualWidth+"Max Columns " +MaxColumns+ "" ));
                 TotalColumns = MaxColumns;
             }
             if (TotalColumns > 0)
                 TotalRows = (int)Math.Ceiling(PhotoItems.Count / (double)TotalColumns);
-            AdaptiveGridViewControl.DesiredWidth = AdaptiveGridViewControl.ActualWidth / TotalColumns;
+            // System.Diagnostics.Debug.WriteLine(( " item width " + itemWidth.ToString()));
+            itemWidth = AdaptiveGridViewControl.ActualWidth / TotalColumns;
+            AdaptiveGridViewControl.DesiredWidth = itemWidth;
+            //System.Diagnostics.Debug.WriteLine((" desired width " + itemWidth.ToString()));
         }
         private void AddParticipant_Click(object sender, RoutedEventArgs e)
         {

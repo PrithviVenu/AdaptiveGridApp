@@ -102,8 +102,7 @@
             ItemTemplate="{StaticResource ImageTemplate}"
             ItemsSource="{x:Bind PhotoItems, Mode=OneWay}"
             SelectionMode="Single"
-            SizeChanged="AdaptiveGridViewControl_SizeChanged"
-            StretchContentForSingleRow="True">
+            SizeChanged="AdaptiveGridViewControl_SizeChanged">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <!--<VariableSizedWrapGrid Orientation="Horizontal" />-->

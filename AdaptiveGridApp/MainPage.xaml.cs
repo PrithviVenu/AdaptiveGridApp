@@ -95,17 +95,6 @@ namespace AdaptiveGridApp
             Reset();
         }
 
-        private bool IsItemInLastRow(PhotoItem photoItem)
-        {
-            bool IsItemInLastRow = false;
-            int CurrentRow = (int)Math.Ceiling((PhotoItems.IndexOf(photoItem) + 1) / (double)TotalColumns);
-
-            if (CurrentRow == TotalRows)
-            {
-                IsItemInLastRow = true;
-            }
-            return IsItemInLastRow;
-        }
         private void Reset()
         {
             PhotoItems.Clear();

@@ -15,13 +15,6 @@ namespace AdaptiveGridApp
 {
     public partial class CustomAdaptiveGridView : GridView
     {
-        private bool _isLoaded;
-        private ScrollMode _savedVerticalScrollMode;
-        private ScrollMode _savedHorizontalScrollMode;
-        private ScrollBarVisibility _savedVerticalScrollBarVisibility;
-        private ScrollBarVisibility _savedHorizontalScrollBarVisibility;
-        private Orientation _savedOrientation;
-        private bool _needToRestoreScrollStates;
         private bool _needContainerMarginForLayout;
 
         /// <summary>
@@ -30,12 +23,7 @@ namespace AdaptiveGridApp
         public CustomAdaptiveGridView()
         {
             IsTabStop = false;
-            //SizeChanged += OnSizeChanged;
             ItemClick += OnItemClick;
-            //Items.VectorChanged += ItemsOnVectorChanged;
-            Loaded += OnLoaded;
-            Unloaded += OnUnloaded;
-
             // Prevent issues with higher DPIs and underlying panel. #1803
             UseLayoutRounding = false;
         }
@@ -136,22 +124,9 @@ namespace AdaptiveGridApp
                 }
             }
         }
-
-
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            _isLoaded = true;
-        }
-
-        private void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            _isLoaded = false;
-        }
-
         private void RecalculateLayout(double containerWidth)
         {
-            var itemsPanel = ItemsPanelRoot as Panel;
-            var panelMargin = itemsPanel != null ?
+            var panelMargin = ItemsPanelRoot is Panel itemsPanel ?
                               itemsPanel.Margin.Left + itemsPanel.Margin.Right :
                               0;
             var padding = Padding.Left + Padding.Right;

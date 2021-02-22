@@ -22,7 +22,7 @@
         </DataTemplate>
     </Page.Resources>
 
-    <Grid>
+    <Grid x:Name="RootGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
@@ -83,10 +83,10 @@
                             Text="Fill" />
                     </MenuFlyout>
                 </FlyoutBase.AttachedFlyout>
-                <Grid.ColumnDefinitions>
+                <!--<Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="auto" />
-                </Grid.ColumnDefinitions>
+                </Grid.ColumnDefinitions>-->
                 <TextBlock
                     x:Name="ModeGridTextBox"
                     Margin="10,0,0,0"
@@ -95,8 +95,7 @@
                     Text="Aspect Fit" />
                 <FontIcon
                     x:Name="ModeIcon"
-                    Grid.Column="1"
-                    Margin="20,0,0,0"
+                    Margin="0,0,10,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     FontFamily="Segoe MDL2 Assets"
@@ -121,76 +120,94 @@
                     Text="250"
                     TextChanged="MinWidth_TextChanged" />
             </Grid>
-            <Grid
-                Name="AspectRatioGrid"
-                Grid.Column="4"
-                Width="80"
-                Height="25"
-                Margin="0,0,20,0"
-                HorizontalAlignment="Right"
-                BorderBrush="Black"
-                BorderThickness="1"
-                Tapped="Grid_Tapped">
-                <FlyoutBase.AttachedFlyout>
-                    <MenuFlyout>
-                        <MenuFlyoutItem
-                            x:Name="Ratio16W9H"
-                            Click="Ratio16W9H_Click"
-                            Text="16:9" />
-                        <MenuFlyoutItem
-                            x:Name="Ratio4W3H"
-                            Click="Ratio4W3H_Click"
-                            Text="4:3" />
-                    </MenuFlyout>
-                </FlyoutBase.AttachedFlyout>
+            <Grid Grid.Column="4" HorizontalAlignment="Right">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock
-                    x:Name="RatioGridTextBox"
-                    Margin="10,0,0,0"
-                    VerticalAlignment="Center"
-                    Foreground="Blue"
-                    Text="16:9" />
-                <FontIcon
-                    x:Name="RatioIcon"
-                    Grid.Column="1"
-                    Margin="10,0,0,0"
+                <Grid
+                    Name="ScrollModeGrid"
+                    Width="120"
+                    Height="25"
+                    Margin="0,0,20,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
-                    FontFamily="Segoe MDL2 Assets"
-                    Glyph="&#xE70D;" />
-            </Grid>
+                    BorderBrush="Black"
+                    BorderThickness="1"
+                    Tapped="Grid_Tapped">
+                    <FlyoutBase.AttachedFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem
+                                x:Name="VerticalScrollMode"
+                                Click="VerticalScrollMode_Click"
+                                Text="Vertical" />
+                            <MenuFlyoutItem
+                                x:Name="HorizontalScrollMode"
+                                Click="HorizontalScrollMode_Click"
+                                Text="Horizontal" />
+                        </MenuFlyout>
+                    </FlyoutBase.AttachedFlyout>
+                    <!--<Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>-->
+                    <TextBlock
+                        x:Name="ScrollModeGridTextBox"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Foreground="Blue"
+                        Text="Vertical" />
+                    <FontIcon
+                        x:Name="ScrollModeIcon"
+                        Margin="0,0,10,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        FontFamily="Segoe MDL2 Assets"
+                        Glyph="&#xE70D;" />
+                </Grid>
 
-            <!--<Grid
-                Grid.Column="4"
-                Margin="0,0,20,0"
-                HorizontalAlignment="Right">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
-                </Grid.ColumnDefinitions>
-                <Button
-                    x:Name="ToggleAspectRatio"
-                    Background="Transparent"
-                    BorderBrush="Transparent"
-                    BorderThickness="0"
-                    Click="ToggleAspectRatio_Click"
-                    Content="Toggle Aspect Ratio"
-                    Foreground="Blue">
-                    <Button.Resources>
-                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
-                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
-                    </Button.Resources>
-                </Button>
-                <TextBlock
-                    x:Name="AspectRatio"
+                <Grid
+                    Name="AspectRatioGrid"
                     Grid.Column="1"
+                    Width="80"
+                    Height="25"
+                    Margin="0,0,20,0"
+                    HorizontalAlignment="Right"
                     VerticalAlignment="Center"
-                    Foreground="Red"
-                    Text=" 16:9" />
-            </Grid>-->
+                    BorderBrush="Black"
+                    BorderThickness="1"
+                    Tapped="Grid_Tapped">
+                    <FlyoutBase.AttachedFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem
+                                x:Name="Ratio16W9H"
+                                Click="Ratio16W9H_Click"
+                                Text="16:9" />
+                            <MenuFlyoutItem
+                                x:Name="Ratio4W3H"
+                                Click="Ratio4W3H_Click"
+                                Text="4:3" />
+                        </MenuFlyout>
+                    </FlyoutBase.AttachedFlyout>
+                    <!--<Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>-->
+                    <TextBlock
+                        x:Name="RatioGridTextBox"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Foreground="Blue"
+                        Text="16:9" />
+                    <FontIcon
+                        x:Name="RatioIcon"
+                        Margin="0,0,10,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        FontFamily="Segoe MDL2 Assets"
+                        Glyph="&#xE70D;" />
+                </Grid>
+            </Grid>
         </Grid>
         <GridView
             x:Name="AdaptiveGridViewControl"
@@ -203,7 +220,6 @@
             SelectionMode="Single">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <!--<VariableSizedWrapGrid Orientation="Horizontal" />-->
                     <local:CustomPanel />
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>

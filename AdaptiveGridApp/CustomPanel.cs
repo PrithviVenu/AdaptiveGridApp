@@ -17,6 +17,19 @@ namespace AdaptiveGridApp
         public static int ItemMargin = 15;
         protected override Size MeasureOverride(Size availableSize)
         {
+            if (MainPage.ScrollMode == ScrollMode.Vertical)
+                MeasureForVerticalMode(availableSize);
+            else
+                MeasureForHorizontalMode(availableSize);
+            return LimitUnboundedSize(availableSize);
+        }
+
+        private void MeasureForHorizontalMode(Size availableSize)
+        {
+        }
+
+        public void MeasureForVerticalMode(Size availableSize)
+        {
             // Determine the square that can contain this number of items.
             ComputeAndSetDimension(availableSize);
             // Get an aspect ratio from availableSize, decides whether to trim row or column.
@@ -50,7 +63,6 @@ namespace AdaptiveGridApp
                 }
                 maxcellheight = (child.DesiredSize.Height > maxcellheight) ? child.DesiredSize.Height : maxcellheight;
             }
-            return LimitUnboundedSize(availableSize);
         }
         Size LimitUnboundedSize(Size input)
         {
@@ -82,10 +94,23 @@ namespace AdaptiveGridApp
 
         protected override Size ArrangeOverride(Size finalSize)
         {
+            if (MainPage.ScrollMode == ScrollMode.Vertical)
+                ArrangeForVerticalMode(finalSize);
+            else
+                ArrangeForHorizontalMode(finalSize);
+            return finalSize;
+        }
+        public void ArrangeForHorizontalMode(Size finalSize)
+        {
+
+        }
+
+        public void ArrangeForVerticalMode(Size finalSize)
+        {
             int count = 1;
             double x, y;
             if (Children.Count == 0)
-                return finalSize;
+                return;
             int LastRowTotalItems = Children.Count - ((TotalRows - 1) * TotalColumns);
             int LastRowStartIndex;
             if (TotalRows <= 1)
@@ -149,7 +174,6 @@ namespace AdaptiveGridApp
                 child.Arrange(new Rect(anchorPoint, child.DesiredSize));
                 count++;
             }
-            return finalSize;
         }
     }
 }

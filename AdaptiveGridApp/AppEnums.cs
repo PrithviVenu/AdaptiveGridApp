@@ -11,4 +11,10 @@ namespace AdaptiveGridApp
         AspectFit,
         Fill
     }
+
+    public enum ScrollMode
+    {
+        Horizontal,
+        Vertical
+    }
 }

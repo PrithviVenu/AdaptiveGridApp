@@ -31,6 +31,8 @@ namespace AdaptiveGridApp
         public static int CurrentAspectWidthRatio = 16;
         public static int CurrentAspectHeightRatio = 9;
         public static GridMode GridMode = GridMode.AspectFit;
+        public static ScrollMode ScrollMode = ScrollMode.Vertical;
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -91,7 +93,16 @@ namespace AdaptiveGridApp
                 CurrentAspectWidthRatio = 16;
                 CurrentAspectHeightRatio = 9;
             }
-            Reset();
+            //PhotoItem item = PhotoItems[PhotoItems.Count - 1];
+            //PhotoItems.Remove(item);
+            //PhotoItems.Add(item);
+            //var v = AdaptiveGridViewControl.ItemsPanel;
+            //Border border = VisualTreeHelper.GetChild(AdaptiveGridViewControl, 0) as Border;
+            // get scrollviewer
+            //ScrollViewer scrollviewer = border.Child as ScrollViewer;
+            //scrollviewer.ChangeView(0.000001, null, null);
+            //scrollviewer.ChangeView(-0.000001, null, null);
+            //Reset();
         }
 
         private void ToggleGridMode(GridMode GridMode)
@@ -100,13 +111,11 @@ namespace AdaptiveGridApp
             {
                 MainPage.GridMode = GridMode.Fill;
                 ModeGridTextBox.Text = "Fill";
-                ModeIcon.Margin = new Thickness(62, 0, 0, 0);
             }
             else if (GridMode == GridMode.AspectFit)
             {
                 MainPage.GridMode = GridMode.AspectFit;
                 ModeGridTextBox.Text = "Aspect Fit";
-                ModeIcon.Margin = new Thickness(20, 0, 0, 0);
             }
         }
 
@@ -153,6 +162,18 @@ namespace AdaptiveGridApp
         private void Ratio4W3H_Click(object sender, RoutedEventArgs e)
         {
             ToggleAspectRatio("4:3");
+        }
+
+        private void HorizontalScrollMode_Click(object sender, RoutedEventArgs e)
+        {
+            ScrollMode = ScrollMode.Horizontal;
+            ScrollModeGridTextBox.Text = "Horizontal";
+        }
+
+        private void VerticalScrollMode_Click(object sender, RoutedEventArgs e)
+        {
+            ScrollMode = ScrollMode.Vertical;
+            ScrollModeGridTextBox.Text = "Vertical  ";
         }
     }
 }

@@ -12,7 +12,10 @@ namespace AdaptiveGridApp
     {
         protected override Size MeasureOverride(Size availableSize)
         {
-            return new Size(availableSize.Width, (availableSize.Width * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio);
+            if (MainPage.GridMode == GridMode.AspectFit)
+                return new Size(availableSize.Width, (availableSize.Width * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio);
+            else
+                return availableSize;
         }
     }
 }

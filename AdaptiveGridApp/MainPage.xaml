@@ -31,6 +31,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Button
@@ -60,8 +61,34 @@
                     <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
                 </Button.Resources>
             </Button>
+            <Grid Grid.Column="2" Margin="10,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    x:Name="ToggleGridMode"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    BorderThickness="0"
+                    Click="ToggleGridMode_Click"
+                    Content="Toggle Grid Mode"
+                    Foreground="Blue">
+                    <Button.Resources>
+                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
+                    </Button.Resources>
+                </Button>
+                <TextBlock
+                    x:Name="Mode"
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Foreground="Red"
+                    Text=" Aspect Fit" />
+            </Grid>
+
             <Grid
-                Grid.Column="2"
+                Grid.Column="3"
                 Margin="0,0,20,0"
                 HorizontalAlignment="Right">
                 <Grid.ColumnDefinitions>

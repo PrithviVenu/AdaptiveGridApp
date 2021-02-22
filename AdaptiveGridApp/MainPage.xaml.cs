@@ -30,7 +30,7 @@ namespace AdaptiveGridApp
         private int CurrentIndex = 0;
         public static int CurrentAspectWidthRatio = 16;
         public static int CurrentAspectHeightRatio = 9;
-
+        public static GridMode GridMode = GridMode.AspectFit;
         public MainPage()
         {
             this.InitializeComponent();
@@ -92,6 +92,20 @@ namespace AdaptiveGridApp
                 CurrentAspectHeightRatio = 9;
             }
             Reset();
+        }
+
+        private void ToggleGridMode_Click(object sender, RoutedEventArgs e)
+        {
+            if (GridMode == GridMode.AspectFit)
+            {
+                GridMode = GridMode.Fill;
+                Mode.Text = "Fill";
+            }
+            else if (GridMode == GridMode.Fill)
+            {
+                GridMode = GridMode.AspectFit;
+                Mode.Text = "AspectFit";
+            }
         }
     }
 }

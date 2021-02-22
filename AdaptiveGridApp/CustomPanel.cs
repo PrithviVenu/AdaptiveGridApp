@@ -11,7 +11,7 @@ namespace AdaptiveGridApp
 {
     public class CustomPanel : Panel
     {
-        double cellwidth, cellheight, maxcellheight, aspectratio;
+        double cellwidth, cellheight, maxcellheight, LastRowcellwidth, LastRowcellheight, aspectratio;
         public int TotalColumns = 1;
         public int TotalRows = 1;
         public int MinimumWidth = 250;
@@ -21,7 +21,6 @@ namespace AdaptiveGridApp
             ComputeAndSetDimension(availableSize);
             // Get an aspect ratio from availableSize, decides whether to trim row or column.
             aspectratio = availableSize.Width / availableSize.Height;
-
             cellwidth = (int)Math.Floor(availableSize.Width / TotalColumns);
             // Next get a cell height, same logic of dividing available vertical by rowcount.
             cellheight = (cellwidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
@@ -87,26 +86,46 @@ namespace AdaptiveGridApp
                 int indexFactor = LastRowStartIndex - 1;
                 int index = indexFactor + i;
                 UIElement child = Children[index];
-                int RightMargin = 10;
                 int centerX = (int)finalSize.Width / 2;
                 y = (count - 1) / TotalColumns * child.DesiredSize.Height;
+                int offset = (LastRowTotalItems < CenterItemIndex) ? LastRowTotalItems : CenterItemIndex;
+                int rightPanelOffset = LastRowTotalItems - offset;
+                int leftPanelOffset = offset - 1;
+                int horizontalOffset = leftPanelOffset - rightPanelOffset;
+                double horizontalOffsetValue = 0;
+                if (horizontalOffset > 0)
+                {
+                    horizontalOffsetValue = horizontalOffset * (child.DesiredSize.Width / 2);
+                }
+                //if (MainPage.GridMode == GridMode.AspectFit)
+                //{
                 if (TotalColumns == LastRowTotalItems)
                 {
                     x = (count - 1) % TotalColumns * child.DesiredSize.Width;
                 }
                 else if (i > CenterItemIndex)
                 {
-                    x = centerX + ((int)((i - CenterItemIndex - 1) * child.DesiredSize.Width)) + ((int)child.DesiredSize.Width / 2);
+                    x = centerX + ((int)((i - CenterItemIndex - 1) * child.DesiredSize.Width)) + ((int)child.DesiredSize.Width / 2) + horizontalOffsetValue;
                 }
                 else
                 {
-                    int offset = (LastRowTotalItems < CenterItemIndex) ? LastRowTotalItems : CenterItemIndex;
-                    x = centerX - ((int)((offset - i) * child.DesiredSize.Width)) - ((int)child.DesiredSize.Width / 2);
+                    //int offset = (LastRowTotalItems < CenterItemIndex) ? LastRowTotalItems : CenterItemIndex;
+                    x = centerX - ((int)((offset - i) * child.DesiredSize.Width)) - ((int)child.DesiredSize.Width / 2) + horizontalOffsetValue;
                 }
                 if (x < 0)
                     x = 0;
                 Point anchorPoint = new Point(x, y);
                 child.Arrange(new Rect(anchorPoint, child.DesiredSize));
+                //}
+                //else
+                //{
+                //    double renderWidth = finalSize.Width / LastRowTotalItems;
+                //    double renderHeight = (renderWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
+                //    Size renderSize = new Size(renderWidth, renderHeight);
+                //    x = (count - 1) % TotalColumns * renderWidth;
+                //    Point anchorPoint = new Point(x, y);
+                //    child.Arrange(new Rect(anchorPoint, renderSize));
+                //}
                 count++;
             }
             return finalSize;

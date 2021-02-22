@@ -168,12 +168,20 @@ namespace AdaptiveGridApp
         {
             ScrollMode = ScrollMode.Horizontal;
             ScrollModeGridTextBox.Text = "Horizontal";
+            ScrollViewer.SetVerticalScrollBarVisibility(AdaptiveGridViewControl, ScrollBarVisibility.Disabled);
+            ScrollViewer.SetHorizontalScrollBarVisibility(AdaptiveGridViewControl, ScrollBarVisibility.Auto);
+            ScrollViewer.SetVerticalScrollMode(AdaptiveGridViewControl, Windows.UI.Xaml.Controls.ScrollMode.Disabled);
+            ScrollViewer.SetHorizontalScrollMode(AdaptiveGridViewControl, Windows.UI.Xaml.Controls.ScrollMode.Enabled);
         }
 
         private void VerticalScrollMode_Click(object sender, RoutedEventArgs e)
         {
             ScrollMode = ScrollMode.Vertical;
-            ScrollModeGridTextBox.Text = "Vertical  ";
+            ScrollModeGridTextBox.Text = "Vertical";
+            ScrollViewer.SetVerticalScrollBarVisibility(AdaptiveGridViewControl, ScrollBarVisibility.Auto);
+            ScrollViewer.SetHorizontalScrollBarVisibility(AdaptiveGridViewControl, ScrollBarVisibility.Disabled);
+            ScrollViewer.SetVerticalScrollMode(AdaptiveGridViewControl, Windows.UI.Xaml.Controls.ScrollMode.Enabled);
+            ScrollViewer.SetHorizontalScrollMode(AdaptiveGridViewControl, Windows.UI.Xaml.Controls.ScrollMode.Disabled);
         }
     }
 }

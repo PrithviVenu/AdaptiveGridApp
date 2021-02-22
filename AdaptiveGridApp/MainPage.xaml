@@ -83,10 +83,6 @@
                             Text="Fill" />
                     </MenuFlyout>
                 </FlyoutBase.AttachedFlyout>
-                <!--<Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
-                </Grid.ColumnDefinitions>-->
                 <TextBlock
                     x:Name="ModeGridTextBox"
                     Margin="10,0,0,0"
@@ -147,10 +143,6 @@
                                 Text="Horizontal" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
-                    <!--<Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="auto" />
-                    </Grid.ColumnDefinitions>-->
                     <TextBlock
                         x:Name="ScrollModeGridTextBox"
                         Margin="10,0,0,0"
@@ -189,10 +181,6 @@
                                 Text="4:3" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
-                    <!--<Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="auto" />
-                    </Grid.ColumnDefinitions>-->
                     <TextBlock
                         x:Name="RatioGridTextBox"
                         Margin="10,0,0,0"

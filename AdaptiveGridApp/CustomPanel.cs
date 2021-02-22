@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-
 namespace AdaptiveGridApp
 {
     public class CustomPanel : Panel
@@ -14,7 +13,8 @@ namespace AdaptiveGridApp
         double cellwidth, cellheight, maxcellheight, LastRowcellwidth, LastRowcellheight, aspectratio;
         public int TotalColumns = 1;
         public int TotalRows = 1;
-        public int MinimumWidth = 250;
+        public static int MinimumWidth = 250;
+        public static int ItemMargin = 15;
         protected override Size MeasureOverride(Size availableSize)
         {
             // Determine the square that can contain this number of items.
@@ -46,18 +46,7 @@ namespace AdaptiveGridApp
                 {
                     LastRowcellwidth = availableSize.Width / LastRowTotalItems;
                     LastRowcellheight = (LastRowcellwidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
-                    //double WindowHeight = Window.Current.Content.ActualSize.Y;
-                    //if (curre)
-                    //if (LastRowcellwidth / LastRowcellheight < 2.5)
-                    //{
                     child.Measure(new Size(LastRowcellwidth, LastRowcellheight));
-                    //}
-                    //else
-                    //{
-                    //    child.Measure(new Size(cellwidth, cellheight));
-                    //    LastRowcellwidth = cellwidth;
-                    //    LastRowcellheight = cellheight;
-                    //}
                 }
                 maxcellheight = (child.DesiredSize.Height > maxcellheight) ? child.DesiredSize.Height : maxcellheight;
             }
@@ -90,6 +79,7 @@ namespace AdaptiveGridApp
                 TotalRows = (int)Math.Ceiling(Children.Count / (double)TotalColumns);
         }
 
+
         protected override Size ArrangeOverride(Size finalSize)
         {
             int count = 1;
@@ -112,6 +102,11 @@ namespace AdaptiveGridApp
                 x = (count - 1) % TotalColumns * child.DesiredSize.Width;
                 y = (count - 1) / TotalColumns * child.DesiredSize.Height;
                 Point anchorPoint = new Point(x, y);
+                Rect rect = new Rect(anchorPoint, child.DesiredSize);
+                if (child is GridViewItem item)
+                {
+                    item.CornerRadius = new CornerRadius(25);
+                }
                 child.Arrange(new Rect(anchorPoint, child.DesiredSize));
                 count++;
             }
@@ -132,8 +127,6 @@ namespace AdaptiveGridApp
                 {
                     horizontalOffsetValue = horizontalOffset * (child.DesiredSize.Width / 2);
                 }
-                //if (MainPage.GridMode == GridMode.AspectFit)
-                //{
                 if (TotalColumns == LastRowTotalItems)
                 {
                     x = (count - 1) % TotalColumns * child.DesiredSize.Width;
@@ -144,24 +137,14 @@ namespace AdaptiveGridApp
                 }
                 else
                 {
-                    //int offset = (LastRowTotalItems < CenterItemIndex) ? LastRowTotalItems : CenterItemIndex;
                     x = centerX - ((int)((offset - i) * child.DesiredSize.Width)) - ((int)child.DesiredSize.Width / 2) + horizontalOffsetValue;
                 }
                 if (x < 0)
                     x = 0;
-                //Point anchorPoint = new Point(x, y);
-                //child.Arrange(new Rect(anchorPoint, child.DesiredSize));
-                // }
-                //else
-                //{
-                //double renderWidth = finalSize.Width / LastRowTotalItems;
-                //double renderHeight = (renderWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
-                //Size renderSize = new Size(renderWidth, renderHeight);
-                //x = (count - 1) % TotalColumns * child.DesiredSize.Width;
-                //y = (count - 1) / TotalColumns * cellheight;
-                //Point anchorPoint = new Point(x, y);
-                //child.Arrange(new Rect(anchorPoint, renderSize));
-                // }
+                if (child is GridViewItem item)
+                {
+                    item.CornerRadius = new CornerRadius(25);
+                }
                 Point anchorPoint = new Point(x, y);
                 child.Arrange(new Rect(anchorPoint, child.DesiredSize));
                 count++;

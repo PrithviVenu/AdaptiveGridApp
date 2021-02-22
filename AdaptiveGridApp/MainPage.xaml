@@ -32,6 +32,7 @@
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Button
@@ -40,7 +41,7 @@
                 BorderBrush="Transparent"
                 BorderThickness="0"
                 Click="AddParticipant_Click"
-                Content="Add Image"
+                Content="Add Participant"
                 Foreground="Blue">
                 <Button.Resources>
                     <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
@@ -54,41 +55,116 @@
                 BorderBrush="Transparent"
                 BorderThickness="0"
                 Click="ClearParticipants_Click"
-                Content="Clear Participants"
+                Content="Clear"
                 Foreground="Blue">
                 <Button.Resources>
                     <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
                     <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
                 </Button.Resources>
             </Button>
-            <Grid Grid.Column="2" Margin="10,0,0,0">
+            <Grid
+                Name="ModeGrid"
+                Grid.Column="2"
+                Width="120"
+                Height="25"
+                Margin="10,0,0,0"
+                BorderBrush="Black"
+                BorderThickness="1"
+                Tapped="Grid_Tapped">
+                <FlyoutBase.AttachedFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem
+                            x:Name="AspectFit"
+                            Click="AspectFit_Click"
+                            Text="Aspect Fit" />
+                        <MenuFlyoutItem
+                            x:Name="Fill"
+                            Click="Fill_Click"
+                            Text="Fill" />
+                    </MenuFlyout>
+                </FlyoutBase.AttachedFlyout>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
-                <Button
-                    x:Name="ToggleGridMode"
-                    Background="Transparent"
-                    BorderBrush="Transparent"
-                    BorderThickness="0"
-                    Click="ToggleGridMode_Click"
-                    Content="Toggle Grid Mode"
-                    Foreground="Blue">
-                    <Button.Resources>
-                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
-                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
-                    </Button.Resources>
-                </Button>
                 <TextBlock
-                    x:Name="Mode"
-                    Grid.Column="1"
+                    x:Name="ModeGridTextBox"
+                    Margin="10,0,0,0"
                     VerticalAlignment="Center"
-                    Foreground="Red"
-                    Text=" Aspect Fit" />
+                    Foreground="Blue"
+                    Text="Aspect Fit" />
+                <FontIcon
+                    x:Name="ModeIcon"
+                    Grid.Column="1"
+                    Margin="20,0,0,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    FontFamily="Segoe MDL2 Assets"
+                    Glyph="&#xE70D;" />
+            </Grid>
+            <Grid Grid.Column="3" Margin="10,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Margin="10,0,10,0"
+                    VerticalAlignment="Center"
+                    Foreground="Blue"
+                    Text="Min Width" />
+                <TextBox
+                    x:Name="MinWidth"
+                    Grid.Column="1"
+                    Margin="0,10,0,10"
+                    VerticalAlignment="Center"
+                    PlaceholderText="Min Width"
+                    Text="250"
+                    TextChanged="MinWidth_TextChanged" />
+            </Grid>
+            <Grid
+                Name="AspectRatioGrid"
+                Grid.Column="4"
+                Width="80"
+                Height="25"
+                Margin="0,0,20,0"
+                HorizontalAlignment="Right"
+                BorderBrush="Black"
+                BorderThickness="1"
+                Tapped="Grid_Tapped">
+                <FlyoutBase.AttachedFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem
+                            x:Name="Ratio16W9H"
+                            Click="Ratio16W9H_Click"
+                            Text="16:9" />
+                        <MenuFlyoutItem
+                            x:Name="Ratio4W3H"
+                            Click="Ratio4W3H_Click"
+                            Text="4:3" />
+                    </MenuFlyout>
+                </FlyoutBase.AttachedFlyout>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    x:Name="RatioGridTextBox"
+                    Margin="10,0,0,0"
+                    VerticalAlignment="Center"
+                    Foreground="Blue"
+                    Text="16:9" />
+                <FontIcon
+                    x:Name="RatioIcon"
+                    Grid.Column="1"
+                    Margin="10,0,0,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    FontFamily="Segoe MDL2 Assets"
+                    Glyph="&#xE70D;" />
             </Grid>
 
-            <Grid
-                Grid.Column="3"
+            <!--<Grid
+                Grid.Column="4"
                 Margin="0,0,20,0"
                 HorizontalAlignment="Right">
                 <Grid.ColumnDefinitions>
@@ -114,7 +190,7 @@
                     VerticalAlignment="Center"
                     Foreground="Red"
                     Text=" 16:9" />
-            </Grid>
+            </Grid>-->
         </Grid>
         <GridView
             x:Name="AdaptiveGridViewControl"

@@ -77,35 +77,82 @@ namespace AdaptiveGridApp
             CurrentIndex = 0;
         }
 
-        private void ToggleAspectRatio_Click(object sender, RoutedEventArgs e)
+        private void ToggleAspectRatio(string Ratio)
         {
-            if (AspectRatio.Text.Contains("16:9"))
+            if (Ratio.Contains("4:3"))
             {
-                AspectRatio.Text = " 4:3";
+                RatioGridTextBox.Text = " 4:3";
                 CurrentAspectWidthRatio = 4;
                 CurrentAspectHeightRatio = 3;
             }
-            else if (AspectRatio.Text.Contains("4:3"))
+            else if (Ratio.Contains("16:9"))
             {
-                AspectRatio.Text = " 16:9";
+                RatioGridTextBox.Text = " 16:9";
                 CurrentAspectWidthRatio = 16;
                 CurrentAspectHeightRatio = 9;
             }
             Reset();
         }
 
-        private void ToggleGridMode_Click(object sender, RoutedEventArgs e)
+        private void ToggleGridMode(GridMode GridMode)
         {
-            if (GridMode == GridMode.AspectFit)
+            if (GridMode == GridMode.Fill)
             {
-                GridMode = GridMode.Fill;
-                Mode.Text = "Fill";
+                MainPage.GridMode = GridMode.Fill;
+                ModeGridTextBox.Text = "Fill";
+                ModeIcon.Margin = new Thickness(62, 0, 0, 0);
             }
-            else if (GridMode == GridMode.Fill)
+            else if (GridMode == GridMode.AspectFit)
             {
-                GridMode = GridMode.AspectFit;
-                Mode.Text = "AspectFit";
+                MainPage.GridMode = GridMode.AspectFit;
+                ModeGridTextBox.Text = "Aspect Fit";
+                ModeIcon.Margin = new Thickness(20, 0, 0, 0);
             }
+        }
+
+        private void MinWidth_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (sender is TextBox textBox && int.TryParse(textBox.Text, out int result))
+            {
+                CustomPanel.MinimumWidth = result;
+            }
+        }
+
+        private void AspectFit_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleGridMode(GridMode.AspectFit);
+        }
+
+        private void Fill_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleGridMode(GridMode.Fill);
+        }
+
+        private void ModeGrid_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBlock textBlock)
+            {
+                FlyoutBase.ShowAttachedFlyout(textBlock);
+            }
+        }
+
+        private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (sender is Grid grid)
+            {
+                FlyoutBase.ShowAttachedFlyout(grid);
+            }
+
+        }
+
+        private void Ratio16W9H_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleAspectRatio("16:9");
+        }
+
+        private void Ratio4W3H_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleAspectRatio("4:3");
         }
     }
 }

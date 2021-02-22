@@ -24,9 +24,41 @@ namespace AdaptiveGridApp
             cellwidth = (int)Math.Floor(availableSize.Width / TotalColumns);
             // Next get a cell height, same logic of dividing available vertical by rowcount.
             cellheight = (cellwidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
-            foreach (UIElement child in Children)
+            LastRowcellwidth = cellwidth;
+            LastRowcellheight = cellheight;
+            int LastRowTotalItems = Children.Count - ((TotalRows - 1) * TotalColumns);
+            int LastRowStartIndex;
+
+            if (TotalRows <= 1)
             {
-                child.Measure(new Size(cellwidth, cellheight));
+                LastRowStartIndex = 0;
+            }
+            else
+            {
+                LastRowStartIndex = (TotalRows - 1) * TotalColumns;
+            }
+            for (int i = 0; i < Children.Count; i++)
+            {
+                UIElement child = Children[i];
+                if (MainPage.GridMode == GridMode.AspectFit || i < LastRowStartIndex)
+                    child.Measure(new Size(cellwidth, cellheight));
+                else
+                {
+                    LastRowcellwidth = availableSize.Width / LastRowTotalItems;
+                    LastRowcellheight = (LastRowcellwidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
+                    //double WindowHeight = Window.Current.Content.ActualSize.Y;
+                    //if (curre)
+                    //if (LastRowcellwidth / LastRowcellheight < 2.5)
+                    //{
+                    child.Measure(new Size(LastRowcellwidth, LastRowcellheight));
+                    //}
+                    //else
+                    //{
+                    //    child.Measure(new Size(cellwidth, cellheight));
+                    //    LastRowcellwidth = cellwidth;
+                    //    LastRowcellheight = cellheight;
+                    //}
+                }
                 maxcellheight = (child.DesiredSize.Height > maxcellheight) ? child.DesiredSize.Height : maxcellheight;
             }
             return LimitUnboundedSize(availableSize);
@@ -35,7 +67,10 @@ namespace AdaptiveGridApp
         {
             if (double.IsInfinity(input.Height))
             {
-                input.Height = cellheight * TotalRows;
+                if (TotalRows == 0)
+                    input.Height = 0;
+                else
+                    input.Height = cellheight * (TotalRows - 1) + LastRowcellheight;
             }
             return input;
         }
@@ -87,7 +122,7 @@ namespace AdaptiveGridApp
                 int index = indexFactor + i;
                 UIElement child = Children[index];
                 int centerX = (int)finalSize.Width / 2;
-                y = (count - 1) / TotalColumns * child.DesiredSize.Height;
+                y = (count - 1) / TotalColumns * cellheight;
                 int offset = (LastRowTotalItems < CenterItemIndex) ? LastRowTotalItems : CenterItemIndex;
                 int rightPanelOffset = LastRowTotalItems - offset;
                 int leftPanelOffset = offset - 1;
@@ -114,18 +149,21 @@ namespace AdaptiveGridApp
                 }
                 if (x < 0)
                     x = 0;
-                Point anchorPoint = new Point(x, y);
-                child.Arrange(new Rect(anchorPoint, child.DesiredSize));
-                //}
+                //Point anchorPoint = new Point(x, y);
+                //child.Arrange(new Rect(anchorPoint, child.DesiredSize));
+                // }
                 //else
                 //{
-                //    double renderWidth = finalSize.Width / LastRowTotalItems;
-                //    double renderHeight = (renderWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
-                //    Size renderSize = new Size(renderWidth, renderHeight);
-                //    x = (count - 1) % TotalColumns * renderWidth;
-                //    Point anchorPoint = new Point(x, y);
-                //    child.Arrange(new Rect(anchorPoint, renderSize));
-                //}
+                //double renderWidth = finalSize.Width / LastRowTotalItems;
+                //double renderHeight = (renderWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
+                //Size renderSize = new Size(renderWidth, renderHeight);
+                //x = (count - 1) % TotalColumns * child.DesiredSize.Width;
+                //y = (count - 1) / TotalColumns * cellheight;
+                //Point anchorPoint = new Point(x, y);
+                //child.Arrange(new Rect(anchorPoint, renderSize));
+                // }
+                Point anchorPoint = new Point(x, y);
+                child.Arrange(new Rect(anchorPoint, child.DesiredSize));
                 count++;
             }
             return finalSize;

@@ -146,14 +146,6 @@ namespace AdaptiveGridApp
             ToggleGridMode(GridMode.Fill);
         }
 
-        private void ModeGrid_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (sender is TextBlock textBlock)
-            {
-                FlyoutBase.ShowAttachedFlyout(textBlock);
-            }
-        }
-
         private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (sender is Grid grid)

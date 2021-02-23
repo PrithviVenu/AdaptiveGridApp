@@ -208,7 +208,7 @@
             SelectionMode="Single">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <local:CustomPanel />
+                    <local:CustomPanel Loaded="CustomPanel_Loaded" />
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
         </GridView>

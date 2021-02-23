@@ -81,17 +81,28 @@ namespace AdaptiveGridApp
 
         private void ToggleAspectRatio(string Ratio)
         {
-            if (Ratio.Contains("4:3"))
+            bool isToggled = false;
+            if (Ratio.Contains("4:3") && CurrentAspectWidthRatio == 16)
             {
+                isToggled = true;
                 RatioGridTextBox.Text = " 4:3";
                 CurrentAspectWidthRatio = 4;
                 CurrentAspectHeightRatio = 3;
             }
-            else if (Ratio.Contains("16:9"))
+            else if (Ratio.Contains("16:9") && CurrentAspectWidthRatio == 4)
             {
+                isToggled = true;
                 RatioGridTextBox.Text = " 16:9";
                 CurrentAspectWidthRatio = 16;
                 CurrentAspectHeightRatio = 9;
+            }
+            if (isToggled)
+            {
+                PhotoItems.Clear();
+                for (int i = 0; i < CurrentIndex; i++)
+                {
+                    PhotoItems.Add(PhotoItemsList[i]);
+                }
             }
             //PhotoItem item = PhotoItems[PhotoItems.Count - 1];
             //PhotoItems.Remove(item);
@@ -107,15 +118,23 @@ namespace AdaptiveGridApp
 
         private void ToggleGridMode(GridMode GridMode)
         {
-            if (GridMode == GridMode.Fill)
+            if (MainPage.GridMode != GridMode)
             {
-                MainPage.GridMode = GridMode.Fill;
-                ModeGridTextBox.Text = "Fill";
-            }
-            else if (GridMode == GridMode.AspectFit)
-            {
-                MainPage.GridMode = GridMode.AspectFit;
-                ModeGridTextBox.Text = "Aspect Fit";
+                if (GridMode == GridMode.Fill)
+                {
+                    MainPage.GridMode = GridMode.Fill;
+                    ModeGridTextBox.Text = "Fill";
+                }
+                else if (GridMode == GridMode.AspectFit)
+                {
+                    MainPage.GridMode = GridMode.AspectFit;
+                    ModeGridTextBox.Text = "Aspect Fit";
+                }
+                PhotoItems.Clear();
+                for (int i = 0; i < CurrentIndex; i++)
+                {
+                    PhotoItems.Add(PhotoItemsList[i]);
+                }
             }
         }
 
@@ -166,22 +185,56 @@ namespace AdaptiveGridApp
 
         private void HorizontalScrollMode_Click(object sender, RoutedEventArgs e)
         {
-            ScrollMode = ScrollMode.Horizontal;
-            ScrollModeGridTextBox.Text = "Horizontal";
-            ScrollViewer.SetVerticalScrollBarVisibility(AdaptiveGridViewControl, ScrollBarVisibility.Disabled);
-            ScrollViewer.SetHorizontalScrollBarVisibility(AdaptiveGridViewControl, ScrollBarVisibility.Auto);
-            ScrollViewer.SetVerticalScrollMode(AdaptiveGridViewControl, Windows.UI.Xaml.Controls.ScrollMode.Disabled);
-            ScrollViewer.SetHorizontalScrollMode(AdaptiveGridViewControl, Windows.UI.Xaml.Controls.ScrollMode.Enabled);
+            if (ScrollMode != ScrollMode.Horizontal)
+            {
+                ScrollMode = ScrollMode.Horizontal;
+                ScrollModeGridTextBox.Text = "Horizontal";
+                Border border = VisualTreeHelper.GetChild(AdaptiveGridViewControl, 0) as Border;
+                // get scrollviewer
+                ScrollViewer scrollviewer = border.Child as ScrollViewer;
+                scrollviewer.VerticalScrollMode = Windows.UI.Xaml.Controls.ScrollMode.Disabled;
+                scrollviewer.HorizontalScrollMode = Windows.UI.Xaml.Controls.ScrollMode.Enabled;
+                PhotoItems.Clear();
+                for (int i = 0; i < CurrentIndex; i++)
+                {
+                    PhotoItems.Add(PhotoItemsList[i]);
+                }
+                //ScrollViewer.SetVerticalScrollBarVisibility(AdaptiveGridViewControl, ScrollBarVisibility.Disabled);
+                //ScrollViewer.SetHorizontalScrollBarVisibility(AdaptiveGridViewControl, ScrollBarVisibility.Auto);
+                //ScrollViewer.SetVerticalScrollMode(AdaptiveGridViewControl, Windows.UI.Xaml.Controls.ScrollMode.Disabled);
+                //ScrollViewer.SetHorizontalScrollMode(AdaptiveGridViewControl, Windows.UI.Xaml.Controls.ScrollMode.Enabled);
+            }
         }
 
         private void VerticalScrollMode_Click(object sender, RoutedEventArgs e)
         {
-            ScrollMode = ScrollMode.Vertical;
-            ScrollModeGridTextBox.Text = "Vertical";
-            ScrollViewer.SetVerticalScrollBarVisibility(AdaptiveGridViewControl, ScrollBarVisibility.Auto);
-            ScrollViewer.SetHorizontalScrollBarVisibility(AdaptiveGridViewControl, ScrollBarVisibility.Disabled);
-            ScrollViewer.SetVerticalScrollMode(AdaptiveGridViewControl, Windows.UI.Xaml.Controls.ScrollMode.Enabled);
-            ScrollViewer.SetHorizontalScrollMode(AdaptiveGridViewControl, Windows.UI.Xaml.Controls.ScrollMode.Disabled);
+            if (ScrollMode != ScrollMode.Vertical)
+            {
+                ScrollMode = ScrollMode.Vertical;
+                ScrollModeGridTextBox.Text = "Vertical";
+                Border border = VisualTreeHelper.GetChild(AdaptiveGridViewControl, 0) as Border;
+                // get scrollviewer
+                ScrollViewer scrollviewer = border.Child as ScrollViewer;
+                scrollviewer.VerticalScrollMode = Windows.UI.Xaml.Controls.ScrollMode.Enabled;
+                scrollviewer.HorizontalScrollMode = Windows.UI.Xaml.Controls.ScrollMode.Disabled;
+                PhotoItems.Clear();
+                for (int i = 0; i < CurrentIndex; i++)
+                {
+                    PhotoItems.Add(PhotoItemsList[i]);
+                }
+                //ScrollViewer.SetVerticalScrollBarVisibility(AdaptiveGridViewControl, ScrollBarVisibility.Auto);
+                //ScrollViewer.SetHorizontalScrollBarVisibility(AdaptiveGridViewControl, ScrollBarVisibility.Disabled);
+                //ScrollViewer.SetVerticalScrollMode(AdaptiveGridViewControl, Windows.UI.Xaml.Controls.ScrollMode.Enabled);
+                //ScrollViewer.SetHorizontalScrollMode(AdaptiveGridViewControl, Windows.UI.Xaml.Controls.ScrollMode.Disabled);
+            }
+        }
+
+        private void CustomPanel_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is CustomPanel panel)
+            {
+                panel.ListingControl = AdaptiveGridViewControl;
+            }
         }
     }
 }

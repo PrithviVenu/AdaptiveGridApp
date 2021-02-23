@@ -104,16 +104,6 @@ namespace AdaptiveGridApp
                     PhotoItems.Add(PhotoItemsList[i]);
                 }
             }
-            //PhotoItem item = PhotoItems[PhotoItems.Count - 1];
-            //PhotoItems.Remove(item);
-            //PhotoItems.Add(item);
-            //var v = AdaptiveGridViewControl.ItemsPanel;
-            //Border border = VisualTreeHelper.GetChild(AdaptiveGridViewControl, 0) as Border;
-            // get scrollviewer
-            //ScrollViewer scrollviewer = border.Child as ScrollViewer;
-            //scrollviewer.ChangeView(0.000001, null, null);
-            //scrollviewer.ChangeView(-0.000001, null, null);
-            //Reset();
         }
 
         private void ToggleGridMode(GridMode GridMode)
@@ -199,10 +189,6 @@ namespace AdaptiveGridApp
                 {
                     PhotoItems.Add(PhotoItemsList[i]);
                 }
-                //ScrollViewer.SetVerticalScrollBarVisibility(AdaptiveGridViewControl, ScrollBarVisibility.Disabled);
-                //ScrollViewer.SetHorizontalScrollBarVisibility(AdaptiveGridViewControl, ScrollBarVisibility.Auto);
-                //ScrollViewer.SetVerticalScrollMode(AdaptiveGridViewControl, Windows.UI.Xaml.Controls.ScrollMode.Disabled);
-                //ScrollViewer.SetHorizontalScrollMode(AdaptiveGridViewControl, Windows.UI.Xaml.Controls.ScrollMode.Enabled);
             }
         }
 
@@ -222,10 +208,6 @@ namespace AdaptiveGridApp
                 {
                     PhotoItems.Add(PhotoItemsList[i]);
                 }
-                //ScrollViewer.SetVerticalScrollBarVisibility(AdaptiveGridViewControl, ScrollBarVisibility.Auto);
-                //ScrollViewer.SetHorizontalScrollBarVisibility(AdaptiveGridViewControl, ScrollBarVisibility.Disabled);
-                //ScrollViewer.SetVerticalScrollMode(AdaptiveGridViewControl, Windows.UI.Xaml.Controls.ScrollMode.Enabled);
-                //ScrollViewer.SetHorizontalScrollMode(AdaptiveGridViewControl, Windows.UI.Xaml.Controls.ScrollMode.Disabled);
             }
         }
 

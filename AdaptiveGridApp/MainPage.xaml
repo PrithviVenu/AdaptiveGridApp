@@ -15,7 +15,7 @@
                 <Grid
                     Background="White"
                     BorderBrush="Black"
-                    BorderThickness="1">
+                    BorderThickness="0">
                     <Image Source="{x:Bind ImageURI, Mode=OneWay}" Stretch="UniformToFill" />
                 </Grid>
             </local:AspectContentControl>
@@ -48,20 +48,39 @@
                     <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
                 </Button.Resources>
             </Button>
-            <Button
-                x:Name="ClearParticipants"
-                Grid.Column="1"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                BorderThickness="0"
-                Click="ClearParticipants_Click"
-                Content="Clear"
-                Foreground="Blue">
-                <Button.Resources>
-                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
-                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
-                </Button.Resources>
-            </Button>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    x:Name="ClearParticipants"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    BorderThickness="0"
+                    Click="ClearParticipants_Click"
+                    Content="Clear"
+                    Foreground="Blue">
+                    <Button.Resources>
+                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
+                    </Button.Resources>
+                </Button>
+                <Button
+                    x:Name="RemoveLast"
+                    Grid.Column="1"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    BorderThickness="0"
+                    Click="RemoveLast_Click"
+                    Content="Remove Last"
+                    Foreground="Blue">
+                    <Button.Resources>
+                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
+                    </Button.Resources>
+                </Button>
+            </Grid>
             <Grid
                 Name="ModeGrid"
                 Grid.Column="2"

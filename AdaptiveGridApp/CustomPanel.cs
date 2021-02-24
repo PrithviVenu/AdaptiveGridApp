@@ -49,7 +49,7 @@ namespace AdaptiveGridApp
                 double AvailableHeight = grid.RowDefinitions[1].ActualHeight;
                 availableSize.Height = AvailableHeight;
                 // Determine the square that can contain this number of items.
-                ComputeAndSetDimension(new Size(grid.ActualWidth, availableSize.Height), ScrollMode.Horizontal);
+                ComputeAndSetDimension(new Size((ListingControl.ActualWidth), availableSize.Height), ScrollMode.Horizontal);
                 // Get an aspect ratio from availableSize, decides whether to trim row or column.
                 aspectratio = availableSize.Width / availableSize.Height;
                 //cellwidth = (int)Math.Floor(grid.ActualWidth / TotalColumnsWithinViewPort);
@@ -183,8 +183,6 @@ namespace AdaptiveGridApp
                 double itemWidth = availableSize.Width / TotalColumnsWithinViewPort;
                 double itemHeight = itemWidth * MainPage.CurrentAspectHeightRatio / MainPage.CurrentAspectWidthRatio;
 
-                int MaxRowsCeil = (int)Math.Ceiling(availableSize.Height / itemHeight);
-                int MaxRowsFloor = (int)Math.Floor(availableSize.Height / itemHeight);
                 if (itemWidth < MinimumWidth)
                 {
                     int MaxColumns = (int)(availableSize.Width / MinimumWidth);
@@ -194,6 +192,9 @@ namespace AdaptiveGridApp
                 }
                 cellheight = itemHeight;
                 cellwidth = itemWidth;
+
+                int MaxRowsCeil = (int)Math.Ceiling(availableSize.Height / itemHeight);
+                int MaxRowsFloor = (int)Math.Floor(availableSize.Height / itemHeight);
                 if (TotalColumnsWithinViewPort > 0)
                     MaxRowsWithinViewPort = (int)Math.Ceiling(Children.Count / (double)TotalColumnsWithinViewPort);
                 if (MaxRowsWithinViewPort > MaxRowsFloor)
@@ -234,6 +235,7 @@ namespace AdaptiveGridApp
             if (TotalColumns <= TotalColumnsWithinViewPort)
             {
                 int count = 1;
+                double VerticalOffset = finalSize.Height - (cellheight * (TotalRows - 1) + LastRowcellheight);
                 double x, y;
                 if (Children.Count == 0)
                     return;
@@ -252,6 +254,8 @@ namespace AdaptiveGridApp
                     UIElement child = Children[i];
                     x = (count - 1) % TotalColumns * child.DesiredSize.Width;
                     y = (count - 1) / TotalColumns * child.DesiredSize.Height;
+                    if (VerticalOffset > 0)
+                        y += (VerticalOffset / 2);
                     Point anchorPoint = new Point(x, y);
                     Rect rect = new Rect(anchorPoint, child.DesiredSize);
                     if (child is GridViewItem item)
@@ -296,6 +300,8 @@ namespace AdaptiveGridApp
                     {
                         item.CornerRadius = new CornerRadius(25);
                     }
+                    if (VerticalOffset > 0)
+                        y += (VerticalOffset / 2);
                     Point anchorPoint = new Point(x, y);
                     child.Arrange(new Rect(anchorPoint, child.DesiredSize));
                     count++;

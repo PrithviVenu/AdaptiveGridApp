@@ -222,5 +222,11 @@ namespace AdaptiveGridApp
                 panel.ListingControl = AdaptiveGridViewControl;
             }
         }
+
+        private void RemoveLast_Click(object sender, RoutedEventArgs e)
+        {
+            PhotoItems.RemoveAt(CurrentIndex - 1);
+            CurrentIndex--;
+        }
     }
 }

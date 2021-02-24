@@ -103,12 +103,6 @@ namespace AdaptiveGridApp
             }
         }
 
-        //public void ParentSizeChanged(Size size)
-        //{
-        //    if (MainPage.ScrollMode == ScrollMode.Horizontal)
-        //        MeasureOverride(new Size(double.PositiveInfinity, size.Height));
-        //}
-
         public void MeasureForVerticalMode(Size availableSize)
         {
             // Determine the square that can contain this number of items.
@@ -181,19 +175,6 @@ namespace AdaptiveGridApp
             }
             else
             {
-                //int rows = (int)Math.Ceiling(Math.Sqrt(Children.Count));
-                //if (rows > 0)
-                //    TotalRows = rows;
-                //else
-                //    TotalRows = 1;
-                //double itemHeight = availableSize.Height / TotalRows;
-                //if (itemHeight < MinimumHeight)
-                //{
-                //    int MaxRows = (int)(availableSize.Height / MinimumHeight);
-                //    TotalRows = MaxRows;
-                //}
-                //if (TotalRows > 0)
-                //    TotalColumns = (int)Math.Ceiling(Children.Count / (double)TotalRows);
                 int cols = (int)Math.Ceiling(Math.Sqrt(Children.Count));
                 if (cols > 0)
                     TotalColumnsWithinViewPort = cols;
@@ -249,7 +230,7 @@ namespace AdaptiveGridApp
 
         public void ArrangeForHorizontalMode(Size finalSize)
         {
-           // TotalColumnsWithinViewPort = (int)Math.Floor(finalSize.Width / cellwidth);
+            // TotalColumnsWithinViewPort = (int)Math.Floor(finalSize.Width / cellwidth);
             if (TotalColumns <= TotalColumnsWithinViewPort)
             {
                 int count = 1;

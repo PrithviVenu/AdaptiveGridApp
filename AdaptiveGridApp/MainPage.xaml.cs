@@ -35,7 +35,6 @@ namespace AdaptiveGridApp
         public static int TotalColumns = 1;
         public static int TotalRows = 1;
         public int MinimumWidth = 250;
-        public CustomPanel panel;
         public MainPage()
         {
             this.InitializeComponent();
@@ -211,43 +210,13 @@ namespace AdaptiveGridApp
                 }
             }
         }
-        //private void ComputeAndSetDimension()
-        //{
-        //    int cols = (int)Math.Ceiling(Math.Sqrt(PhotoItems.Count));
-        //    if (cols > 0)
-        //        TotalColumns = cols;
-        //    double itemWidth = AdaptiveGridViewControl.ActualWidth / TotalColumns;
-        //    if (itemWidth < CustomPanel.MinimumWidth)
-        //    {
-        //        int MaxColumns = (int)(AdaptiveGridViewControl.ActualWidth / CustomPanel.MinimumWidth);
-        //        //  System.Diagnostics.Debug.WriteLine(("ActualWidth " + AdaptiveGridViewControl.ActualWidth+"Max Columns " +MaxColumns+ "" ));
-        //        TotalColumns = MaxColumns;
-        //    }
-        //    if (TotalColumns > 0)
-        //        TotalRows = (int)Math.Ceiling(PhotoItems.Count / (double)TotalColumns);
-        //    // System.Diagnostics.Debug.WriteLine(( " item width " + itemWidth.ToString()));
-        //    itemWidth = AdaptiveGridViewControl.ActualWidth / TotalColumns;
-        //    AdaptiveGridViewControl.DesiredWidth = itemWidth;
-        //    //System.Diagnostics.Debug.WriteLine((" desired width " + itemWidth.ToString()));
-        //}
 
         private void CustomPanel_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is CustomPanel panel)
             {
                 panel.ListingControl = AdaptiveGridViewControl;
-                //this.panel = panel;
             }
         }
-
-        //private void AdaptiveGridViewControl_SizeChanged(object sender, SizeChangedEventArgs e)
-        //{
-        //    panel?.ParentSizeChanged(e.NewSize);
-        //    //ComputeAndSetDimension();
-        //}
-        ////private void Items_VectorChanged(IObservableVector<object> sender, IVectorChangedEventArgs @event)
-        ////{
-        ////    ComputeAndSetDimension();
-        ////}
     }
 }

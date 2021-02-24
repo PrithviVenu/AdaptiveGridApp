@@ -146,18 +146,10 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Photos\1.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Photos\10.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Photos\11.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Photos\12.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Photos\1.jpg" />
+    <Content Include="Photos\10.jpg" />
+    <Content Include="Photos\11.jpg" />
+    <Content Include="Photos\12.jpg" />
     <Content Include="Photos\13.jpg" />
     <Content Include="Photos\14.jpg" />
     <Content Include="Photos\15.jpg" />
@@ -210,6 +202,7 @@
   <ItemGroup>
     <None Include="AdaptiveGridApp_TemporaryKey.pfx" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

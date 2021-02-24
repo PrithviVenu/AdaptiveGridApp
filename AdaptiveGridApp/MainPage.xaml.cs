@@ -35,13 +35,15 @@ namespace AdaptiveGridApp
         public static int TotalColumns = 1;
         public static int TotalRows = 1;
         public int MinimumWidth = 250;
+        //private int count = 0;
+
         public MainPage()
         {
             this.InitializeComponent();
         }
         private int GetCurrentIndex()
         {
-            return CurrentIndex %= 26;
+            return CurrentIndex % 26;
         }
 
         private void AddParticipant_Click(object sender, RoutedEventArgs e)
@@ -49,6 +51,7 @@ namespace AdaptiveGridApp
             PhotoItem item = PhotoItemsList[GetCurrentIndex()];
             PhotoItems.Add(item);
             CurrentIndex++;
+            //count++;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -80,6 +83,7 @@ namespace AdaptiveGridApp
         {
             PhotoItems.Clear();
             CurrentIndex = 0;
+            //count = 0;
         }
 
         private void ToggleAspectRatio(string Ratio)
@@ -104,7 +108,7 @@ namespace AdaptiveGridApp
                 PhotoItems.Clear();
                 for (int i = 0; i < CurrentIndex; i++)
                 {
-                    PhotoItems.Add(PhotoItemsList[i]);
+                    PhotoItems.Add(PhotoItemsList[i % 26]);
                 }
             }
         }
@@ -126,7 +130,7 @@ namespace AdaptiveGridApp
                 PhotoItems.Clear();
                 for (int i = 0; i < CurrentIndex; i++)
                 {
-                    PhotoItems.Add(PhotoItemsList[i]);
+                    PhotoItems.Add(PhotoItemsList[i % 26]);
                 }
             }
         }
@@ -185,7 +189,7 @@ namespace AdaptiveGridApp
                 PhotoItems.Clear();
                 for (int i = 0; i < CurrentIndex; i++)
                 {
-                    PhotoItems.Add(PhotoItemsList[i]);
+                    PhotoItems.Add(PhotoItemsList[i % 26]);
                 }
             }
         }
@@ -206,7 +210,7 @@ namespace AdaptiveGridApp
                 PhotoItems.Clear();
                 for (int i = 0; i < CurrentIndex; i++)
                 {
-                    PhotoItems.Add(PhotoItemsList[i]);
+                    PhotoItems.Add(PhotoItemsList[i % 26]);
                 }
             }
         }

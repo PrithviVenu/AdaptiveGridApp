@@ -9,7 +9,12 @@ namespace AdaptiveGridApp
     public enum GridMode
     {
         AspectFit,
-        Fill
+        Fill,
+        Screenshare,
+        Overlay,
+        ActiveSpeaker,
+        AudioConference,
+        PoppedOut
     }
 
     public enum ScrollMode

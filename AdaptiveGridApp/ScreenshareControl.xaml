@@ -1,0 +1,51 @@
+﻿<UserControl
+    x:Class="AdaptiveGridApp.ScreenshareControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:AdaptiveGridApp"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <DataTemplate x:Key="ImageTemplate" x:DataType="local:PhotoItem">
+            <Grid
+                Margin="0,10,0,0"
+                Background="White"
+                BorderBrush="Black"
+                BorderThickness="0">
+                <Image
+                    Height="200"
+                    Source="{x:Bind ImageURI, Mode=OneWay}"
+                    Stretch="UniformToFill" />
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition
+                Width="400"
+                MinWidth="200"
+                MaxWidth="400" />
+        </Grid.ColumnDefinitions>
+        <Image
+            x:Name="Screen"
+            Margin="0,10,0,0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Source="ms-appx:///Photos/Screen.jpg"
+            Stretch="UniformToFill" />
+        <ListView
+            x:Name="AdaptiveGridViewControl"
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="15,0,0,0"
+            IsItemClickEnabled="False"
+            ItemTemplate="{StaticResource ImageTemplate}"
+            ItemsSource="{x:Bind PhotoItems, Mode=OneWay}"
+            ScrollViewer.VerticalScrollBarVisibility="Hidden"
+            SelectionMode="None" />
+    </Grid>
+</UserControl>

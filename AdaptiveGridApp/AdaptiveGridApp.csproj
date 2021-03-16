@@ -125,20 +125,36 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ActiveSpeakerControl.xaml.cs">
+      <DependentUpon>ActiveSpeakerControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdaptiveHeightValueConverter.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppEnums.cs" />
     <Compile Include="AspectContentControl.cs" />
+    <Compile Include="AudioConferenceControl.xaml.cs">
+      <DependentUpon>AudioConferenceControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomAdaptiveGridView.cs" />
     <Compile Include="CustomAdaptiveGridView.Properties.cs" />
     <Compile Include="CustomPanel.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OverlayControl.xaml.cs">
+      <DependentUpon>OverlayControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ActiveSpeakerCustomPanel.cs" />
     <Compile Include="PhotoItem.cs" />
+    <Compile Include="PoppedoutControl.xaml.cs">
+      <DependentUpon>PoppedoutControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScreenshareControl.xaml.cs">
+      <DependentUpon>ScreenshareControl.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -146,32 +162,87 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Photos\1.jpg" />
-    <Content Include="Photos\10.jpg" />
-    <Content Include="Photos\11.jpg" />
-    <Content Include="Photos\12.jpg" />
-    <Content Include="Photos\13.jpg" />
-    <Content Include="Photos\14.jpg" />
-    <Content Include="Photos\15.jpg" />
-    <Content Include="Photos\16.jpg" />
-    <Content Include="Photos\17.jpg" />
-    <Content Include="Photos\18.jpg" />
-    <Content Include="Photos\19.jpg" />
-    <Content Include="Photos\2.jpg" />
-    <Content Include="Photos\20.jpg" />
-    <Content Include="Photos\21.jpg" />
-    <Content Include="Photos\22.jpg" />
-    <Content Include="Photos\23.jpg" />
-    <Content Include="Photos\24.jpg" />
-    <Content Include="Photos\25.jpg" />
-    <Content Include="Photos\26.jpg" />
-    <Content Include="Photos\3.jpg" />
-    <Content Include="Photos\4.jpg" />
-    <Content Include="Photos\5.jpg" />
-    <Content Include="Photos\6.jpg" />
-    <Content Include="Photos\7.jpg" />
-    <Content Include="Photos\8.jpg" />
-    <Content Include="Photos\9.jpg" />
+    <Content Include="Photos\1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\10.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\11.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\12.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\13.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\14.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\15.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\16.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\17.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\18.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\19.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\20.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\21.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\22.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\23.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\24.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\25.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\26.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\3.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\4.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\5.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\6.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\7.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\8.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\9.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Photos\Screen.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -186,9 +257,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="ActiveSpeakerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AudioConferenceControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="OverlayControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PoppedoutControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScreenshareControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

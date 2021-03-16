@@ -41,8 +41,7 @@
                 BorderBrush="Transparent"
                 BorderThickness="0"
                 Click="AddParticipant_Click"
-                Content="Add Participant"
-                Foreground="Blue">
+                Content="Add Participant">
                 <Button.Resources>
                     <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
                     <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
@@ -59,8 +58,7 @@
                     BorderBrush="Transparent"
                     BorderThickness="0"
                     Click="ClearParticipants_Click"
-                    Content="Clear"
-                    Foreground="Blue">
+                    Content="Clear">
                     <Button.Resources>
                         <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
                         <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
@@ -73,8 +71,7 @@
                     BorderBrush="Transparent"
                     BorderThickness="0"
                     Click="RemoveLast_Click"
-                    Content="Remove Last"
-                    Foreground="Blue">
+                    Content="Remove Last">
                     <Button.Resources>
                         <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
                         <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
@@ -87,7 +84,7 @@
                 Width="120"
                 Height="25"
                 Margin="10,0,0,0"
-                BorderBrush="Black"
+                BorderBrush="#878683"
                 BorderThickness="1"
                 Tapped="Grid_Tapped">
                 <FlyoutBase.AttachedFlyout>
@@ -100,13 +97,32 @@
                             x:Name="Fill"
                             Click="Fill_Click"
                             Text="Fill" />
+                        <MenuFlyoutItem
+                            x:Name="Overlay"
+                            Click="Overlay_Click"
+                            Text="Overlay" />
+                        <MenuFlyoutItem
+                            x:Name="ActiveSpeaker"
+                            Click="ActiveSpeaker_Click"
+                            Text="Active Speaker" />
+                        <MenuFlyoutItem
+                            x:Name="Screenshare"
+                            Click="Screenshare_Click"
+                            Text="Screenshare" />
+                        <MenuFlyoutItem
+                            x:Name="PoppedOut"
+                            Click="PoppedOut_Click"
+                            Text="Popped Out" />
+                        <MenuFlyoutItem
+                            x:Name="AudioConference"
+                            Click="AudioConference_Click"
+                            Text="Audio Conference" />
                     </MenuFlyout>
                 </FlyoutBase.AttachedFlyout>
                 <TextBlock
                     x:Name="ModeGridTextBox"
                     Margin="10,0,0,0"
                     VerticalAlignment="Center"
-                    Foreground="Blue"
                     Text="Aspect Fit" />
                 <FontIcon
                     x:Name="ModeIcon"
@@ -124,7 +140,6 @@
                 <TextBlock
                     Margin="10,0,10,0"
                     VerticalAlignment="Center"
-                    Foreground="Blue"
                     Text="Min Width" />
                 <TextBox
                     x:Name="MinWidth"
@@ -147,7 +162,7 @@
                     Margin="0,0,20,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
-                    BorderBrush="Black"
+                    BorderBrush="#878683"
                     BorderThickness="1"
                     Tapped="Grid_Tapped">
                     <FlyoutBase.AttachedFlyout>
@@ -166,7 +181,6 @@
                         x:Name="ScrollModeGridTextBox"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Foreground="Blue"
                         Text="Vertical" />
                     <FontIcon
                         x:Name="ScrollModeIcon"
@@ -185,7 +199,7 @@
                     Margin="0,0,20,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
-                    BorderBrush="Black"
+                    BorderBrush="#878683"
                     BorderThickness="1"
                     Tapped="Grid_Tapped">
                     <FlyoutBase.AttachedFlyout>
@@ -204,7 +218,6 @@
                         x:Name="RatioGridTextBox"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
-                        Foreground="Blue"
                         Text="16:9" />
                     <FontIcon
                         x:Name="RatioIcon"
@@ -224,6 +237,7 @@
             VerticalAlignment="Center"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
+            x:Load="True"
             IsItemClickEnabled="False"
             ItemTemplate="{StaticResource ImageTemplate}"
             ItemsSource="{x:Bind PhotoItems, Mode=OneWay}"
@@ -234,5 +248,50 @@
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
         </GridView>
+        <local:PoppedoutControl
+            x:Name="PoppedoutControl"
+            Grid.Row="1"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch"
+            x:Load="False"
+            PhotoItems="{x:Bind PhotoItems, Mode=OneWay}" />
+        <local:ScreenshareControl
+            x:Name="ScreenshareControl"
+            Grid.Row="1"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch"
+            x:Load="False"
+            PhotoItems="{x:Bind PhotoItems, Mode=OneWay}" />
+        <local:OverlayControl
+            x:Name="OverlayControl"
+            Grid.Row="1"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch"
+            x:Load="False"
+            PhotoItems="{x:Bind PhotoItems, Mode=OneWay}" />
+        <local:AudioConferenceControl
+            x:Name="AudioConferenceControl"
+            Grid.Row="1"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch"
+            x:Load="False"
+            PhotoItems="{x:Bind PhotoItems, Mode=OneWay}" />
+        <local:ActiveSpeakerControl
+            x:Name="ActiveSpeakerControl"
+            Grid.Row="1"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch"
+            x:Load="False"
+            PhotoItems="{x:Bind PhotoItems, Mode=OneWay}" />
     </Grid>
 </Page>

@@ -112,7 +112,100 @@ namespace AdaptiveGridApp
                 }
             }
         }
+        private void SetGridModeVisibility(GridMode GridMode)
+        {
+            if (GridMode == GridMode.Fill || GridMode == GridMode.AspectFit)
+            {
+                FindName("AdaptiveGridViewControl");
+                UnloadObject(OverlayControl);
+                UnloadObject(ActiveSpeakerControl);
+                UnloadObject(AudioConferenceControl);
+                UnloadObject(PoppedoutControl);
+                UnloadObject(ScreenshareControl);
 
+                //AdaptiveGridViewControl.Visibility = Visibility.Visible;
+                //OverlayControl.Visibility = Visibility.Collapsed;
+                //ActiveSpeakerControl.Visibility = Visibility.Collapsed;
+                //AudioConferenceControl.Visibility = Visibility.Collapsed;
+                //PoppedoutControl.Visibility = Visibility.Collapsed;
+                //ScreenshareControl.Visibility = Visibility.Collapsed;
+            }
+            else if (GridMode == GridMode.Overlay)
+            {
+                //AdaptiveGridViewControl.Visibility = Visibility.Collapsed;
+                //OverlayControl.Visibility = Visibility.Visible;
+                //ActiveSpeakerControl.Visibility = Visibility.Collapsed;
+                //AudioConferenceControl.Visibility = Visibility.Collapsed;
+                //PoppedoutControl.Visibility = Visibility.Collapsed;
+                //ScreenshareControl.Visibility = Visibility.Collapsed;
+                FindName("OverlayControl");
+                UnloadObject(AdaptiveGridViewControl);
+                UnloadObject(ActiveSpeakerControl);
+                UnloadObject(AudioConferenceControl);
+                UnloadObject(PoppedoutControl);
+                UnloadObject(ScreenshareControl);
+            }
+            else if (GridMode == GridMode.ActiveSpeaker)
+            {
+                FindName("ActiveSpeakerControl");
+                UnloadObject(AdaptiveGridViewControl);
+                UnloadObject(OverlayControl);
+                UnloadObject(AudioConferenceControl);
+                UnloadObject(PoppedoutControl);
+                UnloadObject(ScreenshareControl);
+                //AdaptiveGridViewControl.Visibility = Visibility.Collapsed;
+                //OverlayControl.Visibility = Visibility.Collapsed;
+                //ActiveSpeakerControl.Visibility = Visibility.Visible;
+                //AudioConferenceControl.Visibility = Visibility.Collapsed;
+                //PoppedoutControl.Visibility = Visibility.Collapsed;
+                //ScreenshareControl.Visibility = Visibility.Collapsed;
+            }
+            else if (GridMode == GridMode.Screenshare)
+            {
+                FindName("ScreenshareControl");
+                UnloadObject(AdaptiveGridViewControl);
+                UnloadObject(OverlayControl);
+                UnloadObject(AudioConferenceControl);
+                UnloadObject(PoppedoutControl);
+                UnloadObject(ActiveSpeakerControl);
+                //AdaptiveGridViewControl.Visibility = Visibility.Collapsed;
+                //OverlayControl.Visibility = Visibility.Collapsed;
+                //ActiveSpeakerControl.Visibility = Visibility.Collapsed;
+                //AudioConferenceControl.Visibility = Visibility.Collapsed;
+                //PoppedoutControl.Visibility = Visibility.Collapsed;
+                //ScreenshareControl.Visibility = Visibility.Visible;
+            }
+            else if (GridMode == GridMode.PoppedOut)
+            {
+                FindName("PoppedoutControl");
+                UnloadObject(AdaptiveGridViewControl);
+                UnloadObject(OverlayControl);
+                UnloadObject(AudioConferenceControl);
+                UnloadObject(ActiveSpeakerControl);
+                UnloadObject(ScreenshareControl);
+                //AdaptiveGridViewControl.Visibility = Visibility.Collapsed;
+                //OverlayControl.Visibility = Visibility.Collapsed;
+                //ActiveSpeakerControl.Visibility = Visibility.Collapsed;
+                //AudioConferenceControl.Visibility = Visibility.Collapsed;
+                //PoppedoutControl.Visibility = Visibility.Visible;
+                //ScreenshareControl.Visibility = Visibility.Collapsed;
+            }
+            else if (GridMode == GridMode.AudioConference)
+            {
+                FindName("AudioConferenceControl");
+                UnloadObject(AdaptiveGridViewControl);
+                UnloadObject(OverlayControl);
+                UnloadObject(ActiveSpeakerControl);
+                UnloadObject(PoppedoutControl);
+                UnloadObject(ScreenshareControl);
+                //AdaptiveGridViewControl.Visibility = Visibility.Collapsed;
+                //OverlayControl.Visibility = Visibility.Collapsed;
+                //ActiveSpeakerControl.Visibility = Visibility.Collapsed;
+                //AudioConferenceControl.Visibility = Visibility.Visible;
+                //PoppedoutControl.Visibility = Visibility.Collapsed;
+                //ScreenshareControl.Visibility = Visibility.Collapsed;
+            }
+        }
         private void ToggleGridMode(GridMode GridMode)
         {
             if (MainPage.GridMode != GridMode)
@@ -121,17 +214,58 @@ namespace AdaptiveGridApp
                 {
                     MainPage.GridMode = GridMode.Fill;
                     ModeGridTextBox.Text = "Fill";
+                    PhotoItems.Clear();
+                    for (int i = 0; i < CurrentIndex; i++)
+                    {
+                        PhotoItems.Add(PhotoItemsList[i % 26]);
+                    }
                 }
                 else if (GridMode == GridMode.AspectFit)
                 {
                     MainPage.GridMode = GridMode.AspectFit;
                     ModeGridTextBox.Text = "Aspect Fit";
+                    PhotoItems.Clear();
+                    for (int i = 0; i < CurrentIndex; i++)
+                    {
+                        PhotoItems.Add(PhotoItemsList[i % 26]);
+                    }
                 }
-                PhotoItems.Clear();
-                for (int i = 0; i < CurrentIndex; i++)
+                else if (GridMode == GridMode.Overlay)
                 {
-                    PhotoItems.Add(PhotoItemsList[i % 26]);
+                    MainPage.GridMode = GridMode.Overlay;
+                    ModeGridTextBox.Text = "Overlay";
+                    //PhotoItems.Clear();
                 }
+                else if (GridMode == GridMode.ActiveSpeaker)
+                {
+                    MainPage.GridMode = GridMode.ActiveSpeaker;
+                    ModeGridTextBox.Text = "Active Speaker";
+                    //PhotoItems.Clear();
+                }
+                else if (GridMode == GridMode.AudioConference)
+                {
+                    MainPage.GridMode = GridMode.AudioConference;
+                    ModeGridTextBox.Text = "Audio Conference";
+                    //PhotoItems.Clear();
+                }
+                else if (GridMode == GridMode.Screenshare)
+                {
+                    MainPage.GridMode = GridMode.Screenshare;
+                    ModeGridTextBox.Text = "Screenshare";
+                    //PhotoItems.Clear();
+                }
+                else if (GridMode == GridMode.PoppedOut)
+                {
+                    MainPage.GridMode = GridMode.PoppedOut;
+                    ModeGridTextBox.Text = "Popped Out";
+                    //PhotoItems.Clear();
+                }
+                SetGridModeVisibility(GridMode);
+                //PhotoItems.Clear();
+                //for (int i = 0; i < CurrentIndex; i++)
+                //{
+                //    PhotoItems.Add(PhotoItemsList[i % 26]);
+                //}
             }
         }
 
@@ -152,6 +286,31 @@ namespace AdaptiveGridApp
         private void Fill_Click(object sender, RoutedEventArgs e)
         {
             ToggleGridMode(GridMode.Fill);
+        }
+
+
+        private void Overlay_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleGridMode(GridMode.Overlay);
+        }
+
+        private void ActiveSpeaker_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleGridMode(GridMode.ActiveSpeaker);
+        }
+
+        private void Screenshare_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleGridMode(GridMode.Screenshare);
+        }
+        private void PoppedOut_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleGridMode(GridMode.PoppedOut);
+        }
+
+        private void AudioConference_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleGridMode(GridMode.AudioConference);
         }
 
         private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
@@ -179,6 +338,8 @@ namespace AdaptiveGridApp
             {
                 ScrollMode = ScrollMode.Horizontal;
                 ScrollModeGridTextBox.Text = "Horizontal";
+                if (AdaptiveGridViewControl == null)
+                    return;
                 Border border = VisualTreeHelper.GetChild(AdaptiveGridViewControl, 0) as Border;
                 // get scrollviewer
                 ScrollViewer scrollviewer = border.Child as ScrollViewer;

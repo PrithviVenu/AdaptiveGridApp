@@ -12,13 +12,18 @@ namespace AdaptiveGridApp
     public class ActiveSpeakerCustomPanel : Panel
     {
         double cellwidth, cellheight, maxcellheight, LastRowcellwidth, LastRowcellheight, aspectratio;
-        public int TotalColumns = 1;
+        public int TotalColumns = 0;
         public int TotalColumnsWithinViewPort = 1;
         public int MaxRowsWithinViewPort = 1;
-        public int TotalRows = 1;
+        public int TotalRows = 0;
+        public int MaxRightPortItems = 1;
+        public int MaxBottomPortItems = 1;
         public static int MinimumWidth = 250;
         public static int MinimumHeight = 140;
-
+        public static double ActiveSpeakerWidth = 100;
+        public static double ActiveSpeakerHeight = 100;
+        public static int TotalElementsOutsideViewPort = 0;
+        public static int OtherSpeakersCount = 0;
         public static int ItemMargin = 15;
         public static readonly DependencyProperty ListingControlProperty = DependencyProperty.Register(
                                                                            "ListingControl",
@@ -35,112 +40,57 @@ namespace AdaptiveGridApp
         }
         protected override Size MeasureOverride(Size availableSize)
         {
-            if (MainPage.ScrollMode == ScrollMode.Vertical)
-                MeasureForVerticalMode(availableSize);
-            else
-                MeasureForHorizontalMode(availableSize);
+            //if (MainPage.ScrollMode == ScrollMode.Vertical)
+            MeasureForVerticalMode(availableSize);
+            //else
+            //    MeasureForHorizontalMode(availableSize);
             return LimitUnboundedSize(availableSize);
         }
 
-        private void MeasureForHorizontalMode(Size availableSize)
-        {
-            if (ListingControl != null && ListingControl.Parent is Grid grid)
-            {
-                double AvailableHeight = grid.RowDefinitions[1].ActualHeight;
-                availableSize.Height = AvailableHeight;
-                // Determine the square that can contain this number of items.
-                ComputeAndSetDimension(new Size((ListingControl.ActualWidth), availableSize.Height), ScrollMode.Horizontal);
-                // Get an aspect ratio from availableSize, decides whether to trim row or column.
-                aspectratio = availableSize.Width / availableSize.Height;
-                if (double.IsInfinity(availableSize.Width))
-                {
-                    availableSize.Width = cellwidth * (TotalColumns);
-                }
-                if (TotalColumns <= TotalColumnsWithinViewPort)
-                {
-                    LastRowcellwidth = cellwidth;
-                    LastRowcellheight = cellheight;
-                    int LastRowTotalItems = Children.Count - ((TotalRows - 1) * TotalColumnsWithinViewPort);
-                    int LastRowStartIndex;
-
-                    if (TotalRows <= 1)
-                    {
-                        LastRowStartIndex = 0;
-                    }
-                    else
-                    {
-                        LastRowStartIndex = (TotalRows - 1) * TotalColumnsWithinViewPort;
-                    }
-                    for (int i = 0; i < Children.Count; i++)
-                    {
-                        UIElement child = Children[i];
-                        if (MainPage.GridMode == GridMode.AspectFit || i < LastRowStartIndex)
-                            child.Measure(new Size(cellwidth, cellheight));
-                        else
-                        {
-                            LastRowcellwidth = availableSize.Width / LastRowTotalItems;
-                            LastRowcellheight = availableSize.Height - (TotalRows - 1) * cellheight;
-                            child.Measure(new Size(LastRowcellwidth, LastRowcellheight));
-                        }
-                        maxcellheight = (child.DesiredSize.Height > maxcellheight) ? child.DesiredSize.Height : maxcellheight;
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < Children.Count; i++)
-                    {
-                        UIElement child = Children[i];
-                        child.Measure(new Size(cellwidth, cellheight));
-                        maxcellheight = (child.DesiredSize.Height > maxcellheight) ? child.DesiredSize.Height : maxcellheight;
-                    }
-                }
-            }
-        }
 
         public void MeasureForVerticalMode(Size availableSize)
         {
-            // Determine the square that can contain this number of items.
-            ComputeAndSetDimension(availableSize);
-            // Get an aspect ratio from availableSize, decides whether to trim row or column.
-            aspectratio = availableSize.Width / availableSize.Height;
-            cellwidth = (int)Math.Floor(availableSize.Width / TotalColumns);
-            // Next get a cell height, same logic of dividing available vertical by rowcount.
-            cellheight = (cellwidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
-            LastRowcellwidth = cellwidth;
-            LastRowcellheight = cellheight;
-            int LastRowTotalItems = Children.Count - ((TotalRows - 1) * TotalColumns);
-            int LastRowStartIndex;
-
-            if (TotalRows <= 1)
+            if (ListingControl != null && ListingControl.Parent is ActiveSpeakerControl activeSpeakerControl && activeSpeakerControl.Parent is Grid grid)
             {
-                LastRowStartIndex = 0;
-            }
-            else
-            {
-                LastRowStartIndex = (TotalRows - 1) * TotalColumns;
-            }
-            for (int i = 0; i < Children.Count; i++)
-            {
-                UIElement child = Children[i];
-                if (MainPage.GridMode == GridMode.AspectFit || i < LastRowStartIndex)
-                    child.Measure(new Size(cellwidth, cellheight));
-                else
+                // Determine the square that can contain this number of items.
+                //double AvailableHeight = grid.RowDefinitions[1].ActualHeight;
+                double ViewPortHeight = activeSpeakerControl.ActualHeight;
+                ComputeAndSetViewPortDimension(new Size(availableSize.Width, ViewPortHeight));
+                if (Children.Count == 0)
+                    return;
+                UIElement ActiveSpeakerElement = Children[0];
+                ActiveSpeakerElement.Measure(new Size(ActiveSpeakerWidth, ActiveSpeakerHeight));
+                for (int i = 1; i < Children.Count; i++)
                 {
-                    LastRowcellwidth = availableSize.Width / LastRowTotalItems;
-                    LastRowcellheight = (LastRowcellwidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
-                    child.Measure(new Size(LastRowcellwidth, LastRowcellheight));
+                    UIElement child = Children[i];
+                    child.Measure(new Size(cellwidth, cellheight));
                 }
-                maxcellheight = (child.DesiredSize.Height > maxcellheight) ? child.DesiredSize.Height : maxcellheight;
+                // Get an aspect ratio from availableSize, decides whether to trim row or column.
+                //aspectratio = availableSize.Width / availableSize.Height;
+                //cellwidth = (int)Math.Floor(availableSize.Width / TotalColumns);
+                // Next get a cell height, same logic of dividing available vertical by rowcount.
+                //cellheight = (cellwidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
+                // LastRowcellwidth = cellwidth;
+                //LastRowcellheight = cellheight;
+
             }
         }
         Size LimitUnboundedSize(Size input)
         {
             if (double.IsInfinity(input.Height))
             {
-                if (TotalRows == 0)
-                    input.Height = 0;
+                if (ListingControl != null && ListingControl.Parent is ActiveSpeakerControl activeSpeakerControl)
+                {
+                    input.Height = activeSpeakerControl.ActualHeight;
+                    if (OtherSpeakersCount >= MaxRightPortItems)
+                    {
+                        input.Height = MaxRightPortItems * cellheight + TotalRows * cellheight;
+                    }
+                }
                 else
-                    input.Height = cellheight * (TotalRows - 1) + LastRowcellheight;
+                {
+                    input.Height = 0;
+                }
             }
             if (double.IsInfinity(input.Width))
             {
@@ -149,254 +99,151 @@ namespace AdaptiveGridApp
             return input;
         }
 
-        private void ComputeAndSetDimension(Size availableSize, ScrollMode scrollMode = ScrollMode.Vertical)
+        private void ComputeAndSetViewPortDimension(Size availableSize, ScrollMode scrollMode = ScrollMode.Vertical)
         {
             if (scrollMode == ScrollMode.Vertical)
             {
-                int cols = (int)Math.Ceiling(Math.Sqrt(Children.Count));
-                if (cols > 0)
-                    TotalColumns = cols;
-                else
-                    TotalColumns = 1;
-                double itemWidth = availableSize.Width / TotalColumns;
+                double itemWidth = availableSize.Width / 4;
                 if (itemWidth < MinimumWidth)
                 {
-                    int MaxColumns = (int)(availableSize.Width / MinimumWidth);
-                    TotalColumns = MaxColumns;
+                    itemWidth = MinimumWidth;
                 }
-                if (TotalColumns > 0)
-                    TotalRows = (int)Math.Ceiling(Children.Count / (double)TotalColumns);
+                double itemHeight = itemWidth * MainPage.CurrentAspectHeightRatio / MainPage.CurrentAspectWidthRatio;
+                ActiveSpeakerWidth = availableSize.Width;
+                ActiveSpeakerHeight = availableSize.Height;
+                OtherSpeakersCount = Children.Count - 1;
+                if (Children.Count > 1)
+                    ActiveSpeakerWidth = availableSize.Width - itemWidth;
+                double OccupiedActualHeight = OtherSpeakersCount * (itemHeight);
+                if (OccupiedActualHeight > (availableSize.Height))
+                    ActiveSpeakerHeight = (MaxRightPortItems - 1) * cellheight;
+                cellwidth = itemWidth;
+                cellheight = itemHeight;
+                ActiveSpeakerControl activeSpeakerControl = ListingControl.Parent as ActiveSpeakerControl;
+                MaxRightPortItems = (int)Math.Ceiling(activeSpeakerControl.ActualHeight / (cellheight));
+                MaxBottomPortItems = (int)Math.Floor((availableSize.Width - cellwidth) / cellwidth);
+                if (OtherSpeakersCount <= 0)
+                {
+                    TotalElementsOutsideViewPort = 0;
+                    TotalRows = 0;
+                    TotalColumns = 0;
+                }
+                else if (OtherSpeakersCount <= MaxRightPortItems)
+                {
+                    TotalElementsOutsideViewPort = 0;
+                    TotalRows = 0;
+                    TotalColumns = 0;
+                }
+                else if (OtherSpeakersCount <= (MaxBottomPortItems + MaxRightPortItems))
+                {
+                    TotalElementsOutsideViewPort = 0;
+                    TotalRows = 0;
+                    TotalColumns = 0;
+                }
+                else
+                {
+                    TotalElementsOutsideViewPort = OtherSpeakersCount - (MaxBottomPortItems + MaxRightPortItems);
+                    TotalColumns = MaxBottomPortItems + 1;
+                    TotalRows = (int)Math.Ceiling(TotalElementsOutsideViewPort / (double)TotalColumns);
+                }
             }
             else
             {
-                int cols = (int)Math.Ceiling(Math.Sqrt(Children.Count));
-                if (cols > 0)
-                    TotalColumnsWithinViewPort = cols;
-                else
-                    TotalColumnsWithinViewPort = 1;
-                double itemWidth = availableSize.Width / TotalColumnsWithinViewPort;
-                double itemHeight = itemWidth * MainPage.CurrentAspectHeightRatio / MainPage.CurrentAspectWidthRatio;
 
-                if (itemWidth < MinimumWidth)
-                {
-                    int MaxColumns = (int)(availableSize.Width / MinimumWidth);
-                    TotalColumnsWithinViewPort = MaxColumns;
-                    itemWidth = availableSize.Width / TotalColumnsWithinViewPort;
-                    itemHeight = itemWidth * MainPage.CurrentAspectHeightRatio / MainPage.CurrentAspectWidthRatio;
-                }
-                cellheight = itemHeight;
-                cellwidth = itemWidth;
-
-                int MaxRowsCeil = (int)Math.Ceiling(availableSize.Height / itemHeight);
-                int MaxRowsFloor = (int)Math.Floor(availableSize.Height / itemHeight);
-                if (TotalColumnsWithinViewPort > 0)
-                    MaxRowsWithinViewPort = (int)Math.Ceiling(Children.Count / (double)TotalColumnsWithinViewPort);
-                if (MaxRowsWithinViewPort > MaxRowsFloor)
-                {
-                    MaxRowsWithinViewPort = MaxRowsFloor;
-                    double CeilHeight = availableSize.Height / MaxRowsCeil;
-                    double CeilWidth = CeilHeight * MainPage.CurrentAspectWidthRatio / MainPage.CurrentAspectHeightRatio;
-                    if (CeilHeight >= MinimumHeight && CeilWidth >= MinimumWidth && Math.Floor(availableSize.Width / CeilWidth) == TotalColumnsWithinViewPort)
-                    {
-                        MaxRowsWithinViewPort = MaxRowsCeil;
-                        cellheight = CeilHeight;
-                        cellwidth = CeilWidth;
-                    }
-                }
-                TotalRows = (int)Math.Ceiling(Children.Count / (double)TotalColumnsWithinViewPort);
-                if (TotalRows > MaxRowsWithinViewPort)
-                    TotalRows = MaxRowsWithinViewPort;
-                if (TotalRows > 0)
-                    TotalColumns = (int)Math.Ceiling(Children.Count / (double)TotalRows);
             }
         }
 
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            if (MainPage.ScrollMode == ScrollMode.Vertical)
-                ArrangeForVerticalMode(finalSize);
-            else
-                ArrangeForHorizontalMode(finalSize);
+            //if (MainPage.ScrollMode == ScrollMode.Vertical)
+            ArrangeForVerticalMode(finalSize);
+            //else
+            //    ArrangeForHorizontalMode(finalSize);
             return finalSize;
-        }
-
-
-
-        public void ArrangeForHorizontalMode(Size finalSize)
-        {
-            // TotalColumnsWithinViewPort = (int)Math.Floor(finalSize.Width / cellwidth);
-            if (TotalColumns <= TotalColumnsWithinViewPort)
-            {
-                int count = 1;
-                double VerticalOffset = finalSize.Height - (cellheight * (TotalRows - 1) + LastRowcellheight);
-                double x, y;
-                if (Children.Count == 0)
-                    return;
-                int LastRowTotalItems = Children.Count - ((TotalRows - 1) * TotalColumns);
-                int LastRowStartIndex;
-                if (TotalRows <= 1)
-                {
-                    LastRowStartIndex = 0;
-                }
-                else
-                {
-                    LastRowStartIndex = (TotalRows - 1) * TotalColumns;
-                }
-                for (int i = 0; i < LastRowStartIndex; i++)
-                {
-                    UIElement child = Children[i];
-                    x = (count - 1) % TotalColumns * child.DesiredSize.Width;
-                    y = (count - 1) / TotalColumns * child.DesiredSize.Height;
-                    if (VerticalOffset > 0)
-                        y += (VerticalOffset / 2);
-                    Point anchorPoint = new Point(x, y);
-                    Rect rect = new Rect(anchorPoint, child.DesiredSize);
-                    if (child is GridViewItem item)
-                    {
-                        item.CornerRadius = new CornerRadius(25);
-                    }
-                    child.Arrange(new Rect(anchorPoint, child.DesiredSize));
-                    count++;
-                }
-                int CenterItemIndex = TotalColumns / 2 + TotalColumns % 2;
-                for (int i = 1; i <= LastRowTotalItems; i++)
-                {
-                    int indexFactor = LastRowStartIndex - 1;
-                    int index = indexFactor + i;
-                    UIElement child = Children[index];
-                    int centerX = (int)finalSize.Width / 2;
-                    y = (count - 1) / TotalColumns * cellheight;
-                    int offset = (LastRowTotalItems < CenterItemIndex) ? LastRowTotalItems : CenterItemIndex;
-                    int rightPanelOffset = LastRowTotalItems - offset;
-                    int leftPanelOffset = offset - 1;
-                    int horizontalOffset = leftPanelOffset - rightPanelOffset;
-                    double horizontalOffsetValue = 0;
-                    if (horizontalOffset > 0)
-                    {
-                        horizontalOffsetValue = horizontalOffset * (child.DesiredSize.Width / 2);
-                    }
-                    if (TotalColumns == LastRowTotalItems)
-                    {
-                        x = (count - 1) % TotalColumns * child.DesiredSize.Width;
-                    }
-                    else if (i > CenterItemIndex)
-                    {
-                        x = centerX + ((int)((i - CenterItemIndex - 1) * child.DesiredSize.Width)) + ((int)child.DesiredSize.Width / 2) + horizontalOffsetValue;
-                    }
-                    else
-                    {
-                        x = centerX - ((int)((offset - i) * child.DesiredSize.Width)) - ((int)child.DesiredSize.Width / 2) + horizontalOffsetValue;
-                    }
-                    if (x < 0)
-                        x = 0;
-                    if (child is GridViewItem item)
-                    {
-                        item.CornerRadius = new CornerRadius(25);
-                    }
-                    if (VerticalOffset > 0)
-                        y += (VerticalOffset / 2);
-                    Point anchorPoint = new Point(x, y);
-                    child.Arrange(new Rect(anchorPoint, child.DesiredSize));
-                    count++;
-                }
-            }
-            else
-            {
-                double x, y;
-                int TotalItemsWithinViewport = TotalColumnsWithinViewPort * TotalRows;
-                for (int i = 0; i < TotalItemsWithinViewport; i++)
-                {
-                    UIElement child = Children[i];
-                    x = (i) % TotalColumnsWithinViewPort * child.DesiredSize.Width;
-                    y = (i) / TotalColumnsWithinViewPort * child.DesiredSize.Height;
-                    Point anchorPoint = new Point(x, y);
-                    child.Arrange(new Rect(anchorPoint, child.DesiredSize));
-                }
-                int count = 1;
-                int remainingCount = Children.Count - TotalItemsWithinViewport;
-                for (int i = TotalItemsWithinViewport; i < Children.Count; i++)
-                {
-                    UIElement child = Children[i];
-                    int row = (i) % TotalRows;
-                    int column = ((i) / TotalRows);
-                    x = column * child.DesiredSize.Width;
-                    y = row * child.DesiredSize.Height;
-                    Point anchorPoint = new Point(x, y);
-                    child.Arrange(new Rect(anchorPoint, child.DesiredSize));
-                    count++;
-                }
-            }
         }
 
         public void ArrangeForVerticalMode(Size finalSize)
         {
-            int count = 1;
-            double x, y;
-            if (Children.Count == 0)
-                return;
-            int LastRowTotalItems = Children.Count - ((TotalRows - 1) * TotalColumns);
-            int LastRowStartIndex;
-            if (TotalRows <= 1)
-            {
-                LastRowStartIndex = 0;
-            }
-            else
-            {
-                LastRowStartIndex = (TotalRows - 1) * TotalColumns;
-            }
-            for (int i = 0; i < LastRowStartIndex; i++)
+            for (int i = 0; i < Children.Count; i++)
             {
                 UIElement child = Children[i];
-                x = (count - 1) % TotalColumns * child.DesiredSize.Width;
-                y = (count - 1) / TotalColumns * child.DesiredSize.Height;
-                Point anchorPoint = new Point(x, y);
-                Rect rect = new Rect(anchorPoint, child.DesiredSize);
-                if (child is GridViewItem item)
+                double x = 0, y = 0;
+                if (i == 0)
                 {
-                    item.CornerRadius = new CornerRadius(25);
-                }
-                child.Arrange(new Rect(anchorPoint, child.DesiredSize));
-                count++;
-            }
-            int CenterItemIndex = TotalColumns / 2 + TotalColumns % 2;
-            for (int i = 1; i <= LastRowTotalItems; i++)
-            {
-                int indexFactor = LastRowStartIndex - 1;
-                int index = indexFactor + i;
-                UIElement child = Children[index];
-                int centerX = (int)finalSize.Width / 2;
-                y = (count - 1) / TotalColumns * cellheight;
-                int offset = (LastRowTotalItems < CenterItemIndex) ? LastRowTotalItems : CenterItemIndex;
-                int rightPanelOffset = LastRowTotalItems - offset;
-                int leftPanelOffset = offset - 1;
-                int horizontalOffset = leftPanelOffset - rightPanelOffset;
-                double horizontalOffsetValue = 0;
-                if (horizontalOffset > 0)
-                {
-                    horizontalOffsetValue = horizontalOffset * (child.DesiredSize.Width / 2);
-                }
-                if (TotalColumns == LastRowTotalItems)
-                {
-                    x = (count - 1) % TotalColumns * child.DesiredSize.Width;
-                }
-                else if (i > CenterItemIndex)
-                {
-                    x = centerX + ((int)((i - CenterItemIndex - 1) * child.DesiredSize.Width)) + ((int)child.DesiredSize.Width / 2) + horizontalOffsetValue;
-                }
-                else
-                {
-                    x = centerX - ((int)((offset - i) * child.DesiredSize.Width)) - ((int)child.DesiredSize.Width / 2) + horizontalOffsetValue;
-                }
-                if (x < 0)
                     x = 0;
-                if (child is GridViewItem item)
+                    y = 0;
+                }
+                else if (i <= MaxRightPortItems)
                 {
-                    item.CornerRadius = new CornerRadius(25);
+                    double VerticalOffset = 0;
+                    if (ListingControl != null && ListingControl.Parent is ActiveSpeakerControl activeSpeakerControl)
+                    {
+                        if (OtherSpeakersCount > 0 && OtherSpeakersCount <= MaxRightPortItems)
+                            VerticalOffset = activeSpeakerControl.ActualHeight - (cellheight * (OtherSpeakersCount));
+                    }
+                    x = finalSize.Width - cellwidth;
+                    y = (i - 1) * child.DesiredSize.Height;
+                    if (VerticalOffset > 0)
+                        y += (VerticalOffset / 2);
+                    if (i == MaxRightPortItems)
+                    {
+                        int cols =MaxBottomPortItems+1;
+                        int totalFilled = (Children.Count - (MaxRightPortItems)) % cols;
+                        if (totalFilled == 0)
+                            totalFilled = cols;
+                        double HorizontalOffset = finalSize.Width - totalFilled * cellwidth;
+                        if (HorizontalOffset > 0)
+                        {
+                            x -= HorizontalOffset / 2;
+                        }
+                    }
+                }
+                else if (i <= (MaxBottomPortItems + MaxRightPortItems))
+                {
+                    if (ListingControl != null && ListingControl.Parent is ActiveSpeakerControl activeSpeakerControl)
+                    {
+                        int cols =MaxBottomPortItems;
+                        int totalFilled = (Children.Count - (MaxRightPortItems)) % cols;
+                        if (totalFilled == 0)
+                            totalFilled = cols;
+                        double HorizontalOffset = finalSize.Width - totalFilled * cellwidth;
+                        y = (child.DesiredSize.Height) * (MaxRightPortItems - 1);
+                        x = finalSize.Width - (child.DesiredSize.Width) * (i - MaxRightPortItems + 1);
+                        if (HorizontalOffset > 0)
+                        {
+                            x -= HorizontalOffset / 2;
+                        }
+                    }
+                }
+                else if (TotalColumns > 0 && TotalRows > 0 && TotalElementsOutsideViewPort > 0)
+                {
+                    double VerticalOffset = 0;
+                    double HorizontalOffset = 0;
+                    if (ListingControl != null && ListingControl.Parent is ActiveSpeakerControl activeSpeakerControl)
+                    {
+                        VerticalOffset = (child.DesiredSize.Height) * (MaxRightPortItems);
+                        int totalFilled = TotalColumns;
+                        if (Math.Ceiling((i - (MaxBottomPortItems + MaxRightPortItems)) / (double)TotalColumns) == TotalRows)
+                        {
+                            totalFilled = (Children.Count - (MaxBottomPortItems + MaxRightPortItems + 1)) % TotalColumns;
+                            if (totalFilled == 0)
+                                totalFilled = TotalColumns;
+                        }
+
+                        HorizontalOffset = finalSize.Width - totalFilled * cellwidth;
+                    }
+                    x = (i - (MaxBottomPortItems + MaxRightPortItems + 1)) % TotalColumns * child.DesiredSize.Width;
+                    y = (i - (MaxBottomPortItems + MaxRightPortItems + 1)) / TotalColumns * child.DesiredSize.Height;
+                    if (VerticalOffset > 0)
+                        y += VerticalOffset;
+                    if (HorizontalOffset > 0)
+                    {
+                        x += HorizontalOffset / 2;
+                    }
                 }
                 Point anchorPoint = new Point(x, y);
                 child.Arrange(new Rect(anchorPoint, child.DesiredSize));
-                count++;
             }
         }
     }

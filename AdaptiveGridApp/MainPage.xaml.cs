@@ -214,21 +214,21 @@ namespace AdaptiveGridApp
                 {
                     MainPage.GridMode = GridMode.Fill;
                     ModeGridTextBox.Text = "Fill";
-                    PhotoItems.Clear();
-                    for (int i = 0; i < CurrentIndex; i++)
-                    {
-                        PhotoItems.Add(PhotoItemsList[i % 26]);
-                    }
+                    //PhotoItems.Clear();
+                    //for (int i = 0; i < CurrentIndex; i++)
+                    //{
+                    //    PhotoItems.Add(PhotoItemsList[i % 26]);
+                    //}
                 }
                 else if (GridMode == GridMode.AspectFit)
                 {
                     MainPage.GridMode = GridMode.AspectFit;
                     ModeGridTextBox.Text = "Aspect Fit";
-                    PhotoItems.Clear();
-                    for (int i = 0; i < CurrentIndex; i++)
-                    {
-                        PhotoItems.Add(PhotoItemsList[i % 26]);
-                    }
+                    //PhotoItems.Clear();
+                    //for (int i = 0; i < CurrentIndex; i++)
+                    //{
+                    //    PhotoItems.Add(PhotoItemsList[i % 26]);
+                    //}
                 }
                 else if (GridMode == GridMode.Overlay)
                 {
@@ -261,11 +261,11 @@ namespace AdaptiveGridApp
                     //PhotoItems.Clear();
                 }
                 SetGridModeVisibility(GridMode);
-                //PhotoItems.Clear();
-                //for (int i = 0; i < CurrentIndex; i++)
-                //{
-                //    PhotoItems.Add(PhotoItemsList[i % 26]);
-                //}
+                PhotoItems.Clear();
+                for (int i = 0; i < CurrentIndex; i++)
+                {
+                    PhotoItems.Add(PhotoItemsList[i % 26]);
+                }
             }
         }
 

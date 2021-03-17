@@ -115,13 +115,13 @@ namespace AdaptiveGridApp
                 if (Children.Count > 1)
                     ActiveSpeakerWidth = availableSize.Width - itemWidth;
                 double OccupiedActualHeight = OtherSpeakersCount * (itemHeight);
+                cellwidth = itemWidth;
+                cellheight = itemHeight;
                 ActiveSpeakerControl activeSpeakerControl = ListingControl.Parent as ActiveSpeakerControl;
                 MaxRightPortItems = (int)Math.Ceiling(activeSpeakerControl.ActualHeight / (cellheight));
                 MaxBottomPortItems = (int)Math.Floor((availableSize.Width - cellwidth) / cellwidth);
                 if (OccupiedActualHeight > (availableSize.Height))
                     ActiveSpeakerHeight = (MaxRightPortItems - 1) * itemHeight;
-                cellwidth = itemWidth;
-                cellheight = itemHeight;
                 //MaxRightPortItems = (int)Math.Ceiling(activeSpeakerControl.ActualHeight / (cellheight));
                 //MaxBottomPortItems = (int)Math.Floor((availableSize.Width - cellwidth) / cellwidth);
                 if (OtherSpeakersCount <= 0)

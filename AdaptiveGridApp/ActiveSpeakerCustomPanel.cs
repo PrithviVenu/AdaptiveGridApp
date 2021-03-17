@@ -188,8 +188,12 @@ namespace AdaptiveGridApp
                         y += (VerticalOffset / 2);
                     if (i == MaxRightPortItems)
                     {
-                        int cols =MaxBottomPortItems+1;
-                        int totalFilled = (Children.Count - (MaxRightPortItems)) % cols;
+                        int cols = MaxBottomPortItems + 1;
+                        int totalFilled = cols;
+                        if (TotalElementsOutsideViewPort == 0)
+                        {
+                            totalFilled = (Children.Count - (MaxRightPortItems)) % cols;
+                        }
                         if (totalFilled == 0)
                             totalFilled = cols;
                         double HorizontalOffset = finalSize.Width - totalFilled * cellwidth;
@@ -203,8 +207,12 @@ namespace AdaptiveGridApp
                 {
                     if (ListingControl != null && ListingControl.Parent is ActiveSpeakerControl activeSpeakerControl)
                     {
-                        int cols =MaxBottomPortItems;
-                        int totalFilled = (Children.Count - (MaxRightPortItems)) % cols;
+                        int cols = MaxBottomPortItems + 1;
+                        int totalFilled = cols;
+                        if (TotalElementsOutsideViewPort == 0)
+                        {
+                            totalFilled = (Children.Count - (MaxRightPortItems)) % cols;
+                        }
                         if (totalFilled == 0)
                             totalFilled = cols;
                         double HorizontalOffset = finalSize.Width - totalFilled * cellwidth;

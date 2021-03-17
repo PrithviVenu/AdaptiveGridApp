@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace AdaptiveGridApp
 {
-    public class ActiveSpeakerCustomPanel : Panel
+    public class OverlayPanel : Panel
     {
         double cellwidth, cellheight;
         public int TotalColumns = 0;
@@ -50,11 +50,11 @@ namespace AdaptiveGridApp
 
         public void MeasureForVerticalMode(Size availableSize)
         {
-            if (ListingControl != null && ListingControl.Parent is ActiveSpeakerControl activeSpeakerControl && activeSpeakerControl.Parent is Grid grid)
+            if (ListingControl != null && ListingControl.Parent is Grid grid1 && grid1.Parent is OverlayControl overlayControl && overlayControl.Parent is Grid grid)
             {
                 // Determine the square that can contain this number of items.
                 //double AvailableHeight = grid.RowDefinitions[1].ActualHeight;
-                double ViewPortHeight = activeSpeakerControl.ActualHeight;
+                double ViewPortHeight = overlayControl.ActualHeight;
                 ComputeAndSetViewPortDimension(new Size(availableSize.Width, ViewPortHeight));
                 if (Children.Count == 0)
                     return;
@@ -79,9 +79,9 @@ namespace AdaptiveGridApp
         {
             if (double.IsInfinity(input.Height))
             {
-                if (ListingControl != null && ListingControl.Parent is ActiveSpeakerControl activeSpeakerControl)
+                if (ListingControl != null && ListingControl.Parent is Grid grid1 && grid1.Parent is OverlayControl overlayControl)
                 {
-                    input.Height = activeSpeakerControl.ActualHeight;
+                    input.Height = overlayControl.ActualHeight;
                     if (OtherSpeakersCount >= MaxRightPortItems)
                     {
                         input.Height = MaxRightPortItems * cellheight + TotalRows * cellheight;
@@ -115,15 +115,14 @@ namespace AdaptiveGridApp
                 if (Children.Count > 1)
                     ActiveSpeakerWidth = availableSize.Width - itemWidth;
                 double OccupiedActualHeight = OtherSpeakersCount * (itemHeight);
-                ActiveSpeakerControl activeSpeakerControl = ListingControl.Parent as ActiveSpeakerControl;
-                MaxRightPortItems = (int)Math.Ceiling(activeSpeakerControl.ActualHeight / (cellheight));
-                MaxBottomPortItems = (int)Math.Floor((availableSize.Width - cellwidth) / cellwidth);
                 if (OccupiedActualHeight > (availableSize.Height))
-                    ActiveSpeakerHeight = (MaxRightPortItems - 1) * itemHeight;
+                    ActiveSpeakerHeight = (MaxRightPortItems - 1) * cellheight;
                 cellwidth = itemWidth;
                 cellheight = itemHeight;
-                //MaxRightPortItems = (int)Math.Ceiling(activeSpeakerControl.ActualHeight / (cellheight));
-                //MaxBottomPortItems = (int)Math.Floor((availableSize.Width - cellwidth) / cellwidth);
+                Grid grid = ListingControl.Parent as Grid;
+                OverlayControl overlayControl = grid.Parent as OverlayControl;
+                MaxRightPortItems = (int)Math.Ceiling(overlayControl.ActualHeight / (cellheight));
+                MaxBottomPortItems = (int)Math.Floor((availableSize.Width - cellwidth) / cellwidth);
                 if (OtherSpeakersCount <= 0)
                 {
                     TotalElementsOutsideViewPort = 0;
@@ -179,10 +178,10 @@ namespace AdaptiveGridApp
                 else if (i <= MaxRightPortItems)
                 {
                     double VerticalOffset = 0;
-                    if (ListingControl != null && ListingControl.Parent is ActiveSpeakerControl activeSpeakerControl)
+                    if (ListingControl != null && ListingControl.Parent is Grid grid1 && grid1.Parent is OverlayControl overlayControl)
                     {
                         if (OtherSpeakersCount > 0 && OtherSpeakersCount <= MaxRightPortItems)
-                            VerticalOffset = activeSpeakerControl.ActualHeight - (cellheight * (OtherSpeakersCount));
+                            VerticalOffset = overlayControl.ActualHeight - (cellheight * (OtherSpeakersCount));
                     }
                     x = finalSize.Width - cellwidth;
                     y = (i - 1) * child.DesiredSize.Height;
@@ -207,7 +206,7 @@ namespace AdaptiveGridApp
                 }
                 else if (i <= (MaxBottomPortItems + MaxRightPortItems))
                 {
-                    if (ListingControl != null && ListingControl.Parent is ActiveSpeakerControl activeSpeakerControl)
+                    if (ListingControl != null && ListingControl.Parent is Grid grid1 && grid1.Parent is OverlayControl overlayControl)
                     {
                         int cols = MaxBottomPortItems + 1;
                         int totalFilled = cols;
@@ -230,7 +229,7 @@ namespace AdaptiveGridApp
                 {
                     double VerticalOffset = 0;
                     double HorizontalOffset = 0;
-                    if (ListingControl != null && ListingControl.Parent is ActiveSpeakerControl activeSpeakerControl)
+                    if (ListingControl != null && ListingControl.Parent is Grid grid1 && grid1.Parent is OverlayControl overlayControl)
                     {
                         VerticalOffset = (child.DesiredSize.Height) * (MaxRightPortItems);
                         int totalFilled = TotalColumns;
@@ -258,3 +257,4 @@ namespace AdaptiveGridApp
         }
     }
 }
+

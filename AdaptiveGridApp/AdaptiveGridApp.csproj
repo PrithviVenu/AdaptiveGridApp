@@ -147,6 +147,7 @@
       <DependentUpon>OverlayControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ActiveSpeakerCustomPanel.cs" />
+    <Compile Include="OverlayPanel.cs" />
     <Compile Include="PhotoItem.cs" />
     <Compile Include="PoppedoutControl.xaml.cs">
       <DependentUpon>PoppedoutControl.xaml</DependentUpon>

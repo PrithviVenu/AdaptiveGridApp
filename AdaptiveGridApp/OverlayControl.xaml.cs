@@ -47,7 +47,7 @@ namespace AdaptiveGridApp
 
         private void CustomPanel_Loaded(object sender, RoutedEventArgs e)
         {
-            if (sender is CustomPanel panel)
+            if (sender is OverlayPanel panel)
             {
                 panel.ListingControl = AdaptiveGridViewControl;
             }

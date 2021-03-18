@@ -22,13 +22,16 @@
         </DataTemplate>
     </UserControl.Resources>
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="100" />
+        <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-        </Grid.RowDefinitions>-->
-        <Image Source="{x:Bind OverlayParticipant.ImageURI, Mode=OneWay}" Stretch="UniformToFill" />
+        </Grid.RowDefinitions>
+        <Image
+            Grid.Row="0"
+            Source="{x:Bind OverlayParticipant.ImageURI, Mode=OneWay}"
+            Stretch="UniformToFill" />
         <GridView
             x:Name="AdaptiveGridViewControl"
+            Grid.Row="0"
             Margin="15,0,15,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
@@ -42,8 +45,7 @@
             SelectionMode="None">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <!--<local:OverlayPanel Loaded="CustomPanel_Loaded" />-->
-                    <local:CustomPanel Loaded="CustomPanel_Loaded" />
+                    <local:OverlayPanel Loaded="CustomPanel_Loaded" />
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
         </GridView>

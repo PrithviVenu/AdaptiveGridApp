@@ -214,6 +214,8 @@ namespace AdaptiveGridApp
                 {
                     MainPage.GridMode = GridMode.Fill;
                     ModeGridTextBox.Text = "Fill";
+                    ScrollModeGrid.Visibility = Visibility.Visible;
+                    AspectRatioGrid.Visibility = Visibility.Visible;
                     //PhotoItems.Clear();
                     //for (int i = 0; i < CurrentIndex; i++)
                     //{
@@ -224,6 +226,8 @@ namespace AdaptiveGridApp
                 {
                     MainPage.GridMode = GridMode.AspectFit;
                     ModeGridTextBox.Text = "Aspect Fit";
+                    ScrollModeGrid.Visibility = Visibility.Visible;
+                    AspectRatioGrid.Visibility = Visibility.Visible;
                     //PhotoItems.Clear();
                     //for (int i = 0; i < CurrentIndex; i++)
                     //{
@@ -234,30 +238,39 @@ namespace AdaptiveGridApp
                 {
                     MainPage.GridMode = GridMode.Overlay;
                     ModeGridTextBox.Text = "Overlay";
+                    ScrollModeGrid.Visibility = Visibility.Collapsed;
                     //PhotoItems.Clear();
                 }
                 else if (GridMode == GridMode.ActiveSpeaker)
                 {
                     MainPage.GridMode = GridMode.ActiveSpeaker;
                     ModeGridTextBox.Text = "Active Speaker";
+                    ScrollModeGrid.Visibility = Visibility.Collapsed;
+                    AspectRatioGrid.Visibility = Visibility.Collapsed;
                     //PhotoItems.Clear();
                 }
                 else if (GridMode == GridMode.AudioConference)
                 {
                     MainPage.GridMode = GridMode.AudioConference;
                     ModeGridTextBox.Text = "Audio Conference";
+                    ScrollModeGrid.Visibility = Visibility.Collapsed;
+                    AspectRatioGrid.Visibility = Visibility.Collapsed;
                     //PhotoItems.Clear();
                 }
                 else if (GridMode == GridMode.Screenshare)
                 {
                     MainPage.GridMode = GridMode.Screenshare;
                     ModeGridTextBox.Text = "Screenshare";
+                    ScrollModeGrid.Visibility = Visibility.Collapsed;
+                    AspectRatioGrid.Visibility = Visibility.Collapsed;
                     //PhotoItems.Clear();
                 }
                 else if (GridMode == GridMode.PoppedOut)
                 {
                     MainPage.GridMode = GridMode.PoppedOut;
                     ModeGridTextBox.Text = "Popped Out";
+                    ScrollModeGrid.Visibility = Visibility.Collapsed;
+                    AspectRatioGrid.Visibility = Visibility.Collapsed;
                     //PhotoItems.Clear();
                 }
                 SetGridModeVisibility(GridMode);

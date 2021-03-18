@@ -86,7 +86,15 @@ namespace AdaptiveGridApp
                         {
                             LastRowcellwidth = availableSize.Width / LastRowTotalItems;
                             LastRowcellheight = availableSize.Height - (TotalRows - 1) * cellheight;
+                            if ((LastRowcellwidth / LastRowcellheight) > 3)
+                            {
+                                LastRowcellwidth = LastRowcellheight * 2;
+                                // child.Measure(new Size(cellwidth, cellheight));
+                            }
+                            //else
+                            //{
                             child.Measure(new Size(LastRowcellwidth, LastRowcellheight));
+                            //}
                         }
                         maxcellheight = (child.DesiredSize.Height > maxcellheight) ? child.DesiredSize.Height : maxcellheight;
                     }
@@ -133,8 +141,25 @@ namespace AdaptiveGridApp
                 else
                 {
                     LastRowcellwidth = availableSize.Width / LastRowTotalItems;
-                    LastRowcellheight = (LastRowcellwidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
+                    //LastRowcellheight = ListingControl.ActualHeight - (TotalRows - 1) * cellheight;
+                    if (ListingControl != null)
+                    {
+                        double ViewPortHeight = ListingControl.ActualHeight;
+                        if ((TotalRows - 1) * cellheight < ViewPortHeight)
+                            LastRowcellheight = ViewPortHeight - (TotalRows - 1) * cellheight;
+                        if (LastRowcellheight < MinimumHeight)
+                            LastRowcellheight = cellheight;
+                    }
+                    //LastRowcellheight = (LastRowcellwidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
+                    if ((LastRowcellwidth / LastRowcellheight) > 3)
+                    {
+                        LastRowcellwidth = LastRowcellheight * 2;
+                        // child.Measure(new Size(cellwidth, cellheight));
+                    }
+                    //else
+                    //{
                     child.Measure(new Size(LastRowcellwidth, LastRowcellheight));
+                    //}
                 }
                 maxcellheight = (child.DesiredSize.Height > maxcellheight) ? child.DesiredSize.Height : maxcellheight;
             }

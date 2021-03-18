@@ -42,7 +42,8 @@
             SelectionMode="None">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <local:OverlayPanel Loaded="CustomPanel_Loaded" />
+                    <!--<local:OverlayPanel Loaded="CustomPanel_Loaded" />-->
+                    <local:CustomPanel Loaded="CustomPanel_Loaded" />
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
         </GridView>

@@ -27,6 +27,7 @@
         VerticalAlignment="Center"
         HorizontalContentAlignment="Center"
         VerticalContentAlignment="Center"
+        Background="AliceBlue"
         IsItemClickEnabled="False"
         ItemTemplate="{StaticResource ImageTemplate}"
         ItemsSource="{x:Bind PhotoItems, Mode=OneWay}"

@@ -113,10 +113,10 @@
                             x:Name="PoppedOut"
                             Click="PoppedOut_Click"
                             Text="Popped Out" />
-                        <MenuFlyoutItem
+                        <!--<MenuFlyoutItem
                             x:Name="AudioConference"
                             Click="AudioConference_Click"
-                            Text="Audio Conference" />
+                            Text="Audio Conference" />-->
                     </MenuFlyout>
                 </FlyoutBase.AttachedFlyout>
                 <TextBlock

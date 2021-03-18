@@ -434,9 +434,12 @@ namespace AdaptiveGridApp
                 if (TotalColumns == LastRowTotalItems)
                 {
                     x = (count - 1) % TotalColumns * child.DesiredSize.Width;
-                    double offset1 = finalSize.Width - TotalColumns * cellwidth;
-                    if (offset1 > 0)
-                        x += (offset1 / 2);
+                    if (MainPage.GridMode == GridMode.AspectFit)
+                    {
+                        double offset1 = finalSize.Width - TotalColumns * cellwidth;
+                        if (offset1 > 0)
+                            x += (offset1 / 2);
+                    }
                 }
                 else if (i > CenterItemIndex)
                 {

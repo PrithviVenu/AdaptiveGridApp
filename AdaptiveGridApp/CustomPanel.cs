@@ -194,9 +194,12 @@ namespace AdaptiveGridApp
 
                 if (itemWidth < MinimumWidth)
                 {
-                    itemWidth = MinimumWidth;
+                    //itemWidth = MinimumWidth;
+                    //itemHeight = (itemWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
                     int MaxColumns = (int)(availableSize.Width / MinimumWidth);
                     TotalColumns = MaxColumns;
+                     itemWidth = availableSize.Width / TotalColumns;
+                     itemHeight = (itemWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
                 }
                 if (TotalColumns > 0)
                     TotalRows = (int)Math.Ceiling(Children.Count / (double)TotalColumns);
@@ -206,7 +209,7 @@ namespace AdaptiveGridApp
                     double RowsWithinViewPort = ViewPortHeight / itemHeight;
                     int RowsCeil = (int)Math.Ceiling(RowsWithinViewPort);
                     int RowsFloor = (int)Math.Floor(RowsWithinViewPort);
-                    if (TotalRows >= RowsCeil && RowsCeil > RowsFloor)//&& grid.ActualWidth<grid.ActualHeight
+                    if (TotalRows >= RowsCeil && RowsCeil > RowsFloor && (RowsWithinViewPort-RowsFloor)>0.5)//&& grid.ActualWidth<grid.ActualHeight
                     {
                         //TotalRows = RowsCeil;
                         itemHeight = ViewPortHeight / RowsCeil;

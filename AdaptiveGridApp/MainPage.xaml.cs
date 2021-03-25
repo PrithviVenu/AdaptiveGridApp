@@ -35,7 +35,6 @@ namespace AdaptiveGridApp
         public static int TotalColumns = 1;
         public static int TotalRows = 1;
         public int MinimumWidth = 250;
-        //private int count = 0;
 
         public MainPage()
         {
@@ -81,7 +80,6 @@ namespace AdaptiveGridApp
         {
             PhotoItems.Clear();
             CurrentIndex = 0;
-            //count = 0;
         }
 
         private void ToggleAspectRatio(string Ratio)

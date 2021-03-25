@@ -50,6 +50,8 @@ namespace AdaptiveGridApp
             if (sender is OverlayPanel panel)
             {
                 panel.ListingControl = AdaptiveGridViewControl;
+                panel.Margin = new Thickness(1, 1, 1, 1);
+                panel.Margin = new Thickness(0, 0, 0, 0);
             }
         }
 

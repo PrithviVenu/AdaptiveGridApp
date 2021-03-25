@@ -38,6 +38,17 @@ namespace AdaptiveGridApp
             if (sender is ActiveSpeakerCustomPanel panel)
             {
                 panel.ListingControl = AdaptiveGridViewControl;
+                //AdaptiveGridViewControl.InvalidateMeasure();
+                panel.Margin = new Thickness(1, 1, 1, 1);
+                panel.Margin = new Thickness(0, 0, 0, 0);
+            }
+        }
+
+        private void ActiveSpeakerCustomPanel_Loading(FrameworkElement sender, object args)
+        {
+            if (sender is ActiveSpeakerCustomPanel panel)
+            {
+                panel.ListingControl = AdaptiveGridViewControl;
             }
         }
     }

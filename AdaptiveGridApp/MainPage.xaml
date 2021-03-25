@@ -244,7 +244,7 @@
             SelectionMode="Single">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <local:CustomPanel Loaded="CustomPanel_Loaded" />
+                    <local:CustomPanel x:Name="panel" Loaded="CustomPanel_Loaded" />
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
         </GridView>

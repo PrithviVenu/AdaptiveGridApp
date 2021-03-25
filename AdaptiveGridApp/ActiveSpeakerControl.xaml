@@ -33,7 +33,7 @@
         SelectionMode="Single">
         <GridView.ItemsPanel>
             <ItemsPanelTemplate>
-                <local:ActiveSpeakerCustomPanel Loaded="CustomPanel_Loaded" />
+                <local:ActiveSpeakerCustomPanel x:Name="Panel" Loaded="CustomPanel_Loaded" />
             </ItemsPanelTemplate>
         </GridView.ItemsPanel>
     </GridView>

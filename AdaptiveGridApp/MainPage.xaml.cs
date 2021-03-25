@@ -51,12 +51,10 @@ namespace AdaptiveGridApp
             PhotoItem item = PhotoItemsList[GetCurrentIndex()];
             PhotoItems.Add(item);
             CurrentIndex++;
-            //count++;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            //   AdaptiveGridViewControl.Items.VectorChanged += Items_VectorChanged;
             for (int i = 0; i < 26; i++)
             {
                 PhotoItem item = new PhotoItem
@@ -122,23 +120,9 @@ namespace AdaptiveGridApp
                 UnloadObject(AudioConferenceControl);
                 UnloadObject(PoppedoutControl);
                 UnloadObject(ScreenshareControl);
-
-                //AdaptiveGridViewControl.Visibility = Visibility.Visible;
-                //OverlayControl.Visibility = Visibility.Collapsed;
-                //ActiveSpeakerControl.Visibility = Visibility.Collapsed;
-                //AudioConferenceControl.Visibility = Visibility.Collapsed;
-                //PoppedoutControl.Visibility = Visibility.Collapsed;
-                //ScreenshareControl.Visibility = Visibility.Collapsed;
             }
             else if (GridMode == GridMode.Overlay)
             {
-                //AdaptiveGridViewControl.Visibility = Visibility.Collapsed;
-                //OverlayControl.Visibility = Visibility.Visible;
-                //ActiveSpeakerControl.Visibility = Visibility.Collapsed;
-                //AudioConferenceControl.Visibility = Visibility.Collapsed;
-                //PoppedoutControl.Visibility = Visibility.Collapsed;
-                //ScreenshareControl.Visibility = Visibility.Collapsed;
-                FindName("OverlayControl");
                 UnloadObject(AdaptiveGridViewControl);
                 UnloadObject(ActiveSpeakerControl);
                 UnloadObject(AudioConferenceControl);
@@ -153,12 +137,6 @@ namespace AdaptiveGridApp
                 UnloadObject(AudioConferenceControl);
                 UnloadObject(PoppedoutControl);
                 UnloadObject(ScreenshareControl);
-                //AdaptiveGridViewControl.Visibility = Visibility.Collapsed;
-                //OverlayControl.Visibility = Visibility.Collapsed;
-                //ActiveSpeakerControl.Visibility = Visibility.Visible;
-                //AudioConferenceControl.Visibility = Visibility.Collapsed;
-                //PoppedoutControl.Visibility = Visibility.Collapsed;
-                //ScreenshareControl.Visibility = Visibility.Collapsed;
             }
             else if (GridMode == GridMode.Screenshare)
             {
@@ -168,12 +146,6 @@ namespace AdaptiveGridApp
                 UnloadObject(AudioConferenceControl);
                 UnloadObject(PoppedoutControl);
                 UnloadObject(ActiveSpeakerControl);
-                //AdaptiveGridViewControl.Visibility = Visibility.Collapsed;
-                //OverlayControl.Visibility = Visibility.Collapsed;
-                //ActiveSpeakerControl.Visibility = Visibility.Collapsed;
-                //AudioConferenceControl.Visibility = Visibility.Collapsed;
-                //PoppedoutControl.Visibility = Visibility.Collapsed;
-                //ScreenshareControl.Visibility = Visibility.Visible;
             }
             else if (GridMode == GridMode.PoppedOut)
             {
@@ -183,12 +155,6 @@ namespace AdaptiveGridApp
                 UnloadObject(AudioConferenceControl);
                 UnloadObject(ActiveSpeakerControl);
                 UnloadObject(ScreenshareControl);
-                //AdaptiveGridViewControl.Visibility = Visibility.Collapsed;
-                //OverlayControl.Visibility = Visibility.Collapsed;
-                //ActiveSpeakerControl.Visibility = Visibility.Collapsed;
-                //AudioConferenceControl.Visibility = Visibility.Collapsed;
-                //PoppedoutControl.Visibility = Visibility.Visible;
-                //ScreenshareControl.Visibility = Visibility.Collapsed;
             }
             else if (GridMode == GridMode.AudioConference)
             {
@@ -198,12 +164,6 @@ namespace AdaptiveGridApp
                 UnloadObject(ActiveSpeakerControl);
                 UnloadObject(PoppedoutControl);
                 UnloadObject(ScreenshareControl);
-                //AdaptiveGridViewControl.Visibility = Visibility.Collapsed;
-                //OverlayControl.Visibility = Visibility.Collapsed;
-                //ActiveSpeakerControl.Visibility = Visibility.Collapsed;
-                //AudioConferenceControl.Visibility = Visibility.Visible;
-                //PoppedoutControl.Visibility = Visibility.Collapsed;
-                //ScreenshareControl.Visibility = Visibility.Collapsed;
             }
         }
         private void ToggleGridMode(GridMode GridMode)
@@ -216,11 +176,8 @@ namespace AdaptiveGridApp
                     ModeGridTextBox.Text = "Fill";
                     ScrollModeGrid.Visibility = Visibility.Visible;
                     AspectRatioGrid.Visibility = Visibility.Visible;
-                    //PhotoItems.Clear();
-                    //for (int i = 0; i < CurrentIndex; i++)
-                    //{
-                    //    PhotoItems.Add(PhotoItemsList[i % 26]);
-                    //}
+                    AdaptiveGridViewControl.ItemsPanelRoot.Margin = new Thickness(1, 1, 1, 1);
+                    AdaptiveGridViewControl.ItemsPanelRoot.Margin = new Thickness(0, 0, 0, 0);
                 }
                 else if (GridMode == GridMode.AspectFit)
                 {
@@ -228,18 +185,16 @@ namespace AdaptiveGridApp
                     ModeGridTextBox.Text = "Aspect Fit";
                     ScrollModeGrid.Visibility = Visibility.Visible;
                     AspectRatioGrid.Visibility = Visibility.Visible;
-                    //PhotoItems.Clear();
-                    //for (int i = 0; i < CurrentIndex; i++)
-                    //{
-                    //    PhotoItems.Add(PhotoItemsList[i % 26]);
-                    //}
+                    AdaptiveGridViewControl.ItemsPanelRoot.Margin = new Thickness(1, 1, 1, 1);
+                    AdaptiveGridViewControl.ItemsPanelRoot.Margin = new Thickness(0, 0, 0, 0);
                 }
                 else if (GridMode == GridMode.Overlay)
                 {
                     MainPage.GridMode = GridMode.Overlay;
                     ModeGridTextBox.Text = "Overlay";
                     ScrollModeGrid.Visibility = Visibility.Collapsed;
-                    //PhotoItems.Clear();
+                    AspectRatioGrid.Visibility = Visibility.Collapsed;
+                    SetVerticalScroll();
                 }
                 else if (GridMode == GridMode.ActiveSpeaker)
                 {
@@ -247,7 +202,6 @@ namespace AdaptiveGridApp
                     ModeGridTextBox.Text = "Active Speaker";
                     ScrollModeGrid.Visibility = Visibility.Collapsed;
                     AspectRatioGrid.Visibility = Visibility.Collapsed;
-                    //PhotoItems.Clear();
                 }
                 else if (GridMode == GridMode.AudioConference)
                 {
@@ -255,7 +209,6 @@ namespace AdaptiveGridApp
                     ModeGridTextBox.Text = "Audio Conference";
                     ScrollModeGrid.Visibility = Visibility.Collapsed;
                     AspectRatioGrid.Visibility = Visibility.Collapsed;
-                    //PhotoItems.Clear();
                 }
                 else if (GridMode == GridMode.Screenshare)
                 {
@@ -263,7 +216,6 @@ namespace AdaptiveGridApp
                     ModeGridTextBox.Text = "Screenshare";
                     ScrollModeGrid.Visibility = Visibility.Collapsed;
                     AspectRatioGrid.Visibility = Visibility.Collapsed;
-                    //PhotoItems.Clear();
                 }
                 else if (GridMode == GridMode.PoppedOut)
                 {
@@ -271,14 +223,8 @@ namespace AdaptiveGridApp
                     ModeGridTextBox.Text = "Popped Out";
                     ScrollModeGrid.Visibility = Visibility.Collapsed;
                     AspectRatioGrid.Visibility = Visibility.Collapsed;
-                    //PhotoItems.Clear();
                 }
                 SetGridModeVisibility(GridMode);
-                PhotoItems.Clear();
-                for (int i = 0; i < CurrentIndex; i++)
-                {
-                    PhotoItems.Add(PhotoItemsList[i % 26]);
-                }
             }
         }
 
@@ -349,43 +295,56 @@ namespace AdaptiveGridApp
         {
             if (ScrollMode != ScrollMode.Horizontal)
             {
-                ScrollMode = ScrollMode.Horizontal;
-                ScrollModeGridTextBox.Text = "Horizontal";
-                if (AdaptiveGridViewControl == null)
-                    return;
-                Border border = VisualTreeHelper.GetChild(AdaptiveGridViewControl, 0) as Border;
-                // get scrollviewer
-                ScrollViewer scrollviewer = border.Child as ScrollViewer;
-                scrollviewer.VerticalScrollMode = Windows.UI.Xaml.Controls.ScrollMode.Disabled;
-                scrollviewer.HorizontalScrollMode = Windows.UI.Xaml.Controls.ScrollMode.Enabled;
-                scrollviewer.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
-                scrollviewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
-                PhotoItems.Clear();
-                for (int i = 0; i < CurrentIndex; i++)
-                {
-                    PhotoItems.Add(PhotoItemsList[i % 26]);
-                }
+                SetHorizontalScroll();
             }
         }
+
+        public void SetHorizontalScroll()
+        {
+            ScrollMode = ScrollMode.Horizontal;
+            ScrollModeGridTextBox.Text = "Horizontal";
+            if (AdaptiveGridViewControl == null)
+                return;
+            Border border = VisualTreeHelper.GetChild(AdaptiveGridViewControl, 0) as Border;
+            // get scrollviewer
+            ScrollViewer scrollviewer = border.Child as ScrollViewer;
+            scrollviewer.VerticalScrollMode = Windows.UI.Xaml.Controls.ScrollMode.Disabled;
+            scrollviewer.HorizontalScrollMode = Windows.UI.Xaml.Controls.ScrollMode.Enabled;
+            scrollviewer.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
+            scrollviewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+            PhotoItems.Clear();
+            for (int i = 0; i < CurrentIndex; i++)
+            {
+                PhotoItems.Add(PhotoItemsList[i % 26]);
+            }
+        }
+
+        public void SetVerticalScroll()
+        {
+            ScrollMode = ScrollMode.Vertical;
+            ScrollModeGridTextBox.Text = "Vertical";
+            if (AdaptiveGridViewControl == null)
+                return;
+            Border border = VisualTreeHelper.GetChild(AdaptiveGridViewControl, 0) as Border;
+            // get scrollviewer
+            ScrollViewer scrollviewer = border.Child as ScrollViewer;
+            scrollviewer.VerticalScrollMode = Windows.UI.Xaml.Controls.ScrollMode.Enabled;
+            scrollviewer.HorizontalScrollMode = Windows.UI.Xaml.Controls.ScrollMode.Disabled;
+            scrollviewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+            scrollviewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
+            PhotoItems.Clear();
+            for (int i = 0; i < CurrentIndex; i++)
+            {
+                PhotoItems.Add(PhotoItemsList[i % 26]);
+            }
+        }
+
 
         private void VerticalScrollMode_Click(object sender, RoutedEventArgs e)
         {
             if (ScrollMode != ScrollMode.Vertical)
             {
-                ScrollMode = ScrollMode.Vertical;
-                ScrollModeGridTextBox.Text = "Vertical";
-                Border border = VisualTreeHelper.GetChild(AdaptiveGridViewControl, 0) as Border;
-                // get scrollviewer
-                ScrollViewer scrollviewer = border.Child as ScrollViewer;
-                scrollviewer.VerticalScrollMode = Windows.UI.Xaml.Controls.ScrollMode.Enabled;
-                scrollviewer.HorizontalScrollMode = Windows.UI.Xaml.Controls.ScrollMode.Disabled;
-                scrollviewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-                scrollviewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
-                PhotoItems.Clear();
-                for (int i = 0; i < CurrentIndex; i++)
-                {
-                    PhotoItems.Add(PhotoItemsList[i % 26]);
-                }
+                SetVerticalScroll();
             }
         }
 
@@ -394,6 +353,8 @@ namespace AdaptiveGridApp
             if (sender is CustomPanel panel)
             {
                 panel.ListingControl = AdaptiveGridViewControl;
+                panel.Margin = new Thickness(1, 1, 1, 1);
+                panel.Margin = new Thickness(0, 0, 0, 0);
             }
         }
 

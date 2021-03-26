@@ -27,7 +27,6 @@ namespace AdaptiveGridApp
                                                                    new PropertyMetadata(null)
                                                                             );
 
-
         public ListViewBase ListingControl
         {
             get { return (ListViewBase)GetValue(ListingControlProperty); }
@@ -49,7 +48,7 @@ namespace AdaptiveGridApp
                 double AvailableHeight = grid.RowDefinitions[1].ActualHeight;
                 availableSize.Height = AvailableHeight;
                 // Determine the square that can contain this number of items.
-                ComputeAndSetDimension(new Size((ListingControl.ActualWidth), availableSize.Height), ScrollMode.Horizontal);
+                ComputeAndSetDimension(new Size((grid.ActualWidth), availableSize.Height), ScrollMode.Horizontal);
                 // Get an aspect ratio from availableSize, decides whether to trim row or column.
                 aspectratio = availableSize.Width / availableSize.Height;
                 //cellwidth = (int)Math.Floor(grid.ActualWidth / TotalColumnsWithinViewPort);
@@ -198,8 +197,8 @@ namespace AdaptiveGridApp
                     //itemHeight = (itemWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
                     int MaxColumns = (int)(availableSize.Width / MinimumWidth);
                     TotalColumns = MaxColumns;
-                     itemWidth = availableSize.Width / TotalColumns;
-                     itemHeight = (itemWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
+                    itemWidth = availableSize.Width / TotalColumns;
+                    itemHeight = (itemWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
                 }
                 if (TotalColumns > 0)
                     TotalRows = (int)Math.Ceiling(Children.Count / (double)TotalColumns);
@@ -209,7 +208,7 @@ namespace AdaptiveGridApp
                     double RowsWithinViewPort = ViewPortHeight / itemHeight;
                     int RowsCeil = (int)Math.Ceiling(RowsWithinViewPort);
                     int RowsFloor = (int)Math.Floor(RowsWithinViewPort);
-                    if (TotalRows >= RowsCeil && RowsCeil > RowsFloor && (RowsWithinViewPort-RowsFloor)>0.5)//&& grid.ActualWidth<grid.ActualHeight
+                    if (TotalRows >= RowsCeil && RowsCeil > RowsFloor && (RowsWithinViewPort - RowsFloor) > 0.5)//&& grid.ActualWidth<grid.ActualHeight
                     {
                         //TotalRows = RowsCeil;
                         itemHeight = ViewPortHeight / RowsCeil;

@@ -35,7 +35,7 @@ namespace AdaptiveGridApp
         public static int TotalColumns = 1;
         public static int TotalRows = 1;
         public int MinimumWidth = 250;
-
+        public CustomPanel panel = null;
         public MainPage()
         {
             this.InitializeComponent();
@@ -121,6 +121,7 @@ namespace AdaptiveGridApp
             }
             else if (GridMode == GridMode.Overlay)
             {
+                FindName("OverlayControl");
                 UnloadObject(AdaptiveGridViewControl);
                 UnloadObject(ActiveSpeakerControl);
                 UnloadObject(AudioConferenceControl);
@@ -168,14 +169,18 @@ namespace AdaptiveGridApp
         {
             if (MainPage.GridMode != GridMode)
             {
+                SetGridModeVisibility(GridMode);
                 if (GridMode == GridMode.Fill)
                 {
                     MainPage.GridMode = GridMode.Fill;
                     ModeGridTextBox.Text = "Fill";
                     ScrollModeGrid.Visibility = Visibility.Visible;
                     AspectRatioGrid.Visibility = Visibility.Visible;
-                    AdaptiveGridViewControl.ItemsPanelRoot.Margin = new Thickness(1, 1, 1, 1);
-                    AdaptiveGridViewControl.ItemsPanelRoot.Margin = new Thickness(0, 0, 0, 0);
+                    if (AdaptiveGridViewControl != null)
+                    {
+                        panel.Margin = new Thickness(1, 1, 1, 1);
+                        panel.Margin = new Thickness(0, 0, 0, 0);
+                    }
                 }
                 else if (GridMode == GridMode.AspectFit)
                 {
@@ -183,8 +188,11 @@ namespace AdaptiveGridApp
                     ModeGridTextBox.Text = "Aspect Fit";
                     ScrollModeGrid.Visibility = Visibility.Visible;
                     AspectRatioGrid.Visibility = Visibility.Visible;
-                    AdaptiveGridViewControl.ItemsPanelRoot.Margin = new Thickness(1, 1, 1, 1);
-                    AdaptiveGridViewControl.ItemsPanelRoot.Margin = new Thickness(0, 0, 0, 0);
+                    if (AdaptiveGridViewControl != null)
+                    {
+                        panel.Margin = new Thickness(1, 1, 1, 1);
+                        panel.Margin = new Thickness(0, 0, 0, 0);
+                    }
                 }
                 else if (GridMode == GridMode.Overlay)
                 {
@@ -222,7 +230,6 @@ namespace AdaptiveGridApp
                     ScrollModeGrid.Visibility = Visibility.Collapsed;
                     AspectRatioGrid.Visibility = Visibility.Collapsed;
                 }
-                SetGridModeVisibility(GridMode);
             }
         }
 
@@ -350,6 +357,7 @@ namespace AdaptiveGridApp
         {
             if (sender is CustomPanel panel)
             {
+                this.panel = panel;
                 panel.ListingControl = AdaptiveGridViewControl;
                 panel.Margin = new Thickness(1, 1, 1, 1);
                 panel.Margin = new Thickness(0, 0, 0, 0);

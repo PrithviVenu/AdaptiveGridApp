@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Loaded="Page_Loaded"
+    SizeChanged="Page_SizeChanged"
     mc:Ignorable="d">
     <Page.Resources>
         <DataTemplate x:Key="ImageTemplate" x:DataType="local:PhotoItem">
@@ -22,68 +23,146 @@
         </DataTemplate>
     </Page.Resources>
 
-    <Grid x:Name="RootGrid">
+    <Grid x:Name="RootGrid" HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <Grid>
+        <Grid
+            x:Name="CustomTitleBar"
+            Grid.Row="0"
+            Height="32"
+            Background="#F4F4F4"
+            Opacity="0.8">
+            <Grid x:Name="trickyTitleBar" Background="Transparent" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Grid HorizontalAlignment="Left">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        x:Name="AddParticipants"
+                        Width="45"
+                        Height="45"
+                        Margin="20,0,0,0"
+                        Background="#F4F4F4"
+                        BorderThickness="0"
+                        Click="AddParticipant_Click"
+                        Content="&#xE109;"
+                        FontFamily="Segoe MDL2 Assets"
+                        FontSize="12"
+                        FontWeight="ExtraBold">
+                        <Button.Resources>
+                            <!--<SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White" />-->
+                        </Button.Resources>
+                    </Button>
+                    <Button
+                        x:Name="RemoveLastParticipant"
+                        Grid.Column="1"
+                        Width="45"
+                        Height="45"
+                        Margin="0,0,0,0"
+                        Background="#F4F4F4"
+                        BorderThickness="0"
+                        Click="RemoveLast_Click"
+                        Content="&#xE108;"
+                        FontFamily="Segoe MDL2 Assets"
+                        FontSize="12"
+                        FontWeight="ExtraBold">
+                        <Button.Resources>
+                            <!--<SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White" />-->
+                        </Button.Resources>
+                    </Button>
+                    <Button
+                        x:Name="ClearParticipantsIcon"
+                        Grid.Column="2"
+                        Width="45"
+                        Height="45"
+                        Margin="0,0,0,0"
+                        Background="#F4F4F4"
+                        BorderThickness="0"
+                        Click="ClearParticipants_Click"
+                        Content="&#xE149;"
+                        FontFamily="Segoe MDL2 Assets"
+                        FontSize="12"
+                        FontWeight="ExtraBold">
+                        <Button.Resources>
+                            <!--<SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White" />-->
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+                <Grid
+                    x:Name="UnlockedButton"
+                    Grid.Column="1"
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="#F4F4F4"
+                    BorderThickness="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image
+                        Width="14"
+                        Height="14"
+                        VerticalAlignment="Center"
+                        Source="ms-appx:///Photos/Icons/unlocked.png"
+                        Stretch="Fill" />
+                    <TextBlock
+                        Name="TitleTextBlock"
+                        Grid.Column="1"
+                        Margin="10,1,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Text="Test Meeting (00:02:29)"
+                        TextTrimming="CharacterEllipsis" />
+                </Grid>
+                <Grid Grid.Column="2" HorizontalAlignment="Right">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        x:Name="Settings"
+                        Width="45"
+                        Height="45"
+                        Margin="0,0,200,0"
+                        Background="#F4F4F4"
+                        BorderThickness="0"
+                        Click="Settings_Click"
+                        Content="&#xE115;"
+                        FontFamily="Segoe MDL2 Assets"
+                        FontSize="13"
+                        FontWeight="ExtraBold">
+                        <Button.Resources>
+                            <!--<SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White" />-->
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1" Canvas.ZIndex="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Button
-                x:Name="AddParticipant"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                BorderThickness="0"
-                Click="AddParticipant_Click"
-                Content="Add Participant">
-                <Button.Resources>
-                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
-                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
-                </Button.Resources>
-            </Button>
-            <Grid Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
-                </Grid.ColumnDefinitions>
-                <Button
-                    x:Name="ClearParticipants"
-                    Background="Transparent"
-                    BorderBrush="Transparent"
-                    BorderThickness="0"
-                    Click="ClearParticipants_Click"
-                    Content="Clear">
-                    <Button.Resources>
-                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
-                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
-                    </Button.Resources>
-                </Button>
-                <Button
-                    x:Name="RemoveLast"
-                    Grid.Column="1"
-                    Background="Transparent"
-                    BorderBrush="Transparent"
-                    BorderThickness="0"
-                    Click="RemoveLast_Click"
-                    Content="Remove Last">
-                    <Button.Resources>
-                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
-                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
-                    </Button.Resources>
-                </Button>
-            </Grid>
             <Grid
                 Name="ModeGrid"
-                Grid.Column="2"
                 Width="140"
                 Height="25"
-                Margin="10,0,0,0"
+                Margin="40,0,0,0"
                 BorderBrush="#878683"
                 BorderThickness="1"
                 Tapped="Grid_Tapped">
@@ -132,7 +211,7 @@
                     FontFamily="Segoe MDL2 Assets"
                     Glyph="&#xE70D;" />
             </Grid>
-            <Grid Grid.Column="3" Margin="10,0,0,0">
+            <Grid Grid.Column="1" Margin="10,0,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="auto" />
@@ -150,7 +229,7 @@
                     Text="250"
                     TextChanged="MinWidth_TextChanged" />
             </Grid>
-            <Grid Grid.Column="4" HorizontalAlignment="Right">
+            <Grid Grid.Column="2" HorizontalAlignment="Right">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="auto" />
@@ -231,7 +310,7 @@
         </Grid>
         <GridView
             x:Name="AdaptiveGridViewControl"
-            Grid.Row="1"
+            Grid.Row="2"
             Margin="15,0,15,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
@@ -250,7 +329,7 @@
         </GridView>
         <local:PoppedoutControl
             x:Name="PoppedoutControl"
-            Grid.Row="1"
+            Grid.Row="2"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             HorizontalContentAlignment="Stretch"
@@ -259,7 +338,7 @@
             PhotoItems="{x:Bind PhotoItems, Mode=OneWay}" />
         <local:ScreenshareControl
             x:Name="ScreenshareControl"
-            Grid.Row="1"
+            Grid.Row="2"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             HorizontalContentAlignment="Stretch"
@@ -268,7 +347,7 @@
             PhotoItems="{x:Bind PhotoItems, Mode=OneWay}" />
         <local:OverlayControl
             x:Name="OverlayControl"
-            Grid.Row="1"
+            Grid.Row="2"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             HorizontalContentAlignment="Stretch"
@@ -277,7 +356,7 @@
             PhotoItems="{x:Bind PhotoItems, Mode=OneWay}" />
         <local:AudioConferenceControl
             x:Name="AudioConferenceControl"
-            Grid.Row="1"
+            Grid.Row="2"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             HorizontalContentAlignment="Stretch"
@@ -286,12 +365,242 @@
             PhotoItems="{x:Bind PhotoItems, Mode=OneWay}" />
         <local:ActiveSpeakerControl
             x:Name="ActiveSpeakerControl"
-            Grid.Row="1"
+            Grid.Row="2"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             HorizontalContentAlignment="Stretch"
             VerticalContentAlignment="Stretch"
             x:Load="False"
             PhotoItems="{x:Bind PhotoItems, Mode=OneWay}" />
+        <Grid
+            Grid.Row="3"
+            Height="64"
+            Margin="0,15,0,0"
+            BorderBrush="#F4F4F4"
+            BorderThickness="0,0.5,0,0"
+            Canvas.ZIndex="1">
+            <Grid
+                x:Name="LeftGrid"
+                Margin="0,0,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                ColumnSpacing="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Margin="20,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Image
+                        Width="21"
+                        Height="18"
+                        HorizontalAlignment="Center"
+                        Source="ms-appx:///Photos/Icons/Security.png"
+                        Stretch="Fill" />
+                    <TextBlock
+                        Name="SecurityTextBlock"
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        Text="Security"
+                        TextTrimming="CharacterEllipsis" />
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Image
+                        Width="21"
+                        Height="18"
+                        HorizontalAlignment="Center"
+                        Source="ms-appx:///Photos/Icons/Record.png"
+                        Stretch="Fill" />
+                    <TextBlock
+                        Name="RecordTextBlock"
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        Text="Record"
+                        TextTrimming="CharacterEllipsis" />
+                </Grid>
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Image
+                        Width="21"
+                        Height="18"
+                        HorizontalAlignment="Center"
+                        Source="ms-appx:///Photos/Icons/Invite.png"
+                        Stretch="Fill" />
+                    <TextBlock
+                        Name="InviteTextBlock"
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        Text="Invite"
+                        TextTrimming="CharacterEllipsis" />
+                </Grid>
+            </Grid>
+            <Grid
+                x:Name="CenterGrid"
+                Margin="50,0,0,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                ColumnSpacing="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <!--<ColumnDefinition Width="auto" />-->
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Margin="20,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Image
+                        Width="21"
+                        Height="18"
+                        HorizontalAlignment="Center"
+                        Source="ms-appx:///Photos/Icons/Mic.png"
+                        Stretch="Fill" />
+                    <TextBlock
+                        Name="MuteTextBlock"
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        Text="Mute"
+                        TextTrimming="CharacterEllipsis" />
+                </Grid>
+                <!--<Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Image
+                        Width="35"
+                        Height="18"
+                        HorizontalAlignment="Stretch"
+                        Source="ms-appx:///Photos/Icons/Stop Video.jpg"
+                        Stretch="Fill" />
+                    <TextBlock
+                        Name="StopTextBlock"
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        Text="Stop Video"
+                        TextTrimming="CharacterEllipsis" />
+                </Grid>-->
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Image
+                        Width="30"
+                        Height="30"
+                        Margin="0,-6,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Source="ms-appx:///Photos/Icons/Screenshare.jpg"
+                        Stretch="Fill" />
+                    <TextBlock
+                        Name="ScreenTextBlock"
+                        Grid.Row="1"
+                        Margin="0,-6,0,0"
+                        HorizontalAlignment="Center"
+                        Text="Screen"
+                        TextTrimming="CharacterEllipsis" />
+                </Grid>
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Image
+                        Width="21"
+                        Height="18"
+                        HorizontalAlignment="Center"
+                        Source="ms-appx:///Photos/Icons/End Call.png"
+                        Stretch="Fill" />
+                    <TextBlock
+                        Name="LeaveTextBlock"
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        Text="Leave"
+                        TextTrimming="CharacterEllipsis" />
+                </Grid>
+            </Grid>
+            <Grid
+                x:Name="RightGrid"
+                Margin="50,0,20,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                ColumnSpacing="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <!--<ColumnDefinition Width="auto" />-->
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Margin="20,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Image
+                        Width="21"
+                        Height="18"
+                        HorizontalAlignment="Center"
+                        Source="ms-appx:///Photos/Icons/Chat.png"
+                        Stretch="Fill" />
+                    <TextBlock
+                        Name="ChatTextBlock"
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        Text="Chat"
+                        TextTrimming="CharacterEllipsis" />
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Image
+                        Width="24"
+                        Height="18"
+                        HorizontalAlignment="Center"
+                        Source="ms-appx:///Photos/Icons/Participants.png"
+                        Stretch="Fill" />
+                    <TextBlock
+                        Name="ParticipantsTextBlock"
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        Text="Participants"
+                        TextTrimming="CharacterEllipsis" />
+                </Grid>
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Image
+                        Width="21"
+                        Height="18"
+                        HorizontalAlignment="Center"
+                        Source="ms-appx:///Photos/Icons/Options.png"
+                        Stretch="Fill" />
+                    <TextBlock
+                        Name="OptionsTextBlock"
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        Text="Options"
+                        TextTrimming="CharacterEllipsis" />
+                </Grid>
+            </Grid>
+
+        </Grid>
     </Grid>
 </Page>

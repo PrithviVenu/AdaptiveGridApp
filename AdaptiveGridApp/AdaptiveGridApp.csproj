@@ -241,6 +241,21 @@
     <Content Include="Photos\9.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Photos\Icons\Chat.png" />
+    <Content Include="Photos\Icons\End Call.jpg" />
+    <Content Include="Photos\Icons\End Call.png" />
+    <Content Include="Photos\Icons\Mic.jpg" />
+    <Content Include="Photos\Icons\Mic.png" />
+    <Content Include="Photos\Icons\Invite.png" />
+    <Content Include="Photos\Icons\Options.png" />
+    <Content Include="Photos\Icons\Participants.png" />
+    <Content Include="Photos\Icons\Record.png" />
+    <Content Include="Photos\Icons\Screen.png" />
+    <Content Include="Photos\Icons\Screenshare.jpg" />
+    <Content Include="Photos\Icons\Screenshare.png" />
+    <Content Include="Photos\Icons\Security.png" />
+    <Content Include="Photos\Icons\Stop Video.jpg" />
+    <Content Include="Photos\Icons\unlocked.png" />
     <Content Include="Photos\Screen.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -293,6 +308,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="AdaptiveGridApp_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Font\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

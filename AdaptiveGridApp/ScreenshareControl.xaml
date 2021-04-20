@@ -35,13 +35,13 @@
             Margin="10,10,0,0"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
-            Source="ms-appx:///Photos/Screen.jpg"
-            Stretch="UniformToFill" />
+            Source="ms-appx:///Photos/Icons/Screen.png"
+            Stretch="Fill" />
         <ListView
             x:Name="AdaptiveGridViewControl"
-            Grid.Row="1"
             Grid.Column="1"
             Margin="0,0,0,0"
+            Background="Beige"
             IsItemClickEnabled="False"
             ItemTemplate="{StaticResource ImageTemplate}"
             ItemsSource="{x:Bind PhotoItems, Mode=OneWay}"

@@ -5,8 +5,11 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -39,6 +42,11 @@ namespace AdaptiveGridApp
         public MainPage()
         {
             this.InitializeComponent();
+            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
+            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+            Window.Current.SetTitleBar(trickyTitleBar);
         }
         private int GetCurrentIndex()
         {
@@ -101,11 +109,16 @@ namespace AdaptiveGridApp
             }
             if (isToggled)
             {
-                PhotoItems.Clear();
-                for (int i = 0; i < CurrentIndex; i++)
-                {
-                    PhotoItems.Add(PhotoItemsList[i % 26]);
-                }
+                CustomPanel.MinimumHeight = (CustomPanel.MinimumWidth * CurrentAspectHeightRatio) / CurrentAspectWidthRatio;
+                if (panel == null)
+                    return;
+                panel.Margin = new Thickness(1, 1, 1, 1);
+                panel.Margin = new Thickness(0, 0, 0, 0);
+                //PhotoItems.Clear();
+                //for (int i = 0; i < CurrentIndex; i++)
+                //{
+                //    PhotoItems.Add(PhotoItemsList[i % 26]);
+                //}
             }
         }
         private void SetGridModeVisibility(GridMode GridMode)
@@ -317,11 +330,15 @@ namespace AdaptiveGridApp
             scrollviewer.HorizontalScrollMode = Windows.UI.Xaml.Controls.ScrollMode.Enabled;
             scrollviewer.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
             scrollviewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
-            PhotoItems.Clear();
-            for (int i = 0; i < CurrentIndex; i++)
-            {
-                PhotoItems.Add(PhotoItemsList[i % 26]);
-            }
+            if (panel == null)
+                return;
+            panel.Margin = new Thickness(1, 1, 1, 1);
+            panel.Margin = new Thickness(0, 0, 0, 0);
+            //PhotoItems.Clear();
+            //for (int i = 0; i < CurrentIndex; i++)
+            //{
+            //    PhotoItems.Add(PhotoItemsList[i % 26]);
+            //}
         }
 
         public void SetVerticalScroll()
@@ -337,11 +354,15 @@ namespace AdaptiveGridApp
             scrollviewer.HorizontalScrollMode = Windows.UI.Xaml.Controls.ScrollMode.Disabled;
             scrollviewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
             scrollviewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
-            PhotoItems.Clear();
-            for (int i = 0; i < CurrentIndex; i++)
-            {
-                PhotoItems.Add(PhotoItemsList[i % 26]);
-            }
+            if (panel == null)
+                return;
+            panel.Margin = new Thickness(1, 1, 1, 1);
+            panel.Margin = new Thickness(0, 0, 0, 0);
+            //PhotoItems.Clear();
+            //for (int i = 0; i < CurrentIndex; i++)
+            //{
+            //    PhotoItems.Add(PhotoItemsList[i % 26]);
+            //}
         }
 
 
@@ -368,6 +389,43 @@ namespace AdaptiveGridApp
         {
             PhotoItems.RemoveAt(CurrentIndex - 1);
             CurrentIndex--;
+        }
+
+        private void Refresh(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void UnlockedButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AdaptiveGridViewControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if ((e.NewSize.Width == e.PreviousSize.Width && e.NewSize.Height != e.PreviousSize.Height) || (e.NewSize.Height == e.PreviousSize.Height && e.NewSize.Width != e.PreviousSize.Width))
+            {
+                if (panel == null)
+                    return;
+                panel.Margin = new Thickness(1, 1, 1, 1);
+                panel.Margin = new Thickness(0, 0, 0, 0);
+            }
+        }
+
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if ((e.NewSize.Width == e.PreviousSize.Width && e.NewSize.Height != e.PreviousSize.Height) || (e.NewSize.Height == e.PreviousSize.Height && e.NewSize.Width != e.PreviousSize.Width))
+            {
+                if (panel == null)
+                    return;
+                panel.Margin = new Thickness(1, 1, 1, 1);
+                panel.Margin = new Thickness(0, 0, 0, 0);
+            }
         }
     }
 }

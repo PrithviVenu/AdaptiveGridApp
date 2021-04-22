@@ -22,4 +22,11 @@ namespace AdaptiveGridApp
         Horizontal,
         Vertical
     }
+    public enum VideoPosition
+    {
+        Left,
+        Top,
+        Botton,
+        Right
+    }
 }

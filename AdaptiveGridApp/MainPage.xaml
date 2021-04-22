@@ -26,7 +26,7 @@
     <Grid x:Name="RootGrid" HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
+            <RowDefinition Height="0" />
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
@@ -34,6 +34,7 @@
             x:Name="CustomTitleBar"
             Grid.Row="0"
             Height="32"
+            Margin="0,0,0,15"
             Background="#F4F4F4"
             Opacity="0.8">
             <Grid x:Name="trickyTitleBar" Background="Transparent" />
@@ -103,7 +104,7 @@
                 <Grid
                     x:Name="UnlockedButton"
                     Grid.Column="1"
-                    Margin="0,0,0,0"
+                    Margin="10,-1,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Background="#F4F4F4"
@@ -125,7 +126,7 @@
                         VerticalAlignment="Center"
                         FontSize="12"
                         Text="Test Meeting (00:02:29)"
-                        TextTrimming="CharacterEllipsis" />
+                        TextTrimming="Clip" />
                 </Grid>
                 <Grid Grid.Column="2" HorizontalAlignment="Right">
                     <Grid.ColumnDefinitions>
@@ -142,17 +143,98 @@
                         Content="&#xE115;"
                         FontFamily="Segoe MDL2 Assets"
                         FontSize="13"
-                        FontWeight="ExtraBold">
+                        FontWeight="ExtraBold"
+                        Tapped="Grid_Tapped">
+                        <FlyoutBase.AttachedFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutSubItem Name="ModeItem" Text="Mode">
+                                    <MenuFlyoutItem
+                                        x:Name="AspectFit"
+                                        Click="AspectFit_Click"
+                                        Text="Aspect Fit" />
+                                    <MenuFlyoutItem
+                                        x:Name="Fill"
+                                        Click="Fill_Click"
+                                        Text="Fill" />
+                                </MenuFlyoutSubItem>
+                                <MenuFlyoutSeparator />
+                                <MenuFlyoutSubItem Name="MinWidthItem" Text="Size">
+                                    <MenuFlyoutItem
+                                        x:Name="Small"
+                                        Click="Small_Click"
+                                        Text="Small" />
+                                    <MenuFlyoutItem
+                                        x:Name="Medium"
+                                        Click="Medium_Click"
+                                        Text="Medium" />
+                                    <MenuFlyoutItem
+                                        x:Name="Large"
+                                        Click="Large_Click"
+                                        Text="Large" />
+                                </MenuFlyoutSubItem>
+                                <MenuFlyoutSeparator />
+                                <MenuFlyoutSubItem Name="ScrollModeItem" Text="Scroll Mode">
+                                    <MenuFlyoutItem
+                                        x:Name="VerticalScrollMode"
+                                        Click="VerticalScrollMode_Click"
+                                        Text="Vertical" />
+                                    <MenuFlyoutItem
+                                        x:Name="HorizontalScrollMode"
+                                        Click="HorizontalScrollMode_Click"
+                                        Text="Horizontal" />
+                                </MenuFlyoutSubItem>
+                                <MenuFlyoutSeparator x:Name="AspectRatioItemSeperator" Visibility="Collapsed" />
+                                <MenuFlyoutSubItem Name="AspectRatioItem" Text="Aspect Ratio">
+                                    <MenuFlyoutItem
+                                        x:Name="Ratio16W9H"
+                                        Click="Ratio16W9H_Click"
+                                        Text="16:9" />
+                                    <MenuFlyoutItem
+                                        x:Name="Ratio4W3H"
+                                        Click="Ratio4W3H_Click"
+                                        Text="4:3" />
+                                </MenuFlyoutSubItem>
+                                <MenuFlyoutSeparator x:Name="VideoPositionItemSeperator" Visibility="Collapsed" />
+                                <MenuFlyoutSubItem
+                                    Name="VideoPositionItem"
+                                    Text="Video Position"
+                                    Visibility="Collapsed">
+                                    <MenuFlyoutItem
+                                        x:Name="Top"
+                                        Click="Top_Click"
+                                        Text="Top" />
+                                    <MenuFlyoutItem
+                                        x:Name="Bottom"
+                                        Click="Bottom_Click"
+                                        Text="Bottom" />
+                                    <MenuFlyoutItem
+                                        x:Name="Left"
+                                        Click="Left_Click"
+                                        Text="Left" />
+                                    <MenuFlyoutItem
+                                        x:Name="Right"
+                                        Click="Right_Click"
+                                        Text="Right" />
+                                </MenuFlyoutSubItem>
+                            </MenuFlyout>
+                        </FlyoutBase.AttachedFlyout>
+
                         <Button.Resources>
                             <!--<SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White" />-->
                         </Button.Resources>
                     </Button>
+                    <Image
+                        Width="14"
+                        Height="12"
+                        Margin="0,-1,110,0"
+                        VerticalAlignment="Center"
+                        Source="ms-appx:///Photos/Icons/Wifi.png"
+                        Stretch="Fill" />
                 </Grid>
-
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="1" Canvas.ZIndex="1">
+        <!--<Grid Grid.Row="1" Canvas.ZIndex="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
@@ -176,7 +258,8 @@
                             x:Name="Fill"
                             Click="Fill_Click"
                             Text="Fill" />
-                        <MenuFlyoutItem
+        -->
+        <!--<MenuFlyoutItem
                             x:Name="Overlay"
                             Click="Overlay_Click"
                             Text="Overlay" />
@@ -191,11 +274,12 @@
                         <MenuFlyoutItem
                             x:Name="PoppedOut"
                             Click="PoppedOut_Click"
-                            Text="Popped Out" />
-                        <!--<MenuFlyoutItem
+                            Text="Popped Out" />-->
+        <!--<MenuFlyoutItem
                             x:Name="AudioConference"
                             Click="AudioConference_Click"
                             Text="Audio Conference" />-->
+        <!--
                     </MenuFlyout>
                 </FlyoutBase.AttachedFlyout>
                 <TextBlock
@@ -211,7 +295,10 @@
                     FontFamily="Segoe MDL2 Assets"
                     Glyph="&#xE70D;" />
             </Grid>
-            <Grid Grid.Column="1" Margin="10,0,0,0">
+            <Grid
+                x:Name="MinWidthGrid"
+                Grid.Column="1"
+                Margin="10,0,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="auto" />
@@ -307,7 +394,7 @@
                         Glyph="&#xE70D;" />
                 </Grid>
             </Grid>
-        </Grid>
+        </Grid>-->
         <GridView
             x:Name="AdaptiveGridViewControl"
             Grid.Row="2"
@@ -373,12 +460,14 @@
             x:Load="False"
             PhotoItems="{x:Bind PhotoItems, Mode=OneWay}" />
         <Grid
+            x:Name="BottomPane"
             Grid.Row="3"
             Height="64"
             Margin="0,15,0,0"
             BorderBrush="#F4F4F4"
             BorderThickness="0,0.5,0,0"
-            Canvas.ZIndex="1">
+            Canvas.ZIndex="1"
+            SizeChanged="BottomPane_SizeChanged">
             <Grid
                 x:Name="LeftGrid"
                 Margin="0,0,0,0"
@@ -493,7 +582,7 @@
                         Text="Stop Video"
                         TextTrimming="CharacterEllipsis" />
                 </Grid>-->
-                <Grid Grid.Column="1">
+                <Grid Grid.Column="1" Tapped="Screenshare_Tapped">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
@@ -545,7 +634,10 @@
                     <ColumnDefinition Width="auto" />
                     <!--<ColumnDefinition Width="auto" />-->
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" Margin="20,0,0,0">
+                <Grid
+                    x:Name="ChatGrid"
+                    Grid.Column="0"
+                    Margin="20,0,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
@@ -563,7 +655,7 @@
                         Text="Chat"
                         TextTrimming="CharacterEllipsis" />
                 </Grid>
-                <Grid Grid.Column="1">
+                <Grid x:Name="ParticipantGrid" Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
@@ -581,7 +673,16 @@
                         Text="Participants"
                         TextTrimming="CharacterEllipsis" />
                 </Grid>
-                <Grid Grid.Column="2">
+                <Grid
+                    x:Name="OptionsGrid"
+                    Grid.Column="2"
+                    Tapped="Grid_Tapped">
+                    <FlyoutBase.AttachedFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem x:Name="Chat" Text="Chat" />
+                            <MenuFlyoutItem x:Name="Participants" Text="Participants" />
+                        </MenuFlyout>
+                    </FlyoutBase.AttachedFlyout>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />

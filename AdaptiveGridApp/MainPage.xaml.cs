@@ -34,11 +34,15 @@ namespace AdaptiveGridApp
         public static int CurrentAspectWidthRatio = 16;
         public static int CurrentAspectHeightRatio = 9;
         public static GridMode GridMode = GridMode.AspectFit;
+        public static VideoPosition VideoPosition = VideoPosition.Right;
+        public static GridMode PreviousGridMode = GridMode.AspectFit;
         public static ScrollMode ScrollMode = ScrollMode.Vertical;
         public static int TotalColumns = 1;
         public static int TotalRows = 1;
         public int MinimumWidth = 250;
+
         public CustomPanel panel = null;
+        bool isScreenshareToggled = false;
         public MainPage()
         {
             this.InitializeComponent();
@@ -96,14 +100,14 @@ namespace AdaptiveGridApp
             if (Ratio.Contains("4:3") && CurrentAspectWidthRatio == 16)
             {
                 isToggled = true;
-                RatioGridTextBox.Text = " 4:3";
+                //RatioGridTextBox.Text = " 4:3";
                 CurrentAspectWidthRatio = 4;
                 CurrentAspectHeightRatio = 3;
             }
             else if (Ratio.Contains("16:9") && CurrentAspectWidthRatio == 4)
             {
                 isToggled = true;
-                RatioGridTextBox.Text = " 16:9";
+                //RatioGridTextBox.Text = " 16:9";
                 CurrentAspectWidthRatio = 16;
                 CurrentAspectHeightRatio = 9;
             }
@@ -186,9 +190,15 @@ namespace AdaptiveGridApp
                 if (GridMode == GridMode.Fill)
                 {
                     MainPage.GridMode = GridMode.Fill;
-                    ModeGridTextBox.Text = "Fill";
-                    ScrollModeGrid.Visibility = Visibility.Visible;
-                    AspectRatioGrid.Visibility = Visibility.Visible;
+                    VideoPositionItem.Visibility = Visibility.Collapsed;
+                    AspectRatioItem.Visibility = Visibility.Collapsed;
+                    VideoPositionItemSeperator.Visibility = Visibility.Collapsed;
+                    AspectRatioItemSeperator.Visibility = Visibility.Collapsed;
+                    //ModeGridTextBox.Text = "Fill";
+                    //ScrollModeGrid.Visibility = Visibility.Visible;
+                    //AspectRatioGrid.Visibility = Visibility.Visible;
+                    //ModeGrid.Visibility = Visibility.Visible;
+                    //MinWidthGrid.Visibility = Visibility.Visible;
                     if (AdaptiveGridViewControl != null)
                     {
                         panel.Margin = new Thickness(1, 1, 1, 1);
@@ -197,10 +207,16 @@ namespace AdaptiveGridApp
                 }
                 else if (GridMode == GridMode.AspectFit)
                 {
+                    VideoPositionItem.Visibility = Visibility.Collapsed;
+                    AspectRatioItem.Visibility = Visibility.Visible;
+                    VideoPositionItemSeperator.Visibility = Visibility.Collapsed;
+                    AspectRatioItemSeperator.Visibility = Visibility.Visible;
                     MainPage.GridMode = GridMode.AspectFit;
-                    ModeGridTextBox.Text = "Aspect Fit";
-                    ScrollModeGrid.Visibility = Visibility.Visible;
-                    AspectRatioGrid.Visibility = Visibility.Visible;
+                    //ModeGridTextBox.Text = "Aspect Fit";
+                    //ScrollModeGrid.Visibility = Visibility.Visible;
+                    //AspectRatioGrid.Visibility = Visibility.Visible;
+                    //ModeGrid.Visibility = Visibility.Visible;
+                    //MinWidthGrid.Visibility = Visibility.Visible;
                     if (AdaptiveGridViewControl != null)
                     {
                         panel.Margin = new Thickness(1, 1, 1, 1);
@@ -210,38 +226,61 @@ namespace AdaptiveGridApp
                 else if (GridMode == GridMode.Overlay)
                 {
                     MainPage.GridMode = GridMode.Overlay;
-                    ModeGridTextBox.Text = "Overlay";
-                    ScrollModeGrid.Visibility = Visibility.Collapsed;
-                    AspectRatioGrid.Visibility = Visibility.Collapsed;
+                    VideoPositionItem.Visibility = Visibility.Collapsed;
+                    AspectRatioItem.Visibility = Visibility.Collapsed;
+                    VideoPositionItemSeperator.Visibility = Visibility.Collapsed;
+                    AspectRatioItemSeperator.Visibility = Visibility.Collapsed;
+                    //ModeGridTextBox.Text = "Overlay";
+                    //ScrollModeGrid.Visibility = Visibility.Collapsed;
+                    //AspectRatioGrid.Visibility = Visibility.Collapsed;
                     SetVerticalScroll();
                 }
                 else if (GridMode == GridMode.ActiveSpeaker)
                 {
                     MainPage.GridMode = GridMode.ActiveSpeaker;
-                    ModeGridTextBox.Text = "Active Speaker";
-                    ScrollModeGrid.Visibility = Visibility.Collapsed;
-                    AspectRatioGrid.Visibility = Visibility.Collapsed;
+                    VideoPositionItem.Visibility = Visibility.Collapsed;
+                    AspectRatioItem.Visibility = Visibility.Collapsed;
+                    VideoPositionItemSeperator.Visibility = Visibility.Collapsed;
+                    AspectRatioItemSeperator.Visibility = Visibility.Collapsed;
+                    //ModeGridTextBox.Text = "Active Speaker";
+                    //ScrollModeGrid.Visibility = Visibility.Collapsed;
+                    //AspectRatioGrid.Visibility = Visibility.Collapsed;
                 }
                 else if (GridMode == GridMode.AudioConference)
                 {
                     MainPage.GridMode = GridMode.AudioConference;
-                    ModeGridTextBox.Text = "Audio Conference";
-                    ScrollModeGrid.Visibility = Visibility.Collapsed;
-                    AspectRatioGrid.Visibility = Visibility.Collapsed;
+                    VideoPositionItem.Visibility = Visibility.Collapsed;
+                    AspectRatioItem.Visibility = Visibility.Collapsed;
+                    VideoPositionItemSeperator.Visibility = Visibility.Collapsed;
+                    AspectRatioItemSeperator.Visibility = Visibility.Collapsed;
+                    //ModeGridTextBox.Text = "Audio Conference";
+                    //ScrollModeGrid.Visibility = Visibility.Collapsed;
+                    //AspectRatioGrid.Visibility = Visibility.Collapsed;
                 }
                 else if (GridMode == GridMode.Screenshare)
                 {
+                    PreviousGridMode = MainPage.GridMode;
                     MainPage.GridMode = GridMode.Screenshare;
-                    ModeGridTextBox.Text = "Screenshare";
-                    ScrollModeGrid.Visibility = Visibility.Collapsed;
-                    AspectRatioGrid.Visibility = Visibility.Collapsed;
+                    VideoPositionItem.Visibility = Visibility.Visible;
+                    AspectRatioItem.Visibility = Visibility.Collapsed;
+                    VideoPositionItemSeperator.Visibility = Visibility.Visible;
+                    AspectRatioItemSeperator.Visibility = Visibility.Collapsed;
+                    //MinWidthGrid.Visibility = Visibility.Collapsed;
+                    //ModeGridTextBox.Text = "Screenshare";
+                    //ModeGrid.Visibility = Visibility.Collapsed;
+                    //ScrollModeGrid.Visibility = Visibility.Collapsed;
+                    //AspectRatioGrid.Visibility = Visibility.Collapsed;
                 }
                 else if (GridMode == GridMode.PoppedOut)
                 {
                     MainPage.GridMode = GridMode.PoppedOut;
-                    ModeGridTextBox.Text = "Popped Out";
-                    ScrollModeGrid.Visibility = Visibility.Collapsed;
-                    AspectRatioGrid.Visibility = Visibility.Collapsed;
+                    VideoPositionItem.Visibility = Visibility.Collapsed;
+                    AspectRatioItem.Visibility = Visibility.Collapsed;
+                    VideoPositionItemSeperator.Visibility = Visibility.Collapsed;
+                    AspectRatioItemSeperator.Visibility = Visibility.Collapsed;
+                    //ModeGridTextBox.Text = "Popped Out";
+                    //ScrollModeGrid.Visibility = Visibility.Collapsed;
+                    //AspectRatioGrid.Visibility = Visibility.Collapsed;
                 }
             }
         }
@@ -296,7 +335,10 @@ namespace AdaptiveGridApp
             {
                 FlyoutBase.ShowAttachedFlyout(grid);
             }
-
+            if (sender is Button button)
+            {
+                FlyoutBase.ShowAttachedFlyout(button);
+            }
         }
 
         private void Ratio16W9H_Click(object sender, RoutedEventArgs e)
@@ -320,7 +362,7 @@ namespace AdaptiveGridApp
         public void SetHorizontalScroll()
         {
             ScrollMode = ScrollMode.Horizontal;
-            ScrollModeGridTextBox.Text = "Horizontal";
+            //ScrollModeGridTextBox.Text = "Horizontal";
             if (AdaptiveGridViewControl == null)
                 return;
             Border border = VisualTreeHelper.GetChild(AdaptiveGridViewControl, 0) as Border;
@@ -344,7 +386,7 @@ namespace AdaptiveGridApp
         public void SetVerticalScroll()
         {
             ScrollMode = ScrollMode.Vertical;
-            ScrollModeGridTextBox.Text = "Vertical";
+            //ScrollModeGridTextBox.Text = "Vertical";
             if (AdaptiveGridViewControl == null)
                 return;
             Border border = VisualTreeHelper.GetChild(AdaptiveGridViewControl, 0) as Border;
@@ -426,6 +468,92 @@ namespace AdaptiveGridApp
                 panel.Margin = new Thickness(1, 1, 1, 1);
                 panel.Margin = new Thickness(0, 0, 0, 0);
             }
+        }
+
+        private void Screenshare_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            //if (!isScreenshareToggled)
+            //{
+            //    ToggleGridMode(GridMode.Screenshare);
+            //    isScreenshareToggled = true;
+            //}
+            //else
+            //{
+            //    ToggleGridMode(PreviousGridMode);
+            //    isScreenshareToggled = false;
+            //}
+        }
+
+        private void Top_Click(object sender, RoutedEventArgs e)
+        {
+            VideoPosition = VideoPosition.Top;
+            if (ScreenshareControl != null)
+            {
+                ScreenshareControl.VideoModeToggled(VideoPosition.Top);
+            }
+        }
+
+        private void Bottom_Click(object sender, RoutedEventArgs e)
+        {
+            VideoPosition = VideoPosition.Botton;
+            if (ScreenshareControl != null)
+            {
+                ScreenshareControl.VideoModeToggled(VideoPosition.Botton);
+            }
+        }
+
+        private void Left_Click(object sender, RoutedEventArgs e)
+        {
+            VideoPosition = VideoPosition.Left;
+            if (ScreenshareControl != null)
+            {
+                ScreenshareControl.VideoModeToggled(VideoPosition.Left);
+            }
+        }
+
+        private void Right_Click(object sender, RoutedEventArgs e)
+        {
+            VideoPosition = VideoPosition.Right;
+            if (ScreenshareControl != null)
+            {
+                ScreenshareControl.VideoModeToggled(VideoPosition.Right);
+            }
+        }
+
+        private void BottomPane_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (e.NewSize.Width < 600)
+            {
+                OptionsGrid.Visibility = Visibility.Visible;
+                ChatGrid.Visibility = Visibility.Collapsed;
+                ParticipantGrid.Visibility = Visibility.Collapsed;
+                RightGrid.ColumnDefinitions[2].Width = GridLength.Auto;
+            }
+            else
+            {
+                OptionsGrid.Visibility = Visibility.Collapsed;
+                ChatGrid.Visibility = Visibility.Visible;
+                ParticipantGrid.Visibility = Visibility.Visible;
+                RightGrid.ColumnDefinitions[2].Width = new GridLength(0, GridUnitType.Pixel);
+            }
+        }
+
+        private void Small_Click(object sender, RoutedEventArgs e)
+        {
+            CustomPanel.MinimumWidth = 200; ;
+            CustomPanel.MinimumHeight = (200 * CurrentAspectHeightRatio) / CurrentAspectWidthRatio;
+        }
+
+        private void Medium_Click(object sender, RoutedEventArgs e)
+        {
+            CustomPanel.MinimumWidth = 250;
+            CustomPanel.MinimumHeight = (250 * CurrentAspectHeightRatio) / CurrentAspectWidthRatio;
+        }
+
+        private void Large_Click(object sender, RoutedEventArgs e)
+        {
+            CustomPanel.MinimumWidth = 300;
+            CustomPanel.MinimumHeight = (300 * CurrentAspectHeightRatio) / CurrentAspectWidthRatio;
         }
     }
 }

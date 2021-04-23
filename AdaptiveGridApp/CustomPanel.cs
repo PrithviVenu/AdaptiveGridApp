@@ -379,6 +379,7 @@ namespace AdaptiveGridApp
                 if (TotalColumns > 0 && Children.Count > 1)
                     TotalRows = (int)Math.Ceiling(Children.Count / (double)TotalColumns);
                 double itemHeight = ViewPortHeight / TotalRows;
+                bool isLastRowMerged = false;
                 if (itemHeight < MinimumHeight)
                 {
                     itemHeight = MinimumHeight;
@@ -387,6 +388,7 @@ namespace AdaptiveGridApp
                     {
                         //TotalRows -= 1;
                         itemHeight = ViewPortHeight / (TotalRows - 1);// note itemheight cant go below minheight as itemheight increases
+                        isLastRowMerged = true;
                     }
                 }
                 else
@@ -396,12 +398,13 @@ namespace AdaptiveGridApp
                     {
                         //TotalRows -= 1;
                         itemHeight = ViewPortHeight / (TotalRows - 1);// note itemheight cant go below minheight as itemheight increases
+                        isLastRowMerged = true;
                     }
                 }
                 //if (ViewPortHeight > 0)
                 //{
                 //    double RowsWithinViewPort = ViewPortHeight / itemHeight;
-                //    int RowsCeil = (int)Math.Ceiling(RowsWithinViewPort);
+                //    int RowsCeil = (int)Math.Ceiling(RowsWithinViewPort); 
                 //    int RowsFloor = (int)Math.Floor(RowsWithinViewPort);
                 //    if (TotalRows >= RowsCeil && RowsCeil > RowsFloor) //&& (RowsWithinViewPort - RowsFloor) > 0.5//&& grid.ActualWidth<grid.ActualHeight
                 //    {
@@ -411,25 +414,31 @@ namespace AdaptiveGridApp
                 //            itemHeight = MinimumHeight;
                 //        //itemWidth = (itemHeight * MainPage.CurrentAspectWidthRatio) / MainPage.CurrentAspectHeightRatio;
                 //    }
-                //    if (TotalRows * itemHeight > ViewPortHeight && TotalColumns < MaxColumnsWithinViewPort)//TotalRows > MaxRowsWithinViewPort 
-                //    {
-                //        TotalColumns += 1;
-                //        TotalRows = (int)Math.Ceiling(Children.Count / (double)TotalColumns);
-                //        itemWidth = availableWidth / TotalColumns;
-                //        //itemHeight = (itemWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
-                //        if (TotalRows * itemHeight > ViewPortHeight && TotalColumns < MaxColumnsWithinViewPort)//TotalRows > MaxRowsWithinViewPort 
-                //        {
-                //            TotalColumns += 1;
-                //            TotalRows = (int)Math.Ceiling(Children.Count / (double)TotalColumns);
-                //            itemWidth = availableWidth / TotalColumns;
-                //            //itemHeight = (itemWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
-                //        }
-                //        itemHeight = ViewPortHeight / TotalRows;
-                //        if (itemHeight < MinimumHeight)
-                //        {
-                //            itemHeight = MinimumHeight;
-                //        }
-                //    }
+
+                double occupiedViewPortSpace = TotalRows * itemHeight;
+                if (isLastRowMerged)
+                {
+                    occupiedViewPortSpace -= itemHeight;
+                }
+                if (occupiedViewPortSpace > ViewPortHeight && TotalColumns < MaxColumnsWithinViewPort)//TotalRows > MaxRowsWithinViewPort 
+                {
+                    TotalColumns += 1;
+                    TotalRows = (int)Math.Ceiling(Children.Count / (double)TotalColumns);
+                    itemWidth = availableWidth / TotalColumns;
+                    //itemHeight = (itemWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
+                    if (TotalRows * itemHeight > ViewPortHeight && TotalColumns < MaxColumnsWithinViewPort)//TotalRows > MaxRowsWithinViewPort 
+                    {
+                        TotalColumns += 1;
+                        TotalRows = (int)Math.Ceiling(Children.Count / (double)TotalColumns);
+                        itemWidth = availableWidth / TotalColumns;
+                        //itemHeight = (itemWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
+                    }
+                    itemHeight = ViewPortHeight / TotalRows;
+                    if (itemHeight < MinimumHeight)
+                    {
+                        itemHeight = MinimumHeight;
+                    }
+                }
                 //}
                 cellwidth = itemWidth;
                 cellheight = itemHeight;
@@ -829,8 +838,8 @@ namespace AdaptiveGridApp
                 }
                 if (LastRowTotalItems <= Math.Ceiling(TotalColumns / 2.0))
                 {
-                    if(TotalRows>1)
-                    VerticalOffset += cellheight;
+                    if (TotalRows > 1)
+                        VerticalOffset += cellheight;
                     for (int i = 0; i < LastRowStartIndex; i++)
                     {
                         UIElement child = Children[i];

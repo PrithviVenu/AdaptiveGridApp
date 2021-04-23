@@ -475,16 +475,16 @@ namespace AdaptiveGridApp
 
         private void Screenshare_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            //if (!isScreenshareToggled)
-            //{
-            //    ToggleGridMode(GridMode.Screenshare);
-            //    isScreenshareToggled = true;
-            //}
-            //else
-            //{
-            //    ToggleGridMode(PreviousGridMode);
-            //    isScreenshareToggled = false;
-            //}
+            if (!isScreenshareToggled)
+            {
+                ToggleGridMode(GridMode.Screenshare);
+                isScreenshareToggled = true;
+            }
+            else
+            {
+                ToggleGridMode(PreviousGridMode);
+                isScreenshareToggled = false;
+            }
         }
 
         private void Top_Click(object sender, RoutedEventArgs e)

@@ -12,7 +12,8 @@
     <UserControl.Resources>
         <DataTemplate x:Key="ImageTemplate" x:DataType="local:PhotoItem">
             <Grid
-                Background="White" 
+                Margin="0,10,10,0"
+                Background="White"
                 BorderBrush="Black"
                 BorderThickness="0">
                 <Image
@@ -25,7 +26,9 @@
     <Grid x:Name="ScreenGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0" />
-            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="0" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
             <ColumnDefinition
                 Width="400"
                 MinWidth="300"
@@ -33,12 +36,22 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="0" />
-            <RowDefinition Height="3*" />
+            <RowDefinition Height="0" />
+            <!--<RowDefinition
+                Height="400"
+                MinHeight="300"
+                MaxHeight="650" />-->
+            <RowDefinition Height="*" />
+            <!--<RowDefinition
+                Height="400"
+                MinHeight="300"
+                MaxHeight="650" />-->
+            <RowDefinition Height="0" />
             <RowDefinition Height="0" />
         </Grid.RowDefinitions>
         <Grid
             x:Name="LeftGrid"
-            Grid.RowSpan="3"
+            Grid.RowSpan="5"
             Grid.Column="0">
             <ListView
                 x:Name="AdaptiveGridViewControlLeft"
@@ -56,15 +69,17 @@
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
             </ListView>
-            <controls:GridSplitter
-                Grid.Column="1"
-                Width="1"
-                Background="Gray"
-                FontSize="13"
-                Foreground="White"
-                ResizeBehavior="BasedOnAlignment"
-                ResizeDirection="Auto">
-                <!--<controls:GridSplitter.Element>
+        </Grid>
+        <controls:GridSplitter
+            Grid.RowSpan="5"
+            Grid.Column="1"
+            Width="1"
+            Background="Gray"
+            FontSize="13"
+            Foreground="White"
+            ResizeBehavior="BasedOnAlignment"
+            ResizeDirection="Auto">
+            <!--<controls:GridSplitter.Element>
                 <Grid>
                     <TextBlock
                         HorizontalAlignment="Center"
@@ -75,34 +90,26 @@
                         Text="&#xE784;" />
                 </Grid>
             </controls:GridSplitter.Element>-->
-            </controls:GridSplitter>
-        </Grid>
+        </controls:GridSplitter>
         <Image
             x:Name="Screen"
-            Grid.Row="1"
-            Grid.RowSpan="3"
-            Grid.Column="1"
+            Grid.Row="2"
+            Grid.Column="2"
             Margin="10,10,0,0"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Source="ms-appx:///Photos/Icons/Screen.png"
             Stretch="Fill" />
-        <Grid
-            x:Name="RightGrid"
-            Grid.RowSpan="3"
-            Grid.Column="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-            </Grid.ColumnDefinitions>
-            <controls:GridSplitter
-                Width="1"
-                Background="Gray"
-                FontSize="13"
-                Foreground="White"
-                ResizeBehavior="BasedOnAlignment"
-                ResizeDirection="Auto">
-                <!--<controls:GridSplitter.Element>
+        <controls:GridSplitter
+            Grid.RowSpan="5"
+            Grid.Column="3"
+            Width="1"
+            Background="Gray"
+            FontSize="13"
+            Foreground="White"
+            ResizeBehavior="BasedOnAlignment"
+            ResizeDirection="Auto">
+            <!--<controls:GridSplitter.Element>
                 <Grid>
                     <TextBlock
                         HorizontalAlignment="Center"
@@ -113,11 +120,18 @@
                         Text="&#xE784;" />
                 </Grid>
             </controls:GridSplitter.Element>-->
-            </controls:GridSplitter>
+        </controls:GridSplitter>
+        <Grid
+            x:Name="RightGrid"
+            Grid.RowSpan="5"
+            Grid.Column="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
             <ListView
                 x:Name="AdaptiveGridViewControlRight"
-                Grid.Column="1"
                 Margin="0,0,0,0"
+                HorizontalAlignment="Stretch"
                 IsItemClickEnabled="False"
                 ItemTemplate="{StaticResource ImageTemplate}"
                 ItemsSource="{x:Bind PhotoItems, Mode=OneWay}"
@@ -125,7 +139,7 @@
                 SelectionMode="None">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <ItemsWrapGrid Orientation="Vertical" />
+                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical" />
                         <!--<local:ScreensharePanel x:Name="panel" Loaded="panel_Loaded" />-->
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
@@ -134,10 +148,9 @@
         <Grid
             x:Name="TopGrid"
             Grid.Row="0"
-            Grid.ColumnSpan="3">
+            Grid.ColumnSpan="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <ListView
                 x:Name="AdaptiveGridViewControlTop"
@@ -158,16 +171,18 @@
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
             </ListView>
+        </Grid>
 
-            <controls:GridSplitter
-                Grid.Row="1"
-                Height="1"
-                Background="Gray"
-                FontSize="13"
-                Foreground="White"
-                ResizeBehavior="BasedOnAlignment"
-                ResizeDirection="Auto">
-                <!--<controls:GridSplitter.Element>
+        <controls:GridSplitter
+            Grid.Row="1"
+            Grid.ColumnSpan="5"
+            Height="1"
+            Background="Gray"
+            FontSize="13"
+            Foreground="White"
+            ResizeBehavior="BasedOnAlignment"
+            ResizeDirection="Auto">
+            <!--<controls:GridSplitter.Element>
                 <Grid>
                     <TextBlock
                         HorizontalAlignment="Center"
@@ -178,40 +193,39 @@
                         Text="&#xE784;" />
                 </Grid>
             </controls:GridSplitter.Element>-->
-            </controls:GridSplitter>
-        </Grid>
+        </controls:GridSplitter>
+        <controls:GridSplitter
+            Grid.Row="3"
+            Grid.ColumnSpan="5"
+            Height="1"
+            Background="Gray"
+            FontSize="13"
+            Foreground="White"
+            ResizeBehavior="PreviousAndNext"
+            ResizeDirection="Auto">
+            <!--<controls:GridSplitter.Element>
+                <Grid>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontFamily="Segoe MDL2 Assets"
+                        Foreground="Black"
+                        IsHitTestVisible="False"
+                        Text="&#xE784;" />
+                </Grid>
+            </controls:GridSplitter.Element>-->
+        </controls:GridSplitter>
         <Grid
             x:Name="BottomGrid"
-            Grid.Row="2"
-            Grid.ColumnSpan="3">
+            Grid.Row="4"
+            Grid.ColumnSpan="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <controls:GridSplitter
-                Grid.Row="0"
-                Height="1"
-                Background="Gray"
-                FontSize="13"
-                Foreground="White"
-                ResizeBehavior="BasedOnAlignment"
-                ResizeDirection="Auto">
-                <!--<controls:GridSplitter.Element>
-                <Grid>
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        FontFamily="Segoe MDL2 Assets"
-                        Foreground="Black"
-                        IsHitTestVisible="False"
-                        Text="&#xE784;" />
-                </Grid>
-            </controls:GridSplitter.Element>-->
-            </controls:GridSplitter>
             <ListView
                 x:Name="AdaptiveGridViewControlBottom"
-                Grid.Row="1"
                 Margin="0,0,0,0"
+                VerticalContentAlignment="Stretch"
                 IsItemClickEnabled="False"
                 ItemTemplate="{StaticResource ImageTemplate}"
                 ItemsSource="{x:Bind PhotoItems, Mode=OneWay}"
@@ -222,7 +236,7 @@
                 SelectionMode="None">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" />
+                        <StackPanel VerticalAlignment="Stretch" Orientation="Horizontal" />
                         <!--<local:ScreensharePanel x:Name="panel" Loaded="panel_Loaded" />-->
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>

@@ -333,7 +333,7 @@ namespace AdaptiveGridApp
         {
             if (double.IsInfinity(input.Height))
             {
-                if (TotalRows == 0)
+                if (TotalRows == 0 || Children.Count==0)
                     input.Height = 0;
                 else
                 {
@@ -344,6 +344,9 @@ namespace AdaptiveGridApp
             }
             if (double.IsInfinity(input.Width))
             {
+                if (TotalColumns == 0 || Children.Count == 0)
+                    input.Width = 0;
+                else
                 input.Width = cellwidth * (TotalColumns);
             }
             return input;
@@ -353,6 +356,8 @@ namespace AdaptiveGridApp
             if (scrollMode == ScrollMode.Vertical)
             {
                 double ViewPortHeight = 0;
+                TotalRows = 1;
+                TotalColumns = 1;
                 TotalRows = 1;
                 if (ListingControl != null && ListingControl.Parent is Grid grid1)
                 {
@@ -446,6 +451,8 @@ namespace AdaptiveGridApp
             else
             {
                 double ViewPortHeight = 0;
+                TotalRows = 1;
+                TotalColumns = 1;
                 if (ListingControl != null && ListingControl.Parent is Grid grid)
                 {
                     ViewPortHeight = grid.RowDefinitions[2].ActualHeight;
@@ -531,6 +538,8 @@ namespace AdaptiveGridApp
             if (scrollMode == ScrollMode.Vertical)
             {
                 double ViewPortHeight = 0;
+                TotalRows = 1;
+                TotalColumns = 1;
                 if (ListingControl != null && ListingControl.Parent is Grid grid1)
                 {
                     Grid grid = grid1;
@@ -602,6 +611,8 @@ namespace AdaptiveGridApp
             else
             {
                 double ViewPortHeight = 0;
+                TotalRows = 1;
+                TotalColumns = 1;
                 Grid grid = null;
                 if (ListingControl != null && ListingControl.Parent is Grid grid1)
                 {

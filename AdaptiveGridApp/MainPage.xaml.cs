@@ -369,7 +369,7 @@ namespace AdaptiveGridApp
             // get scrollviewer
             ScrollViewer scrollviewer = border.Child as ScrollViewer;
             scrollviewer.VerticalScrollMode = Windows.UI.Xaml.Controls.ScrollMode.Disabled;
-            scrollviewer.HorizontalScrollMode = Windows.UI.Xaml.Controls.ScrollMode.Enabled;
+            scrollviewer.HorizontalScrollMode = Windows.UI.Xaml.Controls.ScrollMode.Auto;
             scrollviewer.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
             scrollviewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
             if (panel == null)
@@ -392,7 +392,7 @@ namespace AdaptiveGridApp
             Border border = VisualTreeHelper.GetChild(AdaptiveGridViewControl, 0) as Border;
             // get scrollviewer
             ScrollViewer scrollviewer = border.Child as ScrollViewer;
-            scrollviewer.VerticalScrollMode = Windows.UI.Xaml.Controls.ScrollMode.Enabled;
+            scrollviewer.VerticalScrollMode = Windows.UI.Xaml.Controls.ScrollMode.Auto;
             scrollviewer.HorizontalScrollMode = Windows.UI.Xaml.Controls.ScrollMode.Disabled;
             scrollviewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
             scrollviewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
@@ -429,8 +429,11 @@ namespace AdaptiveGridApp
 
         private void RemoveLast_Click(object sender, RoutedEventArgs e)
         {
-            PhotoItems.RemoveAt(CurrentIndex - 1);
-            CurrentIndex--;
+            if (CurrentIndex > 0)
+            {
+                PhotoItems.RemoveAt(CurrentIndex - 1);
+                CurrentIndex--;
+            }
         }
 
         private void Refresh(object sender, RoutedEventArgs e)

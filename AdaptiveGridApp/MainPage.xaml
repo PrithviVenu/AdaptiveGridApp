@@ -128,7 +128,7 @@
                         VerticalAlignment="Center"
                         FontSize="12"
                         Text="Test Meeting (00:02:29)"
-                        TextTrimming="Clip" />
+                        TextTrimming="CharacterEllipsis" />
                 </Grid>
                 <Grid Grid.Column="2" HorizontalAlignment="Right">
                     <Grid.ColumnDefinitions>

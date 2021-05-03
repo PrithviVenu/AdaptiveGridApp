@@ -99,7 +99,7 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Source="ms-appx:///Photos/Icons/Screen.png"
-            Stretch="Fill" />
+            Stretch="Uniform" />
         <controls:GridSplitter
             Grid.RowSpan="5"
             Grid.Column="3"

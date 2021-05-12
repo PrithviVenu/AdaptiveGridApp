@@ -108,7 +108,7 @@ namespace AdaptiveGridApp
                 {
                     itemWidth = MinimumWidth;
                 }
-                double itemHeight = itemWidth * MainPage.CurrentAspectHeightRatio / MainPage.CurrentAspectWidthRatio;
+                double itemHeight = itemWidth * ParticipantHomeControl.CurrentAspectHeightRatio / ParticipantHomeControl.CurrentAspectWidthRatio;
                 ActiveSpeakerWidth = availableSize.Width;
                 ActiveSpeakerHeight = availableSize.Height;
                 OtherSpeakersCount = Children.Count - 1;

@@ -26,7 +26,7 @@ namespace AdaptiveGridApp
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class ParticipantHomeControl : Page
     {
         ObservableCollection<PhotoItem> PhotoItems = new ObservableCollection<PhotoItem>();
         IList<PhotoItem> PhotoItemsList = new List<PhotoItem>();
@@ -43,7 +43,7 @@ namespace AdaptiveGridApp
 
         public CustomPanel panel = null;
         bool isScreenshareToggled = false;
-        public MainPage()
+        public ParticipantHomeControl()
         {
             this.InitializeComponent();
             CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
@@ -184,12 +184,12 @@ namespace AdaptiveGridApp
         }
         private void ToggleGridMode(GridMode GridMode)
         {
-            if (MainPage.GridMode != GridMode)
+            if (ParticipantHomeControl.GridMode != GridMode)
             {
                 SetGridModeVisibility(GridMode);
                 if (GridMode == GridMode.Fill)
                 {
-                    MainPage.GridMode = GridMode.Fill;
+                    ParticipantHomeControl.GridMode = GridMode.Fill;
                     VideoPositionItem.Visibility = Visibility.Collapsed;
                     AspectRatioItem.Visibility = Visibility.Collapsed;
                     VideoPositionItemSeperator.Visibility = Visibility.Collapsed;
@@ -211,7 +211,7 @@ namespace AdaptiveGridApp
                     AspectRatioItem.Visibility = Visibility.Visible;
                     VideoPositionItemSeperator.Visibility = Visibility.Collapsed;
                     AspectRatioItemSeperator.Visibility = Visibility.Visible;
-                    MainPage.GridMode = GridMode.AspectFit;
+                    ParticipantHomeControl.GridMode = GridMode.AspectFit;
                     //ModeGridTextBox.Text = "Aspect Fit";
                     //ScrollModeGrid.Visibility = Visibility.Visible;
                     //AspectRatioGrid.Visibility = Visibility.Visible;
@@ -225,7 +225,7 @@ namespace AdaptiveGridApp
                 }
                 else if (GridMode == GridMode.Overlay)
                 {
-                    MainPage.GridMode = GridMode.Overlay;
+                    ParticipantHomeControl.GridMode = GridMode.Overlay;
                     VideoPositionItem.Visibility = Visibility.Collapsed;
                     AspectRatioItem.Visibility = Visibility.Collapsed;
                     VideoPositionItemSeperator.Visibility = Visibility.Collapsed;
@@ -237,7 +237,7 @@ namespace AdaptiveGridApp
                 }
                 else if (GridMode == GridMode.ActiveSpeaker)
                 {
-                    MainPage.GridMode = GridMode.ActiveSpeaker;
+                    ParticipantHomeControl.GridMode = GridMode.ActiveSpeaker;
                     VideoPositionItem.Visibility = Visibility.Collapsed;
                     AspectRatioItem.Visibility = Visibility.Collapsed;
                     VideoPositionItemSeperator.Visibility = Visibility.Collapsed;
@@ -248,7 +248,7 @@ namespace AdaptiveGridApp
                 }
                 else if (GridMode == GridMode.AudioConference)
                 {
-                    MainPage.GridMode = GridMode.AudioConference;
+                    ParticipantHomeControl.GridMode = GridMode.AudioConference;
                     VideoPositionItem.Visibility = Visibility.Collapsed;
                     AspectRatioItem.Visibility = Visibility.Collapsed;
                     VideoPositionItemSeperator.Visibility = Visibility.Collapsed;
@@ -259,8 +259,8 @@ namespace AdaptiveGridApp
                 }
                 else if (GridMode == GridMode.Screenshare)
                 {
-                    PreviousGridMode = MainPage.GridMode;
-                    MainPage.GridMode = GridMode.Screenshare;
+                    PreviousGridMode = ParticipantHomeControl.GridMode;
+                    ParticipantHomeControl.GridMode = GridMode.Screenshare;
                     VideoPositionItem.Visibility = Visibility.Visible;
                     AspectRatioItem.Visibility = Visibility.Collapsed;
                     VideoPositionItemSeperator.Visibility = Visibility.Visible;
@@ -273,7 +273,7 @@ namespace AdaptiveGridApp
                 }
                 else if (GridMode == GridMode.PoppedOut)
                 {
-                    MainPage.GridMode = GridMode.PoppedOut;
+                    ParticipantHomeControl.GridMode = GridMode.PoppedOut;
                     VideoPositionItem.Visibility = Visibility.Collapsed;
                     AspectRatioItem.Visibility = Visibility.Collapsed;
                     VideoPositionItemSeperator.Visibility = Visibility.Collapsed;

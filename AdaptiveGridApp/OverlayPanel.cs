@@ -36,7 +36,7 @@ namespace AdaptiveGridApp
         }
         protected override Size MeasureOverride(Size availableSize)
         {
-            if (MainPage.ScrollMode == ScrollMode.Vertical)
+            if (ParticipantHomeControl.ScrollMode == ScrollMode.Vertical)
                 MeasureForVerticalMode(availableSize);
             else
                 MeasureForHorizontalMode(availableSize);
@@ -81,7 +81,7 @@ namespace AdaptiveGridApp
                     for (int i = 0; i < Children.Count; i++)
                     {
                         UIElement child = Children[i];
-                        if (MainPage.GridMode == GridMode.Overlay || i < LastRowStartIndex)
+                        if (ParticipantHomeControl.GridMode == GridMode.Overlay || i < LastRowStartIndex)
                             child.Measure(new Size(cellwidth, cellheight));
                         else
                         {
@@ -137,7 +137,7 @@ namespace AdaptiveGridApp
             for (int i = 0; i < Children.Count; i++)
             {
                 UIElement child = Children[i];
-                if (MainPage.GridMode == GridMode.Overlay || i < LastRowStartIndex)
+                if (ParticipantHomeControl.GridMode == GridMode.Overlay || i < LastRowStartIndex)
                     child.Measure(new Size(cellwidth, cellheight));
                 else
                 {
@@ -186,7 +186,7 @@ namespace AdaptiveGridApp
             if (ListingControl != null && ListingControl.Parent is Grid grid1)
             {
                 MaximumWidth = (int)grid1.ActualWidth / 4;
-                MaximumHeight = (MaximumWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
+                MaximumHeight = (MaximumWidth * ParticipantHomeControl.CurrentAspectHeightRatio) / ParticipantHomeControl.CurrentAspectWidthRatio;
             }
             if (scrollMode == ScrollMode.Vertical)
             {
@@ -198,12 +198,12 @@ namespace AdaptiveGridApp
                 double itemWidth = availableSize.Width / TotalColumns;
                 if (itemWidth > MaximumWidth)
                     itemWidth = MaximumWidth;
-                double itemHeight = (itemWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
+                double itemHeight = (itemWidth * ParticipantHomeControl.CurrentAspectHeightRatio) / ParticipantHomeControl.CurrentAspectWidthRatio;
 
                 if (itemWidth < MinimumWidth)
                 {
                     itemWidth = MinimumWidth;
-                    itemHeight = (itemWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
+                    itemHeight = (itemWidth * ParticipantHomeControl.CurrentAspectHeightRatio) / ParticipantHomeControl.CurrentAspectWidthRatio;
                     int MaxColumns = (int)(availableSize.Width / MinimumWidth);
                     TotalColumns = MaxColumns;
                 }
@@ -221,7 +221,7 @@ namespace AdaptiveGridApp
                         itemHeight = ViewPortHeight / RowsCeil;
                         if (itemHeight < MinimumHeight)
                             itemHeight = MinimumHeight;
-                        itemWidth = (itemHeight * MainPage.CurrentAspectWidthRatio) / MainPage.CurrentAspectHeightRatio;
+                        itemWidth = (itemHeight * ParticipantHomeControl.CurrentAspectWidthRatio) / ParticipantHomeControl.CurrentAspectHeightRatio;
                     }
                 }
                 cellwidth = itemWidth;
@@ -237,7 +237,7 @@ namespace AdaptiveGridApp
                 double itemWidth = availableSize.Width / TotalColumnsWithinViewPort;
                 if (itemWidth > MaximumWidth)
                     itemWidth = MaximumWidth;
-                double itemHeight = itemWidth * MainPage.CurrentAspectHeightRatio / MainPage.CurrentAspectWidthRatio;
+                double itemHeight = itemWidth * ParticipantHomeControl.CurrentAspectHeightRatio / ParticipantHomeControl.CurrentAspectWidthRatio;
 
                 if (itemWidth < MinimumWidth)
                 {
@@ -246,7 +246,7 @@ namespace AdaptiveGridApp
                     itemWidth = availableSize.Width / TotalColumnsWithinViewPort;
                     if (itemWidth > MaxWidth)
                         itemWidth = MaxWidth;
-                    itemHeight = itemWidth * MainPage.CurrentAspectHeightRatio / MainPage.CurrentAspectWidthRatio;
+                    itemHeight = itemWidth * ParticipantHomeControl.CurrentAspectHeightRatio / ParticipantHomeControl.CurrentAspectWidthRatio;
                 }
                 cellheight = itemHeight;
                 cellwidth = itemWidth;
@@ -259,7 +259,7 @@ namespace AdaptiveGridApp
                 {
                     MaxRowsWithinViewPort = MaxRowsFloor;
                     double CeilHeight = availableSize.Height / MaxRowsCeil;
-                    double CeilWidth = CeilHeight * MainPage.CurrentAspectWidthRatio / MainPage.CurrentAspectHeightRatio;
+                    double CeilWidth = CeilHeight * ParticipantHomeControl.CurrentAspectWidthRatio / ParticipantHomeControl.CurrentAspectHeightRatio;
                     if (CeilHeight >= MinimumHeight && CeilWidth >= MinimumWidth && Math.Floor(availableSize.Width / CeilWidth) == TotalColumnsWithinViewPort)
                     {
                         MaxRowsWithinViewPort = MaxRowsCeil;
@@ -278,7 +278,7 @@ namespace AdaptiveGridApp
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            if (MainPage.ScrollMode == ScrollMode.Vertical)
+            if (ParticipantHomeControl.ScrollMode == ScrollMode.Vertical)
                 ArrangeForVerticalMode(finalSize);
             else
                 ArrangeForHorizontalMode(finalSize);

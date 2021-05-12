@@ -43,13 +43,13 @@ namespace AdaptiveGridApp
             //    availableSize.Height = grid.ActualHeight;
             //    availableSize = new Size(ListingControl.ActualWidth, ListingControl.ActualHeight);
             //}
-            if (MainPage.VideoPosition == VideoPosition.Right || MainPage.VideoPosition == VideoPosition.Left)
+            if (ParticipantHomeControl.VideoPosition == VideoPosition.Right || ParticipantHomeControl.VideoPosition == VideoPosition.Left)
             {
-                MeasureForVerticalMode(availableSize, MainPage.VideoPosition);
+                MeasureForVerticalMode(availableSize, ParticipantHomeControl.VideoPosition);
             }
             else
             {
-                MeasureForHorizontalMode(availableSize, MainPage.VideoPosition);
+                MeasureForHorizontalMode(availableSize, ParticipantHomeControl.VideoPosition);
             }
 
             return LimitUnboundedSize(availableSize);
@@ -135,7 +135,7 @@ namespace AdaptiveGridApp
                         if (TotalColumns > 0)
                             itemWidth = availableWidth / TotalColumns;
                     }
-                    double itemHeight = (itemWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
+                    double itemHeight = (itemWidth * ParticipantHomeControl.CurrentAspectHeightRatio) / ParticipantHomeControl.CurrentAspectWidthRatio;
                     cellwidth = itemWidth;
                     cellheight = itemHeight;
                 }
@@ -150,13 +150,13 @@ namespace AdaptiveGridApp
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            if (MainPage.VideoPosition == VideoPosition.Right || MainPage.VideoPosition == VideoPosition.Left)
+            if (ParticipantHomeControl.VideoPosition == VideoPosition.Right || ParticipantHomeControl.VideoPosition == VideoPosition.Left)
             {
-                ArrangeForVerticalMode(finalSize, MainPage.VideoPosition);
+                ArrangeForVerticalMode(finalSize, ParticipantHomeControl.VideoPosition);
             }
             else
             {
-                ArrangeForHorizontalMode(finalSize, MainPage.VideoPosition);
+                ArrangeForHorizontalMode(finalSize, ParticipantHomeControl.VideoPosition);
             }
             return finalSize;
         }

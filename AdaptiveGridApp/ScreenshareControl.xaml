@@ -53,19 +53,24 @@
             x:Name="LeftGrid"
             Grid.RowSpan="5"
             Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
             <ListView
                 x:Name="AdaptiveGridViewControlLeft"
                 Grid.Column="0"
                 Margin="0,0,0,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                x:Load="False"
                 IsItemClickEnabled="False"
                 ItemTemplate="{StaticResource ImageTemplate}"
                 ItemsSource="{x:Bind PhotoItems, Mode=OneWay}"
-                ScrollViewer.VerticalScrollBarVisibility="Hidden"
                 SelectionMode="None">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel Orientation="Vertical" />
-                        <!--<local:ScreensharePanel x:Name="panel" Loaded="panel_Loaded" />-->
+                        <!--<StackPanel Orientation="Vertical" />-->
+                        <local:ScreensharePanel x:Name="LeftPanel" Loaded="panel_Loaded" />
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
             </ListView>
@@ -132,15 +137,16 @@
                 x:Name="AdaptiveGridViewControlRight"
                 Margin="0,0,0,0"
                 HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                x:Load="True"
                 IsItemClickEnabled="False"
                 ItemTemplate="{StaticResource ImageTemplate}"
                 ItemsSource="{x:Bind PhotoItems, Mode=OneWay}"
-                ScrollViewer.VerticalScrollBarVisibility="Hidden"
                 SelectionMode="None">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical" />
-                        <!--<local:ScreensharePanel x:Name="panel" Loaded="panel_Loaded" />-->
+                        <!--<StackPanel HorizontalAlignment="Stretch" Orientation="Vertical" />-->
+                        <local:ScreensharePanel x:Name="RightPanel" Loaded="panel_Loaded" />
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
             </ListView>
@@ -156,6 +162,9 @@
                 x:Name="AdaptiveGridViewControlTop"
                 Grid.Row="0"
                 Margin="0,0,0,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                x:Load="False"
                 IsItemClickEnabled="False"
                 ItemTemplate="{StaticResource ImageTemplate}"
                 ItemsSource="{x:Bind PhotoItems, Mode=OneWay}"
@@ -166,8 +175,8 @@
                 SelectionMode="None">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" Spacing="0" />
-                        <!--<local:ScreensharePanel x:Name="panel" Loaded="panel_Loaded" />-->
+                        <!--<StackPanel Orientation="Horizontal" Spacing="0" />-->
+                        <local:ScreensharePanel x:Name="TopPanel" Loaded="panel_Loaded" />
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
             </ListView>
@@ -225,7 +234,10 @@
             <ListView
                 x:Name="AdaptiveGridViewControlBottom"
                 Margin="0,0,0,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
                 VerticalContentAlignment="Stretch"
+                x:Load="False"
                 IsItemClickEnabled="False"
                 ItemTemplate="{StaticResource ImageTemplate}"
                 ItemsSource="{x:Bind PhotoItems, Mode=OneWay}"
@@ -236,8 +248,8 @@
                 SelectionMode="None">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel VerticalAlignment="Stretch" Orientation="Horizontal" />
-                        <!--<local:ScreensharePanel x:Name="panel" Loaded="panel_Loaded" />-->
+                        <!--<StackPanel VerticalAlignment="Stretch" Orientation="Horizontal" />-->
+                        <local:ScreensharePanel x:Name="BottomPanel" Loaded="panel_Loaded" />
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
             </ListView>

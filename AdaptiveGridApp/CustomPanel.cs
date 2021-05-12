@@ -333,7 +333,7 @@ namespace AdaptiveGridApp
         {
             if (double.IsInfinity(input.Height))
             {
-                if (TotalRows == 0 || Children.Count==0)
+                if (TotalRows == 0 || Children.Count == 0)
                     input.Height = 0;
                 else
                 {
@@ -347,7 +347,7 @@ namespace AdaptiveGridApp
                 if (TotalColumns == 0 || Children.Count == 0)
                     input.Width = 0;
                 else
-                input.Width = cellwidth * (TotalColumns);
+                    input.Width = cellwidth * (TotalColumns);
             }
             return input;
         }
@@ -590,18 +590,21 @@ namespace AdaptiveGridApp
                             itemHeight = MinimumHeight;
                         itemWidth = (itemHeight * MainPage.CurrentAspectWidthRatio) / MainPage.CurrentAspectHeightRatio;
                     }
-                    if (TotalRows * itemHeight > ViewPortHeight && TotalColumns < MaxColumnsWithinViewPort)//TotalRows > MaxRowsWithinViewPort 
+                    if (TotalRows * itemHeight > ViewPortHeight && TotalColumns < MaxColumnsWithinViewPort
+                        ) //&& (Math.Ceiling(Children.Count / (double)(TotalColumns + 1)) >= TotalRows) //TotalRows > MaxRowsWithinViewPort 
                     {
                         TotalColumns += 1;
                         TotalRows = (int)Math.Ceiling(Children.Count / (double)TotalColumns);
                         itemWidth = availableWidth / TotalColumns;
                         itemHeight = (itemWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
-                        if (TotalRows * itemHeight > ViewPortHeight && TotalColumns < MaxColumnsWithinViewPort)//TotalRows > MaxRowsWithinViewPort 
+                        if (TotalRows * itemHeight > ViewPortHeight && TotalColumns < MaxColumnsWithinViewPort
+                           ) //&& (Math.Ceiling(Children.Count / (double)(TotalColumns + 1)) >= TotalRows) //TotalRows > MaxRowsWithinViewPort 
                         {
                             TotalColumns += 1;
                             TotalRows = (int)Math.Ceiling(Children.Count / (double)TotalColumns);
                             itemWidth = availableWidth / TotalColumns;
                             itemHeight = (itemWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
+
                         }
                     }
                 }

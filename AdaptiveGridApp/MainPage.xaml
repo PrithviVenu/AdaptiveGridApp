@@ -14,6 +14,8 @@
         <DataTemplate x:Key="ImageTemplate" x:DataType="local:PhotoItem">
             <local:AspectContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                 <Grid
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
                     Background="White"
                     BorderBrush="Black"
                     BorderThickness="0">
@@ -410,6 +412,12 @@
             ItemTemplate="{StaticResource ImageTemplate}"
             ItemsSource="{x:Bind PhotoItems, Mode=OneWay}"
             SelectionMode="Single">
+            <GridView.ItemContainerStyle>
+                <Style TargetType="GridViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                </Style>
+            </GridView.ItemContainerStyle>
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <local:CustomPanel x:Name="panel" Loaded="CustomPanel_Loaded" />
@@ -629,7 +637,11 @@
                         Text="Screen"
                         TextTrimming="CharacterEllipsis" />
                 </Grid>
-                <Grid Grid.Column="2" Margin="0,-5,0,0">
+                <Grid
+                    x:Name="EndCall"
+                    Grid.Column="2"
+                    Margin="0,-5,0,0"
+                    Tapped="EndCall_Tapped">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />

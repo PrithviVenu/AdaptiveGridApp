@@ -558,5 +558,10 @@ namespace AdaptiveGridApp
             CustomPanel.MinimumWidth = 300;
             CustomPanel.MinimumHeight = (300 * CurrentAspectHeightRatio) / CurrentAspectWidthRatio;
         }
+
+        private void EndCall_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+        }
     }
 }

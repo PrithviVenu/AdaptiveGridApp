@@ -36,6 +36,13 @@ namespace AdaptiveGridApp
         }
         protected override Size MeasureOverride(Size availableSize)
         {
+            //if (ListingControl != null && ListingControl.Parent is Grid grid)
+            //{
+            //    double AvailableWidth = grid.ColumnDefinitions[0].ActualWidth;
+            //    availableSize.Width = AvailableWidth;
+            //    availableSize.Height = grid.ActualHeight;
+            //    availableSize = new Size(ListingControl.ActualWidth, ListingControl.ActualHeight);
+            //}
             if (MainPage.VideoPosition == VideoPosition.Right || MainPage.VideoPosition == VideoPosition.Left)
             {
                 MeasureForVerticalMode(availableSize, MainPage.VideoPosition);
@@ -51,21 +58,28 @@ namespace AdaptiveGridApp
 
         private void MeasureForHorizontalMode(Size availableSize, VideoPosition videoPosition = VideoPosition.Botton)
         {
-            if (ListingControl != null && ListingControl.Parent is Grid grid)
+            ComputeAndSetDimension(availableSize, videoPosition);
+            for (int i = 0; i < Children.Count; i++)
             {
-                ComputeAndSetDimension(availableSize, videoPosition);
+                UIElement child = Children[i];
+                child.Measure(new Size(cellwidth, cellheight));
             }
         }
         public void MeasureForVerticalMode(Size availableSize, VideoPosition videoPosition = VideoPosition.Right)
         {
             ComputeAndSetDimension(availableSize, videoPosition);
+            for (int i = 0; i < Children.Count; i++)
+            {
+                UIElement child = Children[i];
+                child.Measure(new Size(cellwidth, cellheight));
+            }
         }
 
         Size LimitUnboundedSize(Size input)
         {
             if (double.IsInfinity(input.Height))
             {
-                if (TotalRows == 0)
+                if (TotalRows == 0 || Children.Count == 0)
                     input.Height = 0;
                 else
                 {
@@ -74,37 +88,62 @@ namespace AdaptiveGridApp
             }
             if (double.IsInfinity(input.Width))
             {
-                input.Width = cellwidth * (TotalColumns);
+                if (TotalColumns == 0 || Children.Count == 0)
+                    input.Width = 0;
+                else
+                    input.Width = cellwidth * (TotalColumns);
             }
             return input;
         }
 
         private void ComputeAndSetDimension(Size availableSize, VideoPosition VideoPosition = VideoPosition.Right)
         {
-            if (VideoPosition == VideoPosition.Right || VideoPosition == VideoPosition.Left)
+            if (ListingControl != null && ListingControl.Parent is Grid grid)
             {
-                double availableWidth = availableSize.Width;
-                double ViewPortHeight = ListingControl.Height;
-                MaxColumnsWithinViewPort = (int)Math.Floor(availableWidth / MinimumWidth);
-                MaxRowsWithinViewPort = (int)Math.Floor(ViewPortHeight / MinimumHeight);
-                int cols = (int)Math.Floor(availableWidth / cellwidth);
-                if (cols > 0)
-                    TotalColumns = cols;
-                else
-                    TotalColumns = 1;
-                double itemWidth = availableWidth / TotalColumns;
-                if (itemWidth < MinimumWidth)
+                if (VideoPosition == VideoPosition.Right || VideoPosition == VideoPosition.Left)
                 {
-                    //itemWidth = MinimumWidth;
-                    //itemHeight = (itemWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
-                    //int MaxColumns = (int)(availableWidth / MinimumWidth);
-                    TotalColumns = MaxColumnsWithinViewPort;
-                    itemWidth = availableWidth / TotalColumns;
+                    //double availableWidth = ListingControl.ActualWidth;
+                    //double ViewPortHeight = ListingControl.ActualHeight;
+                    double availableWidth = availableSize.Width;
+                    double ViewPortHeight = grid.ActualHeight;
+                    TotalRows = 1;
+                    TotalColumns = 1;
+                    MaxColumnsWithinViewPort = (int)Math.Floor(availableWidth / MinimumWidth);
+                    MaxRowsWithinViewPort = (int)Math.Floor(ViewPortHeight / MinimumHeight);
+                    int rowsOccupiedWithinViewPort = (MaxRowsWithinViewPort < Children.Count) ? MaxRowsWithinViewPort : Children.Count;
+                    //int cols = (int)Math.Floor(availableWidth / cellwidth);
+                    if (rowsOccupiedWithinViewPort > 0)
+                    {
+                        int cols = (int)Math.Floor(Children.Count / (double)rowsOccupiedWithinViewPort);
+                        if (cols > MaxColumnsWithinViewPort)
+                        {
+                            cols = MaxColumnsWithinViewPort;
+                        }
+                        if (cols > 0)
+                            TotalColumns = cols;
+                        else
+                            TotalColumns = 1;
+                    }
+                    TotalRows = (int)Math.Ceiling(Children.Count / (double)TotalColumns);
+                    double itemWidth = availableWidth / TotalColumns;
+                    if (itemWidth < MinimumWidth)
+                    {
+                        //itemWidth = MinimumWidth;
+                        //itemHeight = (itemWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
+                        //int MaxColumns = (int)(availableWidth / MinimumWidth);
+                        TotalColumns = MaxColumnsWithinViewPort;
+                        if (TotalColumns > 0)
+                            itemWidth = availableWidth / TotalColumns;
+                    }
+                    double itemHeight = (itemWidth * MainPage.CurrentAspectHeightRatio) / MainPage.CurrentAspectWidthRatio;
+                    cellwidth = itemWidth;
+                    cellheight = itemHeight;
                 }
-            }
-            else
-            {
-
+                else
+                {
+                    TotalRows = 1;
+                    TotalColumns = 1;
+                }
             }
         }
 
@@ -124,7 +163,7 @@ namespace AdaptiveGridApp
 
 
 
-        public void ArrangeForHorizontalMode(Size finalSize, VideoPosition videoPosition = VideoPosition.Botton)
+        public void ArrangeForHorizontalMode(Size finalSize, VideoPosition videoPosition = VideoPosition.Right)
         {
 
         }
@@ -132,8 +171,35 @@ namespace AdaptiveGridApp
 
         public void ArrangeForVerticalMode(Size finalSize, VideoPosition videoPosition = VideoPosition.Right)
         {
+            if (Children.Count == 0)
+                return;
+            if (TotalRows <= MaxRowsWithinViewPort)
+            {
+                for (int index = 0; index < Children.Count; index++)
+                {
+                    UIElement child = Children[index];
+                    double x = (index) % TotalColumns * child.DesiredSize.Width;
+                    double y = (index) / TotalColumns * child.DesiredSize.Height;
+                    Point anchorPoint = new Point(x, y);
+                    child.Arrange(new Rect(anchorPoint, child.DesiredSize));
+                }
 
+                for (int i = 1; i <= TotalColumns; i++)
+                {
+                    for (int j = 1; j <= TotalRows; j++)
+                    {
+                        double x = (i - 1) * cellwidth;
+                        double y = (j - 1) * cellheight;
+                        UIElement child = Children[i - 1];
+                        Point anchorPoint = new Point(x, y);
+                        child.Arrange(new Rect(anchorPoint, child.DesiredSize));
+                    }
+                }
+            }
+            else
+            {
 
+            }
         }
     }
 }

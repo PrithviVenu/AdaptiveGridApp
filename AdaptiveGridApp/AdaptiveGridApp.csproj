@@ -151,6 +151,9 @@
     <Compile Include="ActiveSpeakerCustomPanel.cs" />
     <Compile Include="OverlayPanel.cs" />
     <Compile Include="PhotoItem.cs" />
+    <Compile Include="PinnedParticipantControl.xaml.cs">
+      <DependentUpon>PinnedParticipantControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PoppedoutControl.xaml.cs">
       <DependentUpon>PoppedoutControl.xaml</DependentUpon>
     </Compile>
@@ -294,6 +297,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="OverlayControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PinnedParticipantControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -150,7 +150,7 @@
     </Compile>
     <Compile Include="ActiveSpeakerCustomPanel.cs" />
     <Compile Include="OverlayPanel.cs" />
-    <Compile Include="PhotoItem.cs" />
+    <Compile Include="Participant.cs" />
     <Compile Include="PinnedParticipantControl.xaml.cs">
       <DependentUpon>PinnedParticipantControl.xaml</DependentUpon>
     </Compile>

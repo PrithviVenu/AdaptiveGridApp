@@ -11,7 +11,7 @@
     SizeChanged="Page_SizeChanged"
     mc:Ignorable="d">
     <Page.Resources>
-        <DataTemplate x:Key="ImageTemplate" x:DataType="local:PhotoItem">
+        <DataTemplate x:Key="ImageTemplate" x:DataType="local:Participant">
             <local:AspectContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                 <Grid
                     HorizontalAlignment="Stretch"

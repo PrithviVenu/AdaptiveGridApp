@@ -10,7 +10,7 @@
     d:DesignWidth="400"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <DataTemplate x:Key="ImageTemplate" x:DataType="local:PhotoItem">
+        <DataTemplate x:Key="ImageTemplate" x:DataType="local:Participant">
             <Grid
                 Margin="0,10,10,0"
                 Background="White"

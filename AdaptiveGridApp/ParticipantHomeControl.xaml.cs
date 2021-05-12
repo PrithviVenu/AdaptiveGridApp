@@ -28,8 +28,8 @@ namespace AdaptiveGridApp
     /// </summary>
     public sealed partial class ParticipantHomeControl : Page
     {
-        ObservableCollection<PhotoItem> PhotoItems = new ObservableCollection<PhotoItem>();
-        IList<PhotoItem> PhotoItemsList = new List<PhotoItem>();
+        ObservableCollection<Participant> PhotoItems = new ObservableCollection<Participant>();
+        IList<Participant> PhotoItemsList = new List<Participant>();
         private int CurrentIndex = 0;
         public static int CurrentAspectWidthRatio = 16;
         public static int CurrentAspectHeightRatio = 9;
@@ -59,7 +59,7 @@ namespace AdaptiveGridApp
 
         private void AddParticipant_Click(object sender, RoutedEventArgs e)
         {
-            PhotoItem item = PhotoItemsList[GetCurrentIndex()];
+            Participant item = PhotoItemsList[GetCurrentIndex()];
             PhotoItems.Add(item);
             CurrentIndex++;
         }
@@ -68,7 +68,7 @@ namespace AdaptiveGridApp
         {
             for (int i = 0; i < 26; i++)
             {
-                PhotoItem item = new PhotoItem
+                Participant item = new Participant
                 {
                     Title = ((i + 1).ToString() + ".jpg")
                 };

@@ -10,7 +10,7 @@
     Loaded="UserControl_Loaded"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <DataTemplate x:Key="ImageTemplate" x:DataType="local:PhotoItem">
+        <DataTemplate x:Key="ImageTemplate" x:DataType="local:Participant">
             <local:AspectContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                 <Grid
                     Background="White"

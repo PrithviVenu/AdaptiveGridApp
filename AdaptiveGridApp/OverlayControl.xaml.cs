@@ -23,20 +23,20 @@ namespace AdaptiveGridApp
     {
         // Using a DependencyProperty as the backing store for HasRoundedCorner.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PhotoItemsProperty =
-            DependencyProperty.Register("PhotoItems", typeof(ObservableCollection<PhotoItem>), typeof(OverlayControl), new PropertyMetadata(null));
-        public ObservableCollection<PhotoItem> PhotoItems
+            DependencyProperty.Register("PhotoItems", typeof(ObservableCollection<Participant>), typeof(OverlayControl), new PropertyMetadata(null));
+        public ObservableCollection<Participant> PhotoItems
         {
-            get { return (ObservableCollection<PhotoItem>)GetValue(PhotoItemsProperty); }
+            get { return (ObservableCollection<Participant>)GetValue(PhotoItemsProperty); }
             set { SetValue(PhotoItemsProperty, value); }
         }
 
 
         // Using a DependencyProperty as the backing store for HasRoundedCorner.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty OverlayParticipantProperty =
-            DependencyProperty.Register("PhotoItem", typeof(PhotoItem), typeof(OverlayControl), new PropertyMetadata(null));
-        public PhotoItem OverlayParticipant
+            DependencyProperty.Register("PhotoItem", typeof(Participant), typeof(OverlayControl), new PropertyMetadata(null));
+        public Participant OverlayParticipant
         {
-            get { return (PhotoItem)GetValue(OverlayParticipantProperty); }
+            get { return (Participant)GetValue(OverlayParticipantProperty); }
             set { SetValue(OverlayParticipantProperty, value); }
         }
 
@@ -57,7 +57,7 @@ namespace AdaptiveGridApp
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            PhotoItem item = new PhotoItem
+            Participant item = new Participant
             {
                 Title = ((20).ToString() + ".jpg")
             };

@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Media;
 
 namespace AdaptiveGridApp
 {
-    public class PhotoItem : INotifyPropertyChanged
+    public class Participant : INotifyPropertyChanged
     {
         public string Title { get; set; }
 

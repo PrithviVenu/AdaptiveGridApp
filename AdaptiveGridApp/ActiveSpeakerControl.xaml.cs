@@ -22,10 +22,10 @@ namespace AdaptiveGridApp
     {
         // Using a DependencyProperty as the backing store for HasRoundedCorner.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PhotoItemsProperty =
-            DependencyProperty.Register("PhotoItems", typeof(ObservableCollection<PhotoItem>), typeof(ActiveSpeakerControl), new PropertyMetadata(null));
-        public ObservableCollection<PhotoItem> PhotoItems
+            DependencyProperty.Register("PhotoItems", typeof(ObservableCollection<Participant>), typeof(ActiveSpeakerControl), new PropertyMetadata(null));
+        public ObservableCollection<Participant> PhotoItems
         {
-            get { return (ObservableCollection<PhotoItem>)GetValue(PhotoItemsProperty); }
+            get { return (ObservableCollection<Participant>)GetValue(PhotoItemsProperty); }
             set { SetValue(PhotoItemsProperty, value); }
         }
         public ActiveSpeakerControl()
